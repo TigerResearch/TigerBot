@@ -259,6 +259,8 @@ if __name__ == '__main__':
                         action='store_true',
                         help='Auto upgrade layer precision to higher precision, for example int2 to int4, groupsize 128 to 64. \
                 When this feature enabled, `--save` or `--save_safetensors` would be disable.')
+    parser.add_argument('--quant-directory', type=str, default=None,
+                        help='Specify the directory for export quantization parameters to toml format. `None` means no export by default.')
 
     args = parser.parse_args()
 
