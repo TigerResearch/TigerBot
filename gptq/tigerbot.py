@@ -255,8 +255,13 @@ if __name__ == '__main__':
     parser.add_argument('--true-sequential', action='store_true', help='Whether to run in true sequential model.')
     parser.add_argument('--dtype', type=str, default="float16",
                         help='torch dtype of model')
+    parser.add_argument('--observe',
+                        action='store_true',
+                        help='Auto upgrade layer precision to higher precision, for example int2 to int4, groupsize 128 to 64. \
+                When this feature enabled, `--save` or `--save_safetensors` would be disable.')
 
     args = parser.parse_args()
+
     gpu_dist = []
 
     if type(args.load) is not str:
