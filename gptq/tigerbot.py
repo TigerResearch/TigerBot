@@ -257,11 +257,7 @@ if __name__ == '__main__':
                         help='torch dtype of model')
 
     args = parser.parse_args()
-
-    if args.layers_dist:
-        gpu_dist = [int(x) for x in args.layers_dist.split(':')]
-    else:
-        gpu_dist = []
+    gpu_dist = []
 
     if type(args.load) is not str:
         args.load = args.load.as_posix()
