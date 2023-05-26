@@ -4,26 +4,3 @@ torch==1.13.1
 deepspeed==0.9.2
 datasets==2.12.0
 evaluate==0.4.0
-
-deepspeed \
---include="localhost:0,1,2,3" \
-./train_sft.py \
---deepspeed ./ds_config/ds_config_zero3.json \
---model_path ./tigerbot_560m \
---do_train \
---train_file_path ./data/dev_sft.json \
---output_dir ./ckpt-sft \
---overwrite_output_dir \
---preprocess_num_workers 8 \
---num_train_epochs 5 \
---learning_rate 1e-5 \
---evaluation_strategy steps \
---eval_steps 10 \
---bf16 True \
---save_strategy steps \
---save_steps 10 \
---save_total_limit 2 \
---logging_steps 10 \
---tf32 True \
---per_device_train_batch_size 2 \
---per_device_eval_batch_size 2
