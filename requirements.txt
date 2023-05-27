@@ -1,20 +1,15 @@
-<<<<<<< HEAD
 safetensors==0.3.0
 datasets==2.10.1
-sentencepiece
-git+https://github.com/huggingface/transformers
 accelerate==0.17.1
 triton==2.0.0
-texttable
-toml
-numpy
 protobuf==3.20.2
-
-=======
 transformers==4.28.1
 scikit-learn==1.0.2
 torch==1.13.1
 deepspeed==0.9.2
 datasets==2.12.0
 evaluate==0.4.0
->>>>>>> d9971d7c604d782fe53447c1fcc915d45ea0d930
+texttable
+toml
+numpy
+sentencepiece

@@ -8,6 +8,7 @@ from gptq import GPTQ, Observer
 from utils import find_layers, DEV, get_loaders, \
     export_quant_table, gen_conditions
 from texttable import Texttable
+from transformers import AutoModelForCausalLM, AutoConfig, modeling_utils
 
 
 def get_model(model, type=torch.float16):
@@ -17,7 +18,6 @@ def get_model(model, type=torch.float16):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=type)
     model.seqlen = 2048
     return model
@@ -181,7 +181,6 @@ def model_pack(model, quantizers, wbits, groupsize):
 
 
 def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True, warmup_autotune=True):
-    from transformers import AutoConfig, AutoModelForCausalLM, modeling_utils
     config = AutoConfig.from_pretrained(model)
 
     def noop(*args, **kwargs):
