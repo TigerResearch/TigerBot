@@ -109,7 +109,7 @@ if __name__ == '__main__':
         help='The value used to module the next token probabilities.'
     )
     parser.add_argument(
-        'no_repeat_ngram_size', type=int, default=4,
+        '--no_repeat_ngram_size', type=int, default=4,
         help=' If set to int > 0, all ngrams of that size can only occur once.'
     )
 
