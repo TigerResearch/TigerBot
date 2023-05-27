@@ -34,7 +34,7 @@ def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True
     torch.set_default_dtype(torch.half)
     modeling_utils._init_weights = False
     torch.set_default_dtype(torch.half)
-    model = AutoModelForCausalLM(config)
+    model = AutoModelForCausalLM.from_config(config)
     torch.set_default_dtype(torch.float)
     if eval:
         model = model.eval()
