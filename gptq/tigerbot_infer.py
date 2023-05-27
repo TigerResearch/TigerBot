@@ -3,7 +3,7 @@ import argparse
 import torch
 import quant
 
-from utils import find_layers, DEV
+from utils import find_layers
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, modeling_utils
 from accelerate.utils import get_balanced_memory
 from accelerate import infer_auto_device_map, dispatch_model
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     tok_ins = "\n\n### Instruction:\n"
     tok_res = "\n\n### Response:\n"
     prompt_input = tok_ins + "{instruction}" + tok_res
-
+    DEV = torch.device('cuda:0')
     max_input_length = args.max_input_length
     max_generate_length = args.max_generate_length
     generation_kwargs = {

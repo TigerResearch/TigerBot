@@ -3,7 +3,7 @@ import argparse
 import torch
 from gptq import quant
 
-from utils import find_layers, DEV
+from gptq.utils import find_layers, DEV
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, modeling_utils
 from accelerate.utils import get_balanced_memory
 from accelerate import infer_auto_device_map, dispatch_model
