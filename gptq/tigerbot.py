@@ -281,8 +281,6 @@ if __name__ == '__main__':
     dataloader, testloader = get_loaders(args.dataset, nsamples=args.nsamples, seed=args.seed, model=args.model,
                                          seqlen=model.seqlen)
 
-    DEV = torch.device('cuda:0')
-
     if not args.load and args.wbits < 16 and not args.nearest:
         tick = time.time()
         quantizers = model_sequential(model, dataloader, DEV)
