@@ -115,10 +115,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if type(args.load) is not str:
-        args.load = args.load.as_posix()
-
     if args.load:
+        if type(args.load) is not str:
+            args.load = args.load.as_posix()
         model = load_quant(args.model, args.load, args.wbits, args.groupsize)
     else:
         model = get_model(args.model)
