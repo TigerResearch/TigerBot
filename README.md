@@ -184,12 +184,6 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ![image](image/leaderboard_of_English_NLP_tasks.png)
 
-#### 人工评估
-
-人工评估prompt数据共116条，包含了87道客观题和29道主观题，人工评估了各模型的生成结果更优于TigerBot-7B-online基准模型的概率，结果如下：
-
-![image](image/human_evaluation.png)
-
 ## API
 
 #### 对话（Chat-API）
