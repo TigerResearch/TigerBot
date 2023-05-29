@@ -80,10 +80,10 @@ Tigerbot-7B-base在Bloom-7B初始化基础上进行预训练，训练数据包�
     - [英文web文本](https://huggingface.co)
     - [英文百科](https://huggingface.co)
 - 完整预训练数据占比如图所示: 
-![image](image/pretrain.png)![image](image/zh-books.png)
 <p align="center" width="100%">
     <img src="image/pretrain.png" alt="Tiger" style="width: 50%; min-width: 300px; display: block; margin: auto;">
-    <img src="image/zh-books.png" alt="Tiger" style="width: 50%; min-width: 300px; display: block; margin: auto;">
+    <img src="image/zh-books.png" alt="Tiger" style="width: 50%; min-width: 200px; display: block; margin: auto;">
+    <img src="image/code-lang-type.png" alt="Tiger" style="width: 50%; min-width: 200px; display: block; margin: auto;">
 </p>
 #### 启动训练
 
