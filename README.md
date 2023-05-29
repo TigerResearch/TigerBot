@@ -178,7 +178,17 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 英文自动化测评在7大传统NLP任务上进行，各模型细分得分情况如下：
 
-![image](image/英文任务得分详细表.png)
+![image](image/detailed_score_of_English_NLP_tasks.png)
+
+以TigerBot-7B-online模型的各任务得分为基准，归一化并平均各模型的得分，最终得分榜如下：
+
+![image](image/leaderboard_of_English_NLP_tasks.png)
+
+#### 人工评估
+
+人工评估prompt数据共116条，包含了87道客观题和29道主观题，人工评估了各模型的生成结果更优于TigerBot-7B-online基准模型的概率，结果如下：
+
+![image](image/human_evaluation.png)
 
 ## API
 
