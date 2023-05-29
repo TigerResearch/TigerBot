@@ -87,6 +87,8 @@ Tigerbot-7B-base在Bloom-7B初始化基础上进行预训练，训练数据包�
 <p align="center" width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
+
+
 #### 启动训练
 
 ```
