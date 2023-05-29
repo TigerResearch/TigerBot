@@ -79,7 +79,8 @@ Tigerbot-7B-base在Bloom-7B初始化基础上进行预训练，训练数据包�
     - [英文书籍](https://huggingface.co)
     - [英文web文本](https://huggingface.co)
     - [英文百科](https://huggingface.co)
-- 完整预训练数据占比如图所示: ![image](image/pretrain.png)![image](image/zh-books.png)
+- 完整预训练数据占比如图所示: 
+![image](image/pretrain.png)![image](image/zh-books.png)
 
 #### 启动训练
 
