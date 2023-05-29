@@ -35,24 +35,20 @@ pip install -r requirements.txt
 
 ## 模型
 
-<details>
 <summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                | Bits | memory(MiB) | 
-|--------------------------------------------|------|-------------|
-| [Tigerbot-7B-base](https://huggingface.co) | 16   | -           |
-| [Tigerbot-7B-sft](https://huggingface.co)  | 4    | -           |
+| Tigerbot-7B                                    | Bits | memory(MiB) | 
+|------------------------------------------------|------|-------------|
+| [Tigerbot-7B-base](https://huggingface.co)     | 16   | -           |
+| [Tigerbot-7B-sft](https://huggingface.co)      | 16   | -           |
+| [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | -           |
 
-</details>
-<details>
 <summary>Tigerbot-176B)</summary>
 
-| Tigerbot-176B                                | Bits | memory(MiB) |
-|----------------------------------------------|------|-------------|
-| [Tigerbot-176B-base](https://huggingface.co) | 16   | 13940       |
-| [Tigerbot-176B-sft](https://huggingface.co)  | 4    | -           |
-
-</details>
+| Tigerbot-176B                                    | Bits | memory(MiB) |
+|--------------------------------------------------|------|-------------|
+| [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 13940       |
+| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | -           |
 
 ## 推理
 
@@ -114,7 +110,6 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 
 #### 训练数据
 
-<details>
 <summary>点击展开</summary><br/>
 Tigerbot-7B 训练数据包括：
 
@@ -126,8 +121,6 @@ Tigerbot-7B 训练数据包括：
     - [英文web文本](https://huggingface.co)
     - [英文百科](https://huggingface.co)
 - 15种编程语言
-
-</details>
 
 #### 启动训练
 
