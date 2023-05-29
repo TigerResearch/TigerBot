@@ -10,10 +10,8 @@
 
 - [安装](#安装)
 - [模型](#模型)
-- [推理](#推理)
+- [训练和推理](#训练和推理)
 - [量化](#量化)
-- [预训练](#预训练)
-- [微调](#微调)
 - [测评](#测评)
 - [API](#API)
 
@@ -49,44 +47,9 @@ pip install -r requirements.txt
 | [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 13940       |
 | [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | -           |
 
-## 推理
+## 训练和推理
 
-#### 单卡推理
-
-```
-CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR}
-```
-
-#### 多卡推理
-
-```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python infer ${MODEL_DIR}
-```
-
-## 量化
-
-我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
-
-```
-cd gptq
-
-# Save compressed model
-CUDA_VISIBLE_DEVICES=0 python llama.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-4bit-128g.pt
-```
-
-#### 量化模型单卡推理
-
-```
-CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
-```
-
-#### 量化模型多卡推理
-
-```
-CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
-```
-
-## 预训练
+### 预训练
 
 启动训练前安装DeepSpeed
 
@@ -145,7 +108,7 @@ deepspeed --include="localhost:0,1,2,3" train/train_clm.py \
 --per_device_eval_batch_size 2
 ```
 
-## 微调
+### 微调
 
 #### 训练数据
 
@@ -174,13 +137,53 @@ deepspeed include="localhost:0,1,2,3" train/train_sft.py \
 --per_device_eval_batch_size 2
 ```
 
+### 推理
+
+#### 单卡推理
+
+```
+CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR}
+```
+
+#### 多卡推理
+
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 python infer ${MODEL_DIR}
+```
+
+## 量化
+
+我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
+
+```
+cd gptq
+
+# Save compressed model
+CUDA_VISIBLE_DEVICES=0 python llama.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-4bit-128g.pt
+```
+
+#### 量化模型单卡推理
+
+```
+CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
+```
+
+#### 量化模型多卡推理
+
+```
+CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
+```
+
 ## 测评
+
 #### 英文自动化测评
+
 英文自动化测评在7大传统NLP任务上进行，各模型细分得分情况如下：
 
 ![image](image/英文任务得分详细表.png)
 
 ## API
+
 #### 对话（Chat-API）
 
 #### 插件（Plug-ins）
