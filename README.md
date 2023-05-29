@@ -92,16 +92,18 @@ Tigerbot-7B-base在Bloom-7B初始化基础上进行预训练，训练数据包�
 #### 启动训练
 
 ```
-deepspeed --include="localhost:0,1,2,3" train/train_clm.py \
+deepspeed \
+--include="localhost:0,1,2,3" \
+./train_clm.py \
 --deepspeed ./ds_config/ds_config_zero3.json \
---model_path ${MODEL_DIR} \
+--model_name_or_path ./tigerbot_560m \
+--dataset_name TigerResearch/dev_pretrain \
 --do_train \
---train_file_path ./data/dev_pretrain.json \
 --output_dir ./ckpt-clm \
 --overwrite_output_dir \
 --preprocess_num_workers 8 \
 --num_train_epochs 5 \
---learning_rate  1.2e-4 \
+--learning_rate 1e-5 \
 --evaluation_strategy steps \
 --eval_steps 10 \
 --bf16 True \
@@ -121,11 +123,13 @@ deepspeed --include="localhost:0,1,2,3" train/train_clm.py \
 #### 启动训练
 
 ```
-deepspeed include="localhost:0,1,2,3" train/train_sft.py \
+deepspeed \
+--include="localhost:0,1,2,3" \
+./train_sft.py \
 --deepspeed ./ds_config/ds_config_zero3.json \
---model_path ./tigerbot_560m \
+--model_name_or_path ./tigerbot_560m \
+--dataset_name TigerResearch/dev_sft \
 --do_train \
---train_file_path ./data/dev_sft.json \
 --output_dir ./ckpt-sft \
 --overwrite_output_dir \
 --preprocess_num_workers 8 \
