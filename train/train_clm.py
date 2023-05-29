@@ -11,8 +11,9 @@ os.environ["WANDB_DISABLED"] = "true"
 
 @dataclass
 class PretrainConfig:
-    model_path: Optional[str] = field(metadata={"help": "Path to pretrained model checkpoint"})
-    train_file_path: Optional[str] = field(metadata={"help": "Path to train data file/directory"})
+    model_name_or_path: Optional[str] = field(metadata={"help": "Path to pretrained model checkpoint"})
+    dataset_name: Optional[str] = field(default=None, metadata={"help": "Huggingface dataset name"})
+    train_file_path: Optional[str] = field(default=None, metadata={"help": "Path to train data file/directory"})
     validate_file_path: Optional[str] = field(default=None, metadata={"help": "Path to validation data file/directory"})
     max_length: int = field(default=1024, metadata={"help": "Max length of input"})
     text_key_name: Optional[str] = field(default="content",
@@ -48,26 +49,31 @@ def main():
     pretrain_config, training_args = parser.parse_args_into_dataclasses()
 
     # check file existence
-    check_file_exist(pretrain_config.model_path)
+    if pretrain_config.dataset_name is None and pretrain_config.train_file_path is None:
+        raise ValueError(f"One of --dataset_name or --train_file_path must be set")
     if pretrain_config.train_file_path:
         check_file_exist(pretrain_config.train_file_path)
     if pretrain_config.validate_file_path:
         check_file_exist(pretrain_config.validate_file_path)
 
     # load model, tokenizer
-    tokenizer = transformers.AutoTokenizer.from_pretrained(pretrain_config.model_path, padding_side='right',
+    tokenizer = transformers.AutoTokenizer.from_pretrained(pretrain_config.model_name_or_path, padding_side='right',
                                                            trunction_side="right",
                                                            max_length=pretrain_config.max_length)
 
-    model = transformers.AutoModelForCausalLM.from_pretrained(pretrain_config.model_path)
+    model = transformers.AutoModelForCausalLM.from_pretrained(pretrain_config.model_name_or_path)
 
-    # Split 20% of train data as validation data
-    if not pretrain_config.validate_file_path:
-        train_ds, validation_ds = datasets.load_dataset('json', data_files=pretrain_config.train_file_path,
-                                                        split=['train[:80%]', 'train[80%:]'])
+    if pretrain_config.dataset_name:
+        ds = datasets.load_dataset(pretrain_config.dataset_name)
+        train_ds, validation_ds = ds['train'], ds['validation']
     else:
-        train_ds = datasets.load_dataset("json", data_files=pretrain_config.train_file_path)
-        validation_ds = datasets.load_dataset("json", data_files=pretrain_config.validate_file_path)
+        # Split 20% of train data as validation data
+        if not pretrain_config.validate_file_path:
+            train_ds, validation_ds = datasets.load_dataset('json', data_files=pretrain_config.train_file_path,
+                                                            split=['train[:80%]', 'train[80%:]'])
+        else:
+            train_ds = datasets.load_dataset("json", data_files=pretrain_config.train_file_path)
+            validation_ds = datasets.load_dataset("json", data_files=pretrain_config.validate_file_path)
 
     raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
     column_names = raw_datasets["train"].column_names if training_args.do_train else raw_datasets[
@@ -116,9 +122,9 @@ deepspeed \
 --include="localhost:0,1,2,3" \
 ./train_clm.py \
 --deepspeed ./ds_config/ds_config_zero3.json \
---model_path ./tigerbot_560m \
+--model_name_or_path ./tigerbot_560m \
+--dataset_name TigerResearch/dev_pretrain \
 --do_train \
---train_file_path ./data/dev_pretrain.json \
 --output_dir ./ckpt-clm \
 --overwrite_output_dir \
 --preprocess_num_workers 8 \
