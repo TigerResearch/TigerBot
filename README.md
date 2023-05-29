@@ -15,8 +15,7 @@
 - [预训练](#预训练)
 - [微调](#微调)
 - [测评](#测评)
-- [API](#api)
-- [TigerDoc](#tigerdoc)
+- [API](#API)
 
 ## 安装
 
@@ -110,8 +109,7 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 
 #### 训练数据
 
-<summary>点击展开</summary><br/>
-Tigerbot-7B 训练数据包括：
+Tigerbot-7B-base在Bloom-7B初始化基础上进行预训练，训练数据包括：
 
 - 中英自然语言文本
     - [中文书籍](https://huggingface.co)
@@ -175,5 +173,20 @@ deepspeed include="localhost:0,1,2,3" train/train_sft.py \
 --per_device_train_batch_size 2 \
 --per_device_eval_batch_size 2
 ```
+
+## 测评
+#### 英文自动化测评
+英文自动化测评在7大传统NLP任务上进行，各模型细分得分情况如下：
+
+![image](image/英文任务得分详细表.png)
+
+## API
+#### 对话（Chat-API）
+
+#### 插件（Plug-ins）
+
+#### 微调（Fine-Tunes）
+
+
 
 
