@@ -227,7 +227,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ## 测评
 
 在 7 项传统 NLP 任务上进行，并以 TigerBot-7B-V1 为基准，归一化并平均各模型的得分，结果如下：
->>>>>>> 05c3cd2 (apia)
+
 ![image](image/auto-valuation.png)
 
 ## API
