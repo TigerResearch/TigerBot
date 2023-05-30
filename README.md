@@ -167,14 +167,14 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 - 中英自然语言文本（以下数据集开放到 huggingface）
 
-  | 类型                                   |  磁盘占用 |
-  | ------------------------------------- |------------|
-  | [中文书籍](https://huggingface.co)     | 12G      |
-  | [中文互联网](https://huggingface.co)   | 25G       |
-  | [中文百科](https://huggingface.co)     | 19G       |
-  | [英文书籍](https://huggingface.co)     | 22G      | 
-  | [英文互联网](https://huggingface.co)   | 6.9G       | 
-  | [英文百科](https://huggingface.co)     | 22G    |
+  | 类型                                   |  磁盘占用 |  来源 |
+  | ------------------------------------- |------------| ---|
+  | [中文书籍](https://huggingface.co)     | 12G      |  自研
+  | [中文互联网](https://huggingface.co)   | 25G      |  自研
+  | [中文百科](https://huggingface.co)     | 19G      |  自研
+  | [英文书籍](https://huggingface.co)     | 22G      |  开源
+  | [英文互联网](https://huggingface.co)   | 6.9G     |   开源
+  | [英文百科](https://huggingface.co)     | 22G      |  开源
 
 
 - 完整预训练数据占比如图所示:
@@ -190,28 +190,32 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 微调数据
 
--  指令数据集 (数据集开放到 huggingface）
+- 指令数据集 (数据集开放到 huggingface）
 
-    | 类型 | 数据集          |   数量 | 
-    | ---------- |------------| --- |
-    | 头脑风暴 |  [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co) | 1.7k
-    | 分类 |   [dolly-Classification-en-2k (分类)](https://huggingface.co) | 2k
-    | 数学问题 | [gsm-8k-en (数学问题)](https://huggingface.co) | 8k
-    | 代码 |   [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co) | 2k
-    | 食谱生成 | [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co) | 2k
-    | 病历生成 |  [mt-note-generation-en (病历生成)](https://huggingface.co) | 450
-    | 多轮对话 | [OIG-multichat-en-50k (多轮对话)](https://huggingface.co) | 50k 
-    | 综合问答 | [stackexchange-qa-en-0.5m (综合问答)](https://huggingface.co) | 0.5m
-    | alpaca英文|   [tiger-alpaca-en-50k（基于alpaca生成）](https://huggingface.co) | 50k
-    | WIKI问答| [wiki-qa-bart-alpaca-en-10k (WIKI问答)](https://huggingface.co)|10k
-    | 如何做类教程|  [youtube-howto-en-50k (youtube中howto类教程)](https://huggingface.co) | 50k
-    | firefly数据集清洗版 | [firefly-alpaca-zh-20k (中文-firefly数据集)](https://huggingface.co) | 20k
-    | HC3数据集 | [HC3-alpaca-zh-12k (中文-HC3数据集)](https://huggingface.co) | 12k
-    | 阅读理解 |  [superclue-c3-alpaca-zh-5k (中文-superclue阅读理解)](https://huggingface.co) | 5k
-    | alpaca中文|  [tiger-alpaca-zh-0.5m (中文-基于alpaca生成)](https://huggingface.co) | 0.5m
-    | 知乎问答|  [zhihu-zh-10k (中文-知乎问答)](https://huggingface.co) | 10k
-  
-  >  其它数据集陆续整理开放中...
+    | 类型          | 语言 |  数据集 |  数量 | 来源 |
+    | --------------------------------|--- | ------------| ---| --- | 
+    | alpaca中文| 中文| [tiger-alpaca-zh-0.5m](https://huggingface.co) | 0.5m | 自研 
+    | 脑筋急转弯 | 中文| [tiger-think-more-zh-1k](https://huggingface.co) | 1k | 自研
+    | 百科问答 | 中文| [tiger-wiki-qa-1k](https://huggingface.co)  | 1k | 自研
+    | 名著问答 | 中文| [tiger-book-qa-1k](https://huggingface.co)  | 1k | 自研
+    | 阅读理解 | 中文|  [superclue-c3-alpaca-zh-5k](https://huggingface.co) | 5k | 自研*
+    | 问答 |中文|   [HC3-zh-12k](https://huggingface.co) | 12k | 开源
+    | 知乎问答|中文|   [zhihu-zh-10k](https://huggingface.co) | 10k| 开源
+    | alpaca英文| 英文 |[tiger-alpaca-en-50k](https://huggingface.co) | 50k | 自研
+    | 头脑风暴 | 英文| [dolly-Brainstorming-en-1.7k](https://huggingface.co) | 1.7k | 开源
+    | 分类 |英文|  [dolly-Classification-en-2k](https://huggingface.co) | 2k  | 开源
+    | 数学问题 | 英文| [gsm-8k-en](https://huggingface.co) | 8k  | 开源
+    | 代码 | 英文| [kaggle-leetcodesolutions-en-2k](https://huggingface.co) | 2k  | 自研*
+    | 食谱生成 |英文| [kaggle-recipes-en-2k](https://huggingface.co) | 2k  | 开源
+    | 病历生成 | 英文| [mt-note-generation-en](https://huggingface.co) | 450  | 开源
+    | 多轮对话 |英文| [OIG-multichat-en-50k](https://huggingface.co) | 50k  | 自研*
+    | 综合问答 |英文|[stackexchange-qa-en-0.5m](https://huggingface.co) | 0.5m  | 开源
+    | wiki问答| 英文| [wiki-qa-bart-alpaca-en-10k](https://huggingface.co)|10k | 开源
+    | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
+    
+  > 其中[自研*]类的表搜集公开数据进行人工加工、清洗、转换后形成新的数据集
+
+  > 更多数据集陆续整理开放中...
   
 
 ### 领域数据
