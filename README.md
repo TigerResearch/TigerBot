@@ -288,7 +288,7 @@ print(response.text)
 
 ### 插件（Plug-ins）
 
-![image](image/api/rethink/case-3.gif)
+![image](image/api/rethink/case-1.png)
 
 #### Rethink
 
