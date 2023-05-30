@@ -178,7 +178,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ![image](image/pretrain.png)
 
-> 中文书籍及代码细分:
+-  中文书籍及代码细分:
 
 <p align="center" width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
