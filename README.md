@@ -200,18 +200,12 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 - [法律](https://huggingface.co)
 - [百科](https://huggingface.co)
 
-
 ## 测评
 
 #### 英文自动化测评
 
-英文自动化测评在 7 大传统 NLP 任务上进行，各模型细分得分情况如下：
-
-![image](image/detailed_score_of_English_NLP_tasks.png)
-
-以 TigerBot-7B-online 模型的各任务得分为基准，归一化并平均各模型的得分，最终得分榜如下：
-
-![image](image/leaderboard_of_English_NLP_tasks.png)
+英文自动化测评在7项传统NLP任务上进行，并以TigerBot-7B-V1位基准，归一化并平均各模型的得分，结果如下：
+![image](image/auto-valuation.png)
 
 ## API
 
