@@ -248,11 +248,11 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ## API
 
-#### Authentication
+### Authentication
 
 获取唯一标识：API_KEY, 所有的 api 接口都需要用到
 
-#### 对话（Chat-API）
+### 对话（Chat-API）
 
 <details><summary><b>Example request</b></summary>
 
@@ -327,7 +327,7 @@ print(response.text)
 
 </details>
 
-##### Custom Rethink
+#### Custom Rethink
 
 自定义自己的知识库，提供自己专属的外脑搜索
 
