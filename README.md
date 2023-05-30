@@ -211,7 +211,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
     | 脑筋急转弯 | 中文| [tiger-think-more-zh-1k](https://huggingface.co) | 1k | 自研
     | 百科问答 | 中文| [tiger-wiki-qa-1k](https://huggingface.co)  | 1k | 自研
     | 名著问答 | 中文| [tiger-book-qa-1k](https://huggingface.co)  | 1k | 自研
-    | 阅读理解 | 中文|  [superclue-c3-alpaca-zh-5k](https://huggingface.co) | 5k | 自研*
+    | 阅读理解 | 中文|  [superclue-c3-zh-5k](https://huggingface.co) | 5k | 自研*
     | 问答 |中文|   [HC3-zh-12k](https://huggingface.co) | 12k | 开源
     | 知乎问答|中文|   [zhihu-zh-10k](https://huggingface.co) | 10k| 开源
     | alpaca英文| 英文 |[tiger-alpaca-en-50k](https://huggingface.co) | 50k | 自研
