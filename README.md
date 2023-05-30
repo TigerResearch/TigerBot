@@ -187,9 +187,27 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 - 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
 
-    - 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
-    - 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
-    - 其他数据集陆续整理开放中..
+### 微调数据
+
+-  alpaca 格式指令数据集 (数据集开放到 huggingface）
+    
+    - [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co)
+    - [dolly-Classification-en-2k (分类)](https://huggingface.co)
+    - [gsm-8k-alpaca-en (数学问题)](https://huggingface.co)
+    - [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co)
+    - [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co)
+    - [mt-note-generation-en (病历生成)](https://huggingface.co)
+    - [OIG-multichat-alpaca-en-50k (多轮对话)](https://huggingface.co)
+    - [stackexchange-qa-alpaca-en-0.5m (综合问答)](https://huggingface.co)
+    - [tiger-alpaca-en-50k（虎博基本alpaca自有生成）](https://huggingface.co)
+    - [wiki-qa-bart-alpaca-en-10k (WIKI问答)](https://huggingface.co)
+    - [youtube-howto-en-50k (youtube中howto类教程)](https://huggingface.co)
+    - [firefly-alpaca-zh-20k (中文-firefly数据集alpaca版)](https://huggingface.co)
+    - [HC3-alpaca-zh-12k (中文-HC3数据集alpaca版)](https://huggingface.co)
+    - [superclue-c3-alpaca-zh-5k (中文-superclue阅读理解)](https://huggingface.co)
+    - [tiger-alpaca-zh-0.5m (中文-虎博基本alpaca生成中文问题)](https://huggingface.co)
+    - [zhihu-alpaca-zh-10k (中文-知乎问答)](https://huggingface.co)
+    - 其它数据集陆续整理开放中...
 
 ### 领域数据
 
