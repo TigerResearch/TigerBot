@@ -143,9 +143,13 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python infer.py --model_path ${MODEL_DIR}
 
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
+切到gptq目录下
+
 ```
 cd gptq
-
+```
+#### 模型量化
+```
 # Save compressed model
 CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-4bit-128g.pt
 ```
@@ -153,7 +157,6 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order 
 #### 量化模型单卡推理
 
 ```
-cd gptq
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
 ```
 
@@ -170,14 +173,14 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 - 中英自然语言文本，当前开源总量105G（以下数据集开放到 huggingface）
 
   | 类型                                   |  磁盘占用 |  来源 |
-  | ------------------------------------- |------------| ---|
+    | ------------------------------------- |------------| ---|
   | [中文书籍](https://huggingface.co)     | 12G      |  自研
   | [中文互联网](https://huggingface.co)   | 25G      |  自研
   | [中文百科](https://huggingface.co)     | 19G      |  自研
   | [英文书籍](https://huggingface.co)     | 22G      |  开源
   | [英文互联网](https://huggingface.co)   | 6.9G     |   开源
   | [英文百科](https://huggingface.co)     | 22G      |  开源
-  | **总量**   | **105G**     |  
+  | **总量**   | **105G**     |
 
 
 - 完整预训练数据占比如图所示:
@@ -190,7 +193,6 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
 
-
 ### 微调数据
 
 #### 数据搜集
@@ -198,51 +200,49 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 - 模型中使用的微调数据的搜集思想如下：
 
   a. 参考Alpaca,扩充中英文seed_tasks,增加一些中文习惯种子问题，基于此生成2m中文(本次开源0.5m)及0.1m(本次开源50k)
-  
+
   b. 基于人工写题及答案、网络搜集方式，整理加工问答集数据，在开源列表中标识为[自研]部分，本次开放部分数据
-  
+
   c. 基于各类公开数据集转换清洗，其中[自研*]部分，表示基于原始数据进行二次开发后得到，[开源]部分数据集一般原始数据即为较规整的问答数据，进行简单清洗得到
 
 #### 数据开源
+
 - 指令数据集, 当前开源120W问答对，磁盘空间1.1G (数据集开放到 huggingface）
 
-    | 类型          | 语言 |  数据集 |  数量 | 来源 |
-    | --------------------------------|--- | ------------| ---| --- | 
-    | alpaca中文| 中文| [tiger-alpaca-zh-0.5m](https://huggingface.co) | 0.5m | 自研 
-    | 脑筋急转弯 | 中文| [tiger-think-more-zh-1k](https://huggingface.co) | 1k | 自研
-    | 百科问答 | 中文| [tiger-wiki-qa-1k](https://huggingface.co)  | 1k | 自研
-    | 名著问答 | 中文| [tiger-book-qa-1k](https://huggingface.co)  | 1k | 自研
-    | 阅读理解 | 中文|  [superclue-c3-zh-5k](https://huggingface.co) | 5k | 自研*
-    | 问答 |中文|   [HC3-zh-12k](https://huggingface.co) | 12k | 开源
-    | 知乎问答|中文|   [zhihu-zh-10k](https://huggingface.co) | 10k| 开源
-    | alpaca英文| 英文 |[tiger-alpaca-en-50k](https://huggingface.co) | 50k | 自研
-    | 头脑风暴 | 英文| [dolly-Brainstorming-en-1.7k](https://huggingface.co) | 1.7k | 开源
-    | 分类 |英文|  [dolly-Classification-en-2k](https://huggingface.co) | 2k  | 开源
-    | 数学问题 | 英文| [gsm-8k-en](https://huggingface.co) | 8k  | 开源
-    | 代码 | 英文| [kaggle-leetcodesolutions-en-2k](https://huggingface.co) | 2k  | 自研*
-    | 食谱生成 |英文| [kaggle-recipes-en-2k](https://huggingface.co) | 2k  | 开源
-    | 病历生成 | 英文| [mt-note-generation-en](https://huggingface.co) | 450  | 开源
-    | 多轮对话 |英文| [OIG-multichat-en-50k](https://huggingface.co) | 50k  | 自研*
-    | 综合问答 |英文|[stackexchange-qa-en-0.5m](https://huggingface.co) | 0.5m  | 开源
-    | wiki问答| 英文| [wiki-qa-bart-en-10k](https://huggingface.co)|10k | 开源
-    | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
-    | **总量**   |  |   | **120W条**     | 
-    
+  | 类型          | 语言 |  数据集 |  数量 | 来源 |
+      | --------------------------------|--- | ------------| ---| --- | 
+  | alpaca中文| 中文| [tiger-alpaca-zh-0.5m](https://huggingface.co) | 0.5m | 自研
+  | 脑筋急转弯 | 中文| [tiger-think-more-zh-1k](https://huggingface.co) | 1k | 自研
+  | 百科问答 | 中文| [tiger-wiki-qa-1k](https://huggingface.co)  | 1k | 自研
+  | 名著问答 | 中文| [tiger-book-qa-1k](https://huggingface.co)  | 1k | 自研
+  | 阅读理解 | 中文|  [superclue-c3-zh-5k](https://huggingface.co) | 5k | 自研*
+  | 问答 |中文|   [HC3-zh-12k](https://huggingface.co) | 12k | 开源
+  | 知乎问答|中文|   [zhihu-zh-10k](https://huggingface.co) | 10k| 开源
+  | alpaca英文| 英文 |[tiger-alpaca-en-50k](https://huggingface.co) | 50k | 自研
+  | 头脑风暴 | 英文| [dolly-Brainstorming-en-1.7k](https://huggingface.co) | 1.7k | 开源
+  | 分类 |英文|  [dolly-Classification-en-2k](https://huggingface.co) | 2k  | 开源
+  | 数学问题 | 英文| [gsm-8k-en](https://huggingface.co) | 8k  | 开源
+  | 代码 | 英文| [kaggle-leetcodesolutions-en-2k](https://huggingface.co) | 2k  | 自研*
+  | 食谱生成 |英文| [kaggle-recipes-en-2k](https://huggingface.co) | 2k  | 开源
+  | 病历生成 | 英文| [mt-note-generation-en](https://huggingface.co) | 450  | 开源
+  | 多轮对话 |英文| [OIG-multichat-en-50k](https://huggingface.co) | 50k  | 自研*
+  | 综合问答 |英文|[stackexchange-qa-en-0.5m](https://huggingface.co) | 0.5m  | 开源
+  | wiki问答| 英文| [wiki-qa-bart-en-10k](https://huggingface.co)|10k | 开源
+  | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
+  | **总量**   |  |   | **120W条**     |
+
   > 更多数据集陆续整理开放中...
-  
 
 ### 领域数据
-
 
 - 开放金融、法律、百科相关领域数据，作为rethink外部数据源
 
   | 类型 |  数量 |
-  | ---------- |------------|
+    | ---------- |------------|
   |[金融-研报](https://huggingface.co)   | 5000篇
-  |[金融-财报](https://huggingface.co)  |  5000篇 
+  |[金融-财报](https://huggingface.co)  |  5000篇
   |[法律](https://huggingface.co)     | 1部(刑法）
   |[百科](https://huggingface.co)   |  10W词条
-
 
 ## 测评
 
@@ -283,7 +283,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["北京"]
+    "result": [
+      "北京"
+    ]
   }
 }
 ```
@@ -322,7 +324,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"]
+    "result": [
+      "刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"
+    ]
   }
 }
 ```
