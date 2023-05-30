@@ -167,12 +167,12 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 预训练数据
 
 - 中英自然语言文本（以下数据集开放到 huggingface）
-  - [中文书籍](https://huggingface.co)
-  - [中文互联网](https://huggingface.co)
-  - [中文百科](https://huggingface.co)
-  - [英文书籍](https://huggingface.co)
-  - [英文互联网](https://huggingface.co)
-  - [英文百科](https://huggingface.co)
+  * [中文书籍](https://huggingface.co)
+  * [中文互联网](https://huggingface.co)
+  * [中文百科](https://huggingface.co)
+  * [英文书籍](https://huggingface.co)
+  * [英文互联网](https://huggingface.co)
+  * [英文百科](https://huggingface.co)
   
 -  完整预训练数据占比如图所示:
 
@@ -187,17 +187,17 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 微调数据
 
 - 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
-  - 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
-  - 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
-  - 其他数据集陆续整理开放中..
+  * 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
+  * 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
+  * 其他数据集陆续整理开放中..
 
 ### 领域数据
 
 - 开放金融、法律、百科相关领域数据，作为rethink外部数据源
-  - [金融研报](https://huggingface.co)
-  - [金融-财报](https://huggingface.co)
-  - [法律](https://huggingface.co)
-  - [百科](https://huggingface.co)
+  * [金融研报](https://huggingface.co)
+  * [金融-财报](https://huggingface.co)
+  * [法律](https://huggingface.co)
+  * [百科](https://huggingface.co)
 
 ## 测评
 
