@@ -215,7 +215,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
   | 阅读理解     | 中文 | [superclue-c3-zh-5k](https://huggingface.co)             | 5k          | 自研\* |
   | 问答         | 中文 | [HC3-zh-12k](https://huggingface.co)                     | 12k         | 开源   |
   | 知乎问答     | 中文 | [zhihu-zh-10k](https://huggingface.co)                   | 10k         | 开源   |
-  | alpaca 英文  | 英文 | [tiger-alpaca-en-50k](https://huggingface.co)            | 50k         | 自研   |
+  | alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)    | 50k         | 自研   |
   | 头脑风暴     | 英文 | [dolly-Brainstorming-en-1.7k](https://huggingface.co)    | 1.7k        | 开源   |
   | 分类         | 英文 | [dolly-Classification-en-2k](https://huggingface.co)     | 2k          | 开源   |
   | 数学问题     | 英文 | [gsm-8k-en](https://huggingface.co)                      | 8k          | 开源   |
