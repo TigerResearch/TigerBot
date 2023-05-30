@@ -14,6 +14,7 @@
 - [开源数据集](#开源数据集)
 - [测评](#测评)
 - [API](#API)
+- [案例](#案例)
 
 ## 环境安装
 
@@ -277,9 +278,13 @@ print(response.text)
 
 </details>
 
-#### 插件（Plug-ins）
+### 插件（Plug-ins）
 
-<details><summary><b>Rethink</b><p>TigerBot 提供的一种辅助性外脑搜索方式</p></summary>
+#### Rethink
+
+TigerBot 提供的一种辅助性外脑搜索方式
+
+<details><summary><b>Example request</b></summary>
 
 ```python
 import requests
@@ -523,7 +528,7 @@ print(response.text)
 
 </details>
 
-#### 微调（Fine-Tunes）
+### 微调（Fine-Tunes）【[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)】
 
 <details><summary><b>fine-tune 创建</b></summary>
 
@@ -633,6 +638,35 @@ print(response.text)
 
 </details>
 
+<details><summary><b>fine-tune 下线</b></summary>
+
+```python
+import requests
+
+url = "https://api.tigerbot.com/bot-service/ft/offline"
+
+headers = {
+    'Authorization': 'Bearer ' + API_KEY,
+}
+
+payload = {
+    'ftId': 'Your ftId'
+}
+response = requests.post(url, headers=headers, json=payload)
+
+print(response.text)
+```
+
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+</details>
+
 <details><summary><b>fine-tune 列表</b></summary>
 
 ```python
@@ -696,67 +730,7 @@ print(response.text)
 
 </details>
 
-<details><summary><b>fine-tune 上线</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/online"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'ftId': 'Your ftId'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": null
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 下线</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/offline"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY,
-}
-
-payload = {
-    'ftId': 'Your ftId'
-}
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": null
-}
-```
-
-</details>
-
-### Cases
+## 案例
 
 <details><summary><b>编码</b></summary>
 
@@ -767,5 +741,17 @@ print(response.text)
 <details><summary><b>论文大纲</b></summary>
 
 ![image](image/api/case-4.png)
+
+</details>
+
+<details><summary><b>常识问答</b></summary>
+
+![image](image/api/case-5.png)
+
+</details>
+
+<details><summary><b>领域问答</b></summary>
+
+![image](image/api/case-6.png)
 
 </details>
