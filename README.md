@@ -509,9 +509,7 @@ print(response.text)
 
 </details>
 
-#### 微调（Fine-Tunes）
-
-[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)
+#### 微调（Fine-Tunes）【[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)】
 
 <details><summary><b>fine-tune 创建</b></summary>
 
