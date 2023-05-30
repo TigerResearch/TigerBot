@@ -42,8 +42,8 @@ pip install -r requirements.txt
 <summary>Tigerbot-176B)</summary>
 
 | Tigerbot-176B                                    | Bits | memory(GB) |
-| ------------------------------------------------ | ---- | ---------- |
-| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |            |
+| ------------------------------------------------ | ---- |------------|
+| [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 347.6      |
 | [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |            |
 
 ## 训练和推理
@@ -236,7 +236,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ## 测评
 
-在 7 项传统 NLP 任务上进行，并以 TigerBot-7B-V1 为基准，归一化并平均各模型的得分，结果如下：
+在7项传统NLP任务上进行模型测评，以OpenAI-InstructGPT-6B-SFT为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation.png)
 
