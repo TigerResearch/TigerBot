@@ -183,7 +183,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 - 中文书籍及代码细分:
 
-<p align="center" width="100%">
+<p width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
 
@@ -194,9 +194,9 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
   | 类型 | 数据集          |   数量 | 
   | ---------- |------------| --- |
-  | 头脑风暴 |  [dolly-Brainstorming-en-1.7k ()](https://huggingface.co) | 1.7k
+  | 头脑风暴 |  [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co) | 1.7k
   | 分类 |   [dolly-Classification-en-2k (分类)](https://huggingface.co) | 2k
-  |数学问题 | [gsm-8k-en (数学问题)](https://huggingface.co) | 8k
+  | 数学问题 | [gsm-8k-en (数学问题)](https://huggingface.co) | 8k
   | 代码 |   [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co) | 2k
   | 食谱生成 | [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co) | 2k
   | 病历生成 |  [mt-note-generation-en (病历生成)](https://huggingface.co) | 450
@@ -218,10 +218,13 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 
 - 开放金融、法律、百科相关领域数据，作为rethink外部数据源
-    - [金融-研报](https://huggingface.co)
-    - [金融-财报](https://huggingface.co)
-    - [法律](https://huggingface.co)
-    - [百科](https://huggingface.co)
+
+  | 类型 |  数量 |
+  | ---------- |------------|
+  |[金融-研报](https://huggingface.co)   | 5000篇
+  |[金融-财报](https://huggingface.co)  |  5000篇 
+  |[法律](https://huggingface.co)     | 1部(刑法）
+  |[百科](https://huggingface.co)   |  10W词条
 
 
 ## 测评
