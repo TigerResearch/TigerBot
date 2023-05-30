@@ -176,6 +176,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
   | [英文书籍](https://huggingface.co)     | 22G      |  开源
   | [英文互联网](https://huggingface.co)   | 6.9G     |   开源
   | [英文百科](https://huggingface.co)     | 22G      |  开源
+  | **总量**   | **105G**     |  
 
 
 - 完整预训练数据占比如图所示:
@@ -211,8 +212,9 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
     | 病历生成 | 英文| [mt-note-generation-en](https://huggingface.co) | 450  | 开源
     | 多轮对话 |英文| [OIG-multichat-en-50k](https://huggingface.co) | 50k  | 自研*
     | 综合问答 |英文|[stackexchange-qa-en-0.5m](https://huggingface.co) | 0.5m  | 开源
-    | wiki问答| 英文| [wiki-qa-bart-alpaca-en-10k](https://huggingface.co)|10k | 开源
+    | wiki问答| 英文| [wiki-qa-bart-en-10k](https://huggingface.co)|10k | 开源
     | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
+    | **总量**   |  |   | **120W条**     | 
     
   > 其中[自研*]类的表搜集公开数据进行人工加工、清洗、转换后形成新的数据集
 
