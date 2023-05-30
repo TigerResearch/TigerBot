@@ -74,10 +74,10 @@ Tigerbot-7B-base 在 Bloom-7B 初始化基础上进行预训练，训练数据�
 
 - 中英自然语言文本
   - [中文书籍](https://huggingface.co)
-  - [中文新闻](https://huggingface.co)
+  - [中文互联网](https://huggingface.co)
   - [中文百科](https://huggingface.co)
   - [英文书籍](https://huggingface.co)
-  - [英文 web 文本](https://huggingface.co)
+  - [英文互联网](https://huggingface.co)
   - [英文百科](https://huggingface.co)
 - 完整预训练数据占比如图所示:
 
