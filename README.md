@@ -165,7 +165,7 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsi
 #### 量化模型多卡推理
 
 ```
-CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
 ```
 
 ## 开源数据集
@@ -295,8 +295,6 @@ print(response.text)
 </details>
 
 ### 插件（Plug-ins）
-
-![image](image/api/rethink/case-3.gif)
 
 #### Rethink
 
@@ -750,22 +748,28 @@ print(response.text)
 
 </details>
 
-## Chat 案例
+## 案例
 
-![image](image/api/case-4.png)
-
----
-
-![image](image/api/case-1.png)
-
----
-
-![image](image/api/case-2.png)
-
----
+<details><summary><b>编码</b></summary>
 
 ![image](image/api/case-3.png)
 
----
+</details>
+
+<details><summary><b>论文大纲</b></summary>
+
+![image](image/api/case-4.png)
+
+</details>
+
+<details><summary><b>常识问答</b></summary>
 
 ![image](image/api/case-5.png)
+
+</details>
+
+<details><summary><b>领域问答</b></summary>
+
+![image](image/api/case-6.png)
+
+</details>
