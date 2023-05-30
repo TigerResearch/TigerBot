@@ -14,7 +14,7 @@
 - [开源数据集](#开源数据集)
 - [测评](#测评)
 - [API](#API)
-- [Cases](#Cases)
+- [案例](#案例)
 
 ## 环境安装
 
@@ -742,7 +742,7 @@ print(response.text)
 
 </details>
 
-## Cases
+## 案例
 
 <details><summary><b>编码</b></summary>
 
