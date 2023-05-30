@@ -193,7 +193,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 领域数据
 
-> 开发金融、法律、百科相关领域数据，作为rethink外部数据源
+> 开放金融、法律、百科相关领域数据，作为rethink外部数据源
   - [金融研报](https://huggingface.co)
   - [金融-财报](https://huggingface.co)
   - [法律](https://huggingface.co)
