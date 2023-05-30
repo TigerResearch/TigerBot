@@ -130,13 +130,13 @@ deepspeed \
 #### 单卡推理
 
 ```
-CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0 python infer --model_path ${MODEL_DIR}
 ```
 
 #### 多卡推理
 
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python infer ${MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0,1,2,3 python infer --model_path ${MODEL_DIR}
 ```
 
 ### 量化
