@@ -167,9 +167,8 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ### 预训练数据
 
-- 中英自然语言文本，当前开源总量 105G（以下数据集开放到 huggingface）
-  - 中文书籍、中文互联网、中文百科：[[hugging face](https://huggingface.co/datasets/TigerResearch/pretrain_zh)]
-  - 英文书籍、英文互联网、英文百科：[[hugging face](https://huggingface.co/datasets/TigerResearch/pretrain_en)]
+- 中文开源预训练集 - 55G，包含中文书籍、中文互联网、中文百科 [[hugging face](https://huggingface.co/datasets/TigerResearch/pretrain_zh)]
+- 英文开源预训练集 - 51G，包含英文书籍、英文互联网、英文百科 [[hugging face](https://huggingface.co/datasets/TigerResearch/pretrain_en)]
 
   | 类型                                | 磁盘占用 | 来源 |
   | ----------------------------------- | -------- |----|
