@@ -208,25 +208,25 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
   | 类型         | 语言 | 数据集                                                   | 数量        | 来源   |
   | ------------ | ---- | -------------------------------------------------------- | ----------- | ------ |
-  | alpaca 中文  | 中文 | [tiger-alpaca-zh-0.5m](https://huggingface.co)           | 0.5m        | 自研   |
-  | 百科问答     | 中文 | [tiger-wiki-qa-1k](https://huggingface.co)               | 1k          | 自研   |
-  | 名著问答     | 中文 | [tiger-book-qa-1k](https://huggingface.co)               | 1k          | 自研   |
-  | 猜谜语       | 中文 | [tiger-riddle-qa-1k](https://huggingface.co)             | 1k          | 自研   |
-  | 阅读理解     | 中文 | [superclue-c3-zh-5k](https://huggingface.co)             | 5k          | 自研\* |
-  | 问答         | 中文 | [HC3-zh-12k](https://huggingface.co)                     | 12k         | 开源   |
-  | 知乎问答     | 中文 | [zhihu-zh-10k](https://huggingface.co)                   | 10k         | 开源   |
+  | alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)           | 0.5m        | 自研   |
+  | 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-1k)               | 1k          | 自研   |
+  | 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)               | 1k          | 自研   |
+  | 猜谜语       | 中文 | [tigerbot-riddle-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-riddle-qa-1k)             | 1k          | 自研   |
+  | 阅读理解     | 中文 | [tigerbot-superclue-c3-zh-5k](https://huggingface.co/datasets/TigerResearch/tigerbot-superclue-c3-zh-5k)             | 5k          | 自研\* |
+  | 问答         | 中文 | [tigerbot-HC3-zh-12k](https://huggingface.co/datasets/TigerResearch/tigerbot-HC3-zh-12k)                     | 12k         | 开源   |
+  | 知乎问答     | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/[tigerbot-zhihu-zh-10k)                   | 10k         | 开源   |
   | alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)    | 50k         | 自研   |
-  | 头脑风暴     | 英文 | [dolly-Brainstorming-en-1.7k](https://huggingface.co)    | 1.7k        | 开源   |
-  | 分类         | 英文 | [dolly-Classification-en-2k](https://huggingface.co)     | 2k          | 开源   |
-  | 数学问题     | 英文 | [gsm-8k-en](https://huggingface.co)                      | 8k          | 开源   |
-  | 代码         | 英文 | [kaggle-leetcodesolutions-en-2k](https://huggingface.co) | 2k          | 自研\* |
-  | 食谱生成     | 英文 | [kaggle-recipes-en-2k](https://huggingface.co)           | 2k          | 开源   |
-  | 病历生成     | 英文 | [mt-note-generation-en](https://huggingface.co)          | 450         | 开源   |
-  | 多轮对话     | 英文 | [OIG-multichat-en-50k](https://huggingface.co)           | 50k         | 自研\* |
-  | 综合问答     | 英文 | [stackexchange-qa-en-0.5m](https://huggingface.co)       | 0.5m        | 开源   |
-  | wiki 问答    | 英文 | [wiki-qa-bart-en-10k](https://huggingface.co)            | 10k         | 开源   |
-  | 如何做类教程 | 英文 | [youtube-howto-en-50k](https://huggingface.co)           | 50k         | 开源   |
-  | **总量**     |      |                                                          | **120W 条** |
+  | 头脑风暴     | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)    | 1.7k        | 开源   |
+  | 分类         | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)     | 2k          | 开源   |
+  | 数学问题     | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                      | 8k          | 开源   |
+  | 代码         | 英文 | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2k          | 自研\* |
+  | 食谱生成     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)           | 2k          | 开源   |
+  | 病历生成     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)          | 450         | 开源   |
+  | 多轮对话     | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)           | 50k         | 自研\* |
+  | 综合问答     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)       | 0.5m        | 开源   |
+  | wiki 问答    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)            | 10k         | 开源   |
+  | 如何做类教程 | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)           | 50k         | 开源   |
+  | **总量**     |      |                                                         | **120W 条** |
 
   > 更多数据集陆续整理开放中...
 
@@ -236,10 +236,10 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
   | 类型                                | 数量        |
   | ----------------------------------- | ----------- |
-  | [金融-研报](https://huggingface.co) | 5000 篇     |
-  | [金融-财报](https://huggingface.co) | 5000 篇     |
-  | [法律](https://huggingface.co)      | 1 部(刑法） |
-  | [百科](https://huggingface.co)      | 10W 词条    |
+  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin) | 5000 篇     |
+  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 1000 篇     |
+  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)      | 1 部(刑法） |
+  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)      | 10W 词条    |
 
 ## 测评
 
