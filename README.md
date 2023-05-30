@@ -12,6 +12,7 @@
 - [模型下载](#模型下载)
 - [训练和推理](#训练和推理)
 - [模型量化](#模型量化)
+- [开源数据集](#开源数据集)
 - [测评](#测评)
 - [API](#API)
 
@@ -70,26 +71,6 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 
 如果返回的结果是(8, 0)，那么 TORCH_CUDA_ARCH_LIST="8.0"
 
-#### 训练数据
-
-Tigerbot-7B-base 在 Bloom-7B 初始化基础上进行预训练，训练数据包括：
-
-- 中英自然语言文本
-  - [中文书籍](https://huggingface.co)
-  - [中文互联网](https://huggingface.co)
-  - [中文百科](https://huggingface.co)
-  - [英文书籍](https://huggingface.co)
-  - [英文互联网](https://huggingface.co)
-  - [英文百科](https://huggingface.co)
-- 完整预训练数据占比如图所示:
-
-![image](image/pretrain.png)
-
-- 中文书籍及代码细分:
-<p align="center" width="100%">
-    <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
-</p>
-
 #### 启动训练
 
 ```
@@ -118,13 +99,6 @@ deepspeed \
 ```
 
 ### 微调
-
-#### 训练数据
-
-- 基于alpaca格式指令数据集 (数据集开放到huggingface）
-  + 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
-  + 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
-  + 其他数据集陆续整理开放中..
  
 #### 启动训练
 
@@ -189,6 +163,35 @@ CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --loa
 ```
 CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
 ```
+
+## 开源数据集
+### 预训练数据
+Tigerbot-7B-base 预训练数据如下：
+
+- 中英自然语言文本（以下数据集开放到huggingface）
+  - [中文书籍](https://huggingface.co)
+  - [中文互联网](https://huggingface.co)
+  - [中文百科](https://huggingface.co)
+  - [英文书籍](https://huggingface.co)
+  - [英文互联网](https://huggingface.co)
+  - [英文百科](https://huggingface.co)
+   
+- 完整预训练数据占比如图所示:
+
+![image](image/pretrain.png)
+
+- 中文书籍及代码细分:
+<p align="center" width="100%">
+    <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
+</p>
+
+
+### 微调数据
+
+- 基于alpaca格式指令数据集 (数据集开放到huggingface）
+  + 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
+  + 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
+  + 其他数据集陆续整理开放中..
 
 ## 测评
 
