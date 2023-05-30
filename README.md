@@ -227,8 +227,6 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
     | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
     | **总量**   |  |   | **120W条**     | 
     
-  > 其中[自研*]类的表搜集公开数据进行人工加工、清洗、转换后形成新的数据集
-
   > 更多数据集陆续整理开放中...
   
 
