@@ -183,9 +183,6 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
 
-### 微调数据
-
-- 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
 
 ### 微调数据
 
