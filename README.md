@@ -225,11 +225,11 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ## API
 
-#### Authentication
+### Authentication
 
 获取唯一标识：API_KEY, 所有的 api 接口都需要用到 【[获取 API_KEY](https://www.tigerbot.com/api-reference)】
 
-#### 对话（Chat-API）
+### 对话（Chat-API）
 
 <details><summary><b>Example request</b></summary>
 
@@ -263,9 +263,13 @@ print(response.text)
 
 </details>
 
-#### 插件（Plug-ins）
+### 插件（Plug-ins）
 
-<details><summary><b>Rethink</b><p>TigerBot 提供的一种辅助性外脑搜索方式</p></summary>
+#### Rethink
+
+TigerBot 提供的一种辅助性外脑搜索方式
+
+<details><summary><b>Example request</b></summary>
 
 ```python
 import requests
@@ -298,7 +302,7 @@ print(response.text)
 
 </details>
 
-##### Custom Rethink
+#### Custom Rethink
 
 自定义自己的知识库，提供自己专属的外脑搜索 【[Datasets 样例](https://x-pai.algolet.com/search/%E7%A4%BE%E4%BC%9A%E6%B3%95.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2043989370&Signature=KnQn0tz3QAToku%2FlPz0vGLG0Jjo%3D)】
 
@@ -509,7 +513,7 @@ print(response.text)
 
 </details>
 
-#### 微调（Fine-Tunes）【[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)】
+### 微调（Fine-Tunes）【[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)】
 
 <details><summary><b>fine-tune 创建</b></summary>
 
