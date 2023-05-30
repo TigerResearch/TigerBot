@@ -121,7 +121,7 @@ deepspeed \
 
 #### 训练数据
 
-- 基于alpaca生成的指令数据集 (数据集开放到huggingface）
+- 基于alpaca格式指令数据集 (数据集开放到huggingface）
   + 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
   + 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
   + 其他数据集陆续整理开放中..
