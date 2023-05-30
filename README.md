@@ -166,14 +166,17 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 预训练数据
 
-- 中英自然语言文本（以下数据集开放到 huggingface）
+- 中英自然语言文本，当前开源总量105G（以下数据集开放到 huggingface）
 
-  - [中文书籍](https://huggingface.co)
-  - [中文互联网](https://huggingface.co)
-  - [中文百科](https://huggingface.co)
-  - [英文书籍](https://huggingface.co)
-  - [英文互联网](https://huggingface.co)
-  - [英文百科](https://huggingface.co)
+  | 类型                                   |  磁盘占用 |  来源 |
+  | ------------------------------------- |------------| ---|
+  | [中文书籍](https://huggingface.co)     | 12G      |  自研
+  | [中文互联网](https://huggingface.co)   | 25G      |  自研
+  | [中文百科](https://huggingface.co)     | 19G      |  自研
+  | [英文书籍](https://huggingface.co)     | 22G      |  开源
+  | [英文互联网](https://huggingface.co)   | 6.9G     |   开源
+  | [英文百科](https://huggingface.co)     | 22G      |  开源
+
 
 - 完整预训练数据占比如图所示:
 
@@ -181,55 +184,67 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 - 中文书籍及代码细分:
 
-<p align="center" width="100%">
+<p width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
 
-### 微调数据
-
-- 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
 
 ### 微调数据
 
-- alpaca 格式指令数据集 (数据集开放到 huggingface）
-  - [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co)
-  - [dolly-Classification-en-2k (分类)](https://huggingface.co)
-  - [gsm-8k-alpaca-en (数学问题)](https://huggingface.co)
-  - [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co)
-  - [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co)
-  - [mt-note-generation-en (病历生成)](https://huggingface.co)
-  - [OIG-multichat-alpaca-en-50k (多轮对话)](https://huggingface.co)
-  - [stackexchange-qa-alpaca-en-0.5m (综合问答)](https://huggingface.co)
-  - [tiger-alpaca-en-50k（虎博基本 alpaca 自有生成）](https://huggingface.co)
-  - [wiki-qa-bart-alpaca-en-10k (WIKI 问答)](https://huggingface.co)
-  - [youtube-howto-en-50k (youtube 中 howto 类教程)](https://huggingface.co)
-  - [firefly-alpaca-zh-20k (中文-firefly 数据集 alpaca 版)](https://huggingface.co)
-  - [HC3-alpaca-zh-12k (中文-HC3 数据集 alpaca 版)](https://huggingface.co)
-  - [superclue-c3-alpaca-zh-5k (中文-superclue 阅读理解)](https://huggingface.co)
-  - [tiger-alpaca-zh-0.5m (中文-虎博基本 alpaca 生成中文问题)](https://huggingface.co)
-  - [zhihu-alpaca-zh-10k (中文-知乎问答)](https://huggingface.co)
-  - 其它数据集陆续整理开放中...
+- 指令数据集, 当前开源120W问答对，磁盘空间1.1G (数据集开放到 huggingface）
+
+    | 类型          | 语言 |  数据集 |  数量 | 来源 |
+    | --------------------------------|--- | ------------| ---| --- | 
+    | alpaca中文| 中文| [tiger-alpaca-zh-0.5m](https://huggingface.co) | 0.5m | 自研 
+    | 脑筋急转弯 | 中文| [tiger-think-more-zh-1k](https://huggingface.co) | 1k | 自研
+    | 百科问答 | 中文| [tiger-wiki-qa-1k](https://huggingface.co)  | 1k | 自研
+    | 名著问答 | 中文| [tiger-book-qa-1k](https://huggingface.co)  | 1k | 自研
+    | 阅读理解 | 中文|  [superclue-c3-alpaca-zh-5k](https://huggingface.co) | 5k | 自研*
+    | 问答 |中文|   [HC3-zh-12k](https://huggingface.co) | 12k | 开源
+    | 知乎问答|中文|   [zhihu-zh-10k](https://huggingface.co) | 10k| 开源
+    | alpaca英文| 英文 |[tiger-alpaca-en-50k](https://huggingface.co) | 50k | 自研
+    | 头脑风暴 | 英文| [dolly-Brainstorming-en-1.7k](https://huggingface.co) | 1.7k | 开源
+    | 分类 |英文|  [dolly-Classification-en-2k](https://huggingface.co) | 2k  | 开源
+    | 数学问题 | 英文| [gsm-8k-en](https://huggingface.co) | 8k  | 开源
+    | 代码 | 英文| [kaggle-leetcodesolutions-en-2k](https://huggingface.co) | 2k  | 自研*
+    | 食谱生成 |英文| [kaggle-recipes-en-2k](https://huggingface.co) | 2k  | 开源
+    | 病历生成 | 英文| [mt-note-generation-en](https://huggingface.co) | 450  | 开源
+    | 多轮对话 |英文| [OIG-multichat-en-50k](https://huggingface.co) | 50k  | 自研*
+    | 综合问答 |英文|[stackexchange-qa-en-0.5m](https://huggingface.co) | 0.5m  | 开源
+    | wiki问答| 英文| [wiki-qa-bart-alpaca-en-10k](https://huggingface.co)|10k | 开源
+    | 如何做类教程| 英文| [youtube-howto-en-50k](https://huggingface.co) | 50k | 开源
+    
+  > 其中[自研*]类的表搜集公开数据进行人工加工、清洗、转换后形成新的数据集
+
+  > 更多数据集陆续整理开放中...
+  
 
 ### 领域数据
 
-- 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
-  - [金融研报](https://huggingface.co)
-  - [金融-财报](https://huggingface.co)
-  - [法律](https://huggingface.co)
-  - [百科](https://huggingface.co)
+
+- 开放金融、法律、百科相关领域数据，作为rethink外部数据源
+
+  | 类型 |  数量 |
+  | ---------- |------------|
+  |[金融-研报](https://huggingface.co)   | 5000篇
+  |[金融-财报](https://huggingface.co)  |  5000篇 
+  |[法律](https://huggingface.co)     | 1部(刑法）
+  |[百科](https://huggingface.co)   |  10W词条
+
 
 ## 测评
 
-在 7 项传统 NLP 任务上进行，并以 TigerBot-7B-V1 为基准，归一化并平均各模型的得分，结果如下：
+在7项传统NLP任务上进行模型测评，以OpenAI-InstructGPT-6B-SFT为基准，归一化并平均各模型的得分，结果如下：
+
 ![image](image/auto-valuation.png)
 
 ## API
 
-### Authentication
+#### Authentication
 
-获取唯一标识：API_KEY, 所有的 api 接口都需要用到 【[获取 API_KEY](https://www.tigerbot.com/api-reference)】
+获取唯一标识：API_KEY, 所有的 api 接口都需要用到
 
-### 对话（Chat-API）
+#### 对话（Chat-API）
 
 <details><summary><b>Example request</b></summary>
 
@@ -302,9 +317,9 @@ print(response.text)
 
 </details>
 
-#### Custom Rethink
+##### Custom Rethink
 
-自定义自己的知识库，提供自己专属的外脑搜索 【[Datasets 样例](https://x-pai.algolet.com/search/%E7%A4%BE%E4%BC%9A%E6%B3%95.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2043989370&Signature=KnQn0tz3QAToku%2FlPz0vGLG0Jjo%3D)】
+自定义自己的知识库，提供自己专属的外脑搜索
 
 <details><summary><b>Rethink 创建</b></summary>
 
@@ -564,37 +579,6 @@ print(response.text)
 import requests
 
 url = "https://api.tigerbot.com/bot-service/ft/start_train"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'ftId': 'Your ftId'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": null
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 上线</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/online"
 
 headers = {
     'Authorization': 'Bearer ' + API_KEY
