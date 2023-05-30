@@ -9,7 +9,7 @@ tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
 
 
-def get_bloom(model):
+def get_model(model):
     def skip(*args, **kwargs):
         pass
 
@@ -27,7 +27,7 @@ def main(
 ):
     print(f"loading model: {model_path}...")
 
-    model = get_bloom(model_path)
+    model = get_model(model_path)
     max_memory = get_balanced_memory(model)
     device_map = infer_auto_device_map(model, max_memory=max_memory,
                                        no_split_module_classes=["BloomBlock"])
