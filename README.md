@@ -1,7 +1,7 @@
 # TigerBot
 
 <p align="center" width="100%">
-<img src="http://x-pai.algolet.com/bot/img/logo_core.png" alt="Tiger" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
+<img src="http://x-pai.algolet.com/bot/img/logo_core.png" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
 </p>
 
 ## 最近更新
