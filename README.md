@@ -48,8 +48,6 @@ pip install -r requirements.txt
 
 ## 训练和推理
 
-
-
 ### 预训练
 
 启动训练前安装 DeepSpeed
@@ -99,7 +97,7 @@ deepspeed \
 ```
 
 ### 微调
- 
+
 #### 启动训练
 
 ```
@@ -165,17 +163,18 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ```
 
 ## 开源数据集
+
 ### 预训练数据
+
 Tigerbot-7B-base 预训练数据如下：
 
-- 中英自然语言文本（以下数据集开放到huggingface）
+- 中英自然语言文本（以下数据集开放到 huggingface）
   - [中文书籍](https://huggingface.co)
   - [中文互联网](https://huggingface.co)
   - [中文百科](https://huggingface.co)
   - [英文书籍](https://huggingface.co)
   - [英文互联网](https://huggingface.co)
   - [英文百科](https://huggingface.co)
-   
 - 完整预训练数据占比如图所示:
 
 ![image](image/pretrain.png)
@@ -185,13 +184,12 @@ Tigerbot-7B-base 预训练数据如下：
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
 
-
 ### 微调数据
 
-- 基于alpaca格式指令数据集 (数据集开放到huggingface）
-  + 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
-  + 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
-  + 其他数据集陆续整理开放中..
+- 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
+  - 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
+  - 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
+  - 其他数据集陆续整理开放中..
 
 ## 测评
 
@@ -351,6 +349,41 @@ print(response.text)
 }
 ```
 
+###### Rethink 使用
+
+```python
+import requests
+
+url = "https://api.tigerbot.com/bot-service/plugin/custom/rethink"
+
+headers = {
+  'Authorization': 'Bearer ' + API_KEY
+}
+
+payload = {
+  'pluginId': 'Your pluginId',
+  'text': '被家暴了怎么办',
+  'stopOnEmptyData': False
+}
+
+response = requests.post(url, headers=headers, json=payload)
+
+print(response.text)
+
+```
+
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "result": [
+      "首先，要及时向警方报案，提供详细的信息和证据，协助警方调查取证。同时，要及时就医，并按照医生的建议进行治疗。如果情况严重，可以考虑向法院起诉，寻求法律保护。此外，可以向专业机构寻求帮助，如心理咨询师、社工等，以获得更多的支持和指导。"
+    ]
+  }
+}
+```
+
 ###### Datasets 列表
 
 ```python
@@ -446,41 +479,6 @@ print(response.text)
 }
 ```
 
-###### Rethink 使用
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/rethink"
-
-headers = {
-  'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-  'pluginId': 'Your pluginId',
-  'text': '被家暴了怎么办',
-  'stopOnEmptyData': False
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "首先，要及时向警方报案，提供详细的信息和证据，协助警方调查取证。同时，要及时就医，并按照医生的建议进行治疗。如果情况严重，可以考虑向法院起诉，寻求法律保护。此外，可以向专业机构寻求帮助，如心理咨询师、社工等，以获得更多的支持和指导。"
-    ]
-  }
-}
-```
-
 #### 微调（Fine-Tunes）
 
 ##### fine-tune 创建
@@ -550,6 +548,38 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": null
+}
+```
+
+##### fine-tune 使用
+
+```python
+import requests
+
+url = "https://api.tigerbot.com/bot-service/ft/call"
+
+headers = {
+  'Authorization': 'Bearer ' + API_KEY
+}
+payload = {
+  'ftId': 'Your ftId',
+  'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
+}
+
+response = requests.post(url, headers=headers, json=payload)
+
+print(response.text)
+```
+
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "result": [
+      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
+    ]
+  }
 }
 ```
 
@@ -640,38 +670,6 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": null
-}
-```
-
-##### fine-tune 使用
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/call"
-
-headers = {
-  'Authorization': 'Bearer ' + API_KEY
-}
-payload = {
-  'ftId': 'Your ftId',
-  'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
-    ]
-  }
 }
 ```
 
