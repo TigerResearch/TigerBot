@@ -224,13 +224,13 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ## API
 
-#### 对话（Chat-API）
-
-##### Authentication
+#### Authentication
 
 获取唯一标识：API_KEY, 所有的 api 接口都需要用到
 
-##### Example request
+#### 对话（Chat-API）
+
+<details><summary><b>Example request</b></summary>
 
 ```python
 import requests
@@ -262,13 +262,11 @@ print(response.text)
 }
 ```
 
+</details>
+
 #### 插件（Plug-ins）
 
-##### Rethink
-
-TigerBot 提供的一种辅助性外脑搜索方式
-
-###### Example request
+<details><summary><b>Rethink</b><p>TigerBot 提供的一种辅助性外脑搜索方式</p></summary>
 
 ```python
 import requests
@@ -301,11 +299,13 @@ print(response.text)
 }
 ```
 
+</details>
+
 ##### Custom Rethink
 
 自定义自己的知识库，提供自己专属的外脑搜索
 
-###### Rethink 创建
+<details><summary><b>Rethink 创建</b></summary>
 
 ```python
 import requests
@@ -337,7 +337,9 @@ print(response.text)
 }
 ```
 
-###### Datasets 导入
+</details>
+
+<details><summary><b>Datasets 导入</b></summary>
 
 ```python
 import requests
@@ -372,7 +374,9 @@ print(response.text)
 }
 ```
 
-###### Rethink 使用
+</details>
+
+<details><summary><b> Rethink 使用</b></summary>
 
 ```python
 import requests
@@ -407,7 +411,9 @@ print(response.text)
 }
 ```
 
-###### Datasets 列表
+</details>
+
+<details><summary><b>Datasets 列表</b></summary>
 
 ```python
 import requests
@@ -453,7 +459,9 @@ print(response.text)
 }
 ```
 
-###### Rethinks 列表
+</details>
+
+<details><summary><b>Rethinks 列表</b></summary>
 
 ```python
 import requests
@@ -502,9 +510,11 @@ print(response.text)
 }
 ```
 
+</details>
+
 #### 微调（Fine-Tunes）
 
-##### fine-tune 创建
+<details><summary><b>fine-tune 创建</b></summary>
 
 ```python
 import requests
@@ -545,7 +555,9 @@ print(response.text)
 }
 ```
 
-##### fine-tune 训练
+</details>
+
+<details><summary><b>fine-tune 训练</b></summary>
 
 ```python
 import requests
@@ -574,7 +586,9 @@ print(response.text)
 }
 ```
 
-##### fine-tune 使用
+</details>
+
+<details><summary><b>fine-tune 使用</b></summary>
 
 ```python
 import requests
@@ -606,7 +620,9 @@ print(response.text)
 }
 ```
 
-##### fine-tune 列表
+</details>
+
+<details><summary><b>fine-tune 列表</b></summary>
 
 ```python
 import requests
@@ -667,7 +683,9 @@ print(response.text)
 }
 ```
 
-##### fine-tune 上线
+</details>
+
+<details><summary><b>fine-tune 上线</b></summary>
 
 ```python
 import requests
@@ -696,7 +714,9 @@ print(response.text)
 }
 ```
 
-##### fine-tune 下线
+</details>
+
+<details><summary><b>fine-tune 下线</b></summary>
 
 ```python
 import requests
@@ -722,3 +742,13 @@ print(response.text)
   "data": null
 }
 ```
+
+</details>
+
+### Cases
+
+<details><summary><b>编码</b></summary>
+
+![image](image/api/case-3.png)
+
+</details>
