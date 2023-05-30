@@ -32,18 +32,18 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                    | Bits | memory(MiB) |
-| ---------------------------------------------- | ---- | ----------- |
-| [Tigerbot-7B-base](https://huggingface.co)     | 16   | -           |
-| [Tigerbot-7B-sft](https://huggingface.co)      | 16   | -           |
-| [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | -           |
+| Tigerbot-7B                                    | Bits | memory(GB) |
+| ---------------------------------------------- | ---- |------------|
+| [Tigerbot-7B-base](https://huggingface.co)     | 16   | 17.2       |
+| [Tigerbot-7B-sft](https://huggingface.co)      | 16   | 17.2       |
+| [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | 8.5        |
 
 <summary>Tigerbot-176B)</summary>
 
-| Tigerbot-176B                                    | Bits | memory(MiB) |
-| ------------------------------------------------ | ---- | ----------- |
-| [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 13940       |
-| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | -           |
+| Tigerbot-176B                                    | Bits | memory(GB) |
+| ------------------------------------------------ | ---- |----|
+| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |    |
+| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |    |
 
 ## 训练和推理
 
