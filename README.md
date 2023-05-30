@@ -11,7 +11,6 @@
 - [环境安装](#环境安装)
 - [模型下载](#模型下载)
 - [训练和推理](#训练和推理)
-- [模型量化](#模型量化)
 - [开源数据集](#开源数据集)
 - [测评](#测评)
 - [API](#API)
@@ -42,9 +41,9 @@ pip install -r requirements.txt
 <summary>Tigerbot-176B)</summary>
 
 | Tigerbot-176B                                    | Bits | memory(GB) |
-| ------------------------------------------------ | ---- |----|
-| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |    |
-| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |    |
+| ------------------------------------------------ | ---- |--------| 
+| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |        |
+| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |        | 
 
 ## 训练和推理
 
@@ -139,10 +138,9 @@ CUDA_VISIBLE_DEVICES=0 python infer ${MODEL_DIR}
 CUDA_VISIBLE_DEVICES=0,1,2,3 python infer ${MODEL_DIR}
 ```
 
-## 量化
+### 量化
 
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
-
 ```
 cd gptq
 
@@ -167,14 +165,15 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 预训练数据
 
 > 中英自然语言文本（以下数据集开放到 huggingface）
-  - [中文书籍](https://huggingface.co)
-  - [中文互联网](https://huggingface.co)
-  - [中文百科](https://huggingface.co)
-  - [英文书籍](https://huggingface.co)
-  - [英文互联网](https://huggingface.co)
-  - [英文百科](https://huggingface.co)
-  
->  完整预训练数据占比如图所示:
+
+- [中文书籍](https://huggingface.co)
+- [中文互联网](https://huggingface.co)
+- [中文百科](https://huggingface.co)
+- [英文书籍](https://huggingface.co)
+- [英文互联网](https://huggingface.co)
+- [英文百科](https://huggingface.co)
+
+> 完整预训练数据占比如图所示:
 
 ![image](image/pretrain.png)
 
@@ -187,17 +186,19 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 微调数据
 
 > 基于 alpaca 格式指令数据集 (数据集开放到 huggingface）
-  - 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
-  - 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
-  - 其他数据集陆续整理开放中..
+
+- 英文[tiger-alpaca-en-50k](https://huggingface.co)[开源]
+- 中文[tiger-alpaca-zh-0.5m](https://huggingface.co)[开源]
+- 其他数据集陆续整理开放中..
 
 ### 领域数据
 
 > 开发金融、法律、百科相关领域数据，作为rethink外部数据源
-  - [金融研报](https://huggingface.co)
-  - [金融-财报](https://huggingface.co)
-  - [法律](https://huggingface.co)
-  - [百科](https://huggingface.co)
+
+- [金融研报](https://huggingface.co)
+- [金融-财报](https://huggingface.co)
+- [法律](https://huggingface.co)
+- [百科](https://huggingface.co)
 
 ## 测评
 
@@ -227,12 +228,12 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ai_service/gpt"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  "text": "中国的首都",
-  "modelVersion": "tigerbot-gauss"
+    "text": "中国的首都",
+    "modelVersion": "tigerbot-gauss"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -244,7 +245,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["北京"]
+    "result": [
+      "北京"
+    ]
   }
 }
 ```
@@ -263,12 +266,12 @@ import requests
 uri = "https://api.tigerbot.com/bot-service/ai_service/rethink"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  "text": "刘德华与梁朝伟合演的电影",
-  "pluginName": "wiki"
+    "text": "刘德华与梁朝伟合演的电影",
+    "pluginName": "wiki"
 }
 
 response = requests.post(uri, headers=headers, json=payload)
@@ -281,7 +284,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"]
+    "result": [
+      "刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"
+    ]
   }
 }
 ```
@@ -298,10 +303,10 @@ import requests
 url = "https://api.tigerbot.com/bot-service/plugin/custom/create_plugin"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 payload = {
-  'name': 'Your pluginName'
+    'name': 'Your pluginName'
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -330,11 +335,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/plugin/custom/add_dataset"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'pluginId': "Your pluginId"
+    'pluginId': "Your pluginId"
 }
 
 your_json_file_path = '/Users/rethink/data.json'
@@ -365,13 +370,13 @@ import requests
 url = "https://api.tigerbot.com/bot-service/plugin/custom/rethink"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'pluginId': 'Your pluginId',
-  'text': '被家暴了怎么办',
-  'stopOnEmptyData': False
+    'pluginId': 'Your pluginId',
+    'text': '被家暴了怎么办',
+    'stopOnEmptyData': False
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -400,11 +405,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/plugin/custom/get_dataset_list"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'pluginId': 'Your pluginId'
+    'pluginId': 'Your pluginId'
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -446,12 +451,12 @@ import requests
 url = "https://api.tigerbot.com/bot-service/plugin/custom/get_user_plugin_list"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'pageNum': 1,
-  'pageSize': 2
+    'pageNum': 1,
+    'pageSize': 2
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -497,7 +502,7 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/upload_train_data"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 your_json_file_path = '/Users/fine_tuning/data.json'
@@ -538,11 +543,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/start_train"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'ftId': 'Your ftId'
+    'ftId': 'Your ftId'
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -567,11 +572,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/call"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 payload = {
-  'ftId': 'Your ftId',
-  'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
+    'ftId': 'Your ftId',
+    'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -599,12 +604,12 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/get_fine_tune_list"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'pageNum': 1,
-  'pageSize': 5
+    'pageNum': 1,
+    'pageSize': 5
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -660,11 +665,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/online"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY
+    'Authorization': 'Bearer ' + API_KEY
 }
 
 payload = {
-  'ftId': 'Your ftId'
+    'ftId': 'Your ftId'
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -689,11 +694,11 @@ import requests
 url = "https://api.tigerbot.com/bot-service/ft/offline"
 
 headers = {
-  'Authorization': 'Bearer ' + API_KEY,
+    'Authorization': 'Bearer ' + API_KEY,
 }
 
 payload = {
-  'ftId': 'Your ftId'
+    'ftId': 'Your ftId'
 }
 response = requests.post(url, headers=headers, json=payload)
 
