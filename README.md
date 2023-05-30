@@ -166,12 +166,15 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 预训练数据
 
 - 中英自然语言文本（以下数据集开放到 huggingface）
-    * [中文书籍](https://huggingface.co)
-    * [中文互联网](https://huggingface.co)
-    * [中文百科](https://huggingface.co)
-    * [英文书籍](https://huggingface.co)
-    * [英文互联网](https://huggingface.co)
-    * [英文百科](https://huggingface.co)
+- 
+| 类型                                   |  磁盘占用 |
+| ------------------------------------- |------------|
+| [中文书籍](https://huggingface.co)     | 12G      |
+| [中文互联网](https://huggingface.co)   | 25G       |
+| [中文百科](https://huggingface.co)     | 19G       |
+| [英文书籍](https://huggingface.co)     | 22G      | 
+| [英文互联网](https://huggingface.co)   | 6.9G       | 
+| [英文百科](https://huggingface.co)     | 22G    |
 
 - 完整预训练数据占比如图所示:
 
