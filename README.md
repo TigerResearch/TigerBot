@@ -166,8 +166,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 预训练数据
 
 - 中英自然语言文本（以下数据集开放到 huggingface）
-<<<<<<< HEAD
-- 
+
 | 类型                                   |  磁盘占用 |
 | ------------------------------------- |------------|
 | [中文书籍](https://huggingface.co)     | 12G      |
@@ -176,15 +175,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 | [英文书籍](https://huggingface.co)     | 22G      | 
 | [英文互联网](https://huggingface.co)   | 6.9G       | 
 | [英文百科](https://huggingface.co)     | 22G    |
-=======
 
-  - [中文书籍](https://huggingface.co)
-  - [中文互联网](https://huggingface.co)
-  - [中文百科](https://huggingface.co)
-  - [英文书籍](https://huggingface.co)
-  - [英文互联网](https://huggingface.co)
-  - [英文百科](https://huggingface.co)
->>>>>>> 05c3cd2 (apia)
 
 - 完整预训练数据占比如图所示:
 
@@ -199,43 +190,39 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 微调数据
 
-- alpaca 格式指令数据集 (数据集开放到 huggingface）
-  - [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co)
-  - [dolly-Classification-en-2k (分类)](https://huggingface.co)
-  - [gsm-8k-alpaca-en (数学问题)](https://huggingface.co)
-  - [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co)
-  - [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co)
-  - [mt-note-generation-en (病历生成)](https://huggingface.co)
-  - [OIG-multichat-alpaca-en-50k (多轮对话)](https://huggingface.co)
-  - [stackexchange-qa-alpaca-en-0.5m (综合问答)](https://huggingface.co)
-  - [tiger-alpaca-en-50k（虎博基本 alpaca 自有生成）](https://huggingface.co)
-  - [wiki-qa-bart-alpaca-en-10k (WIKI 问答)](https://huggingface.co)
-  - [youtube-howto-en-50k (youtube 中 howto 类教程)](https://huggingface.co)
-  - [firefly-alpaca-zh-20k (中文-firefly 数据集 alpaca 版)](https://huggingface.co)
-  - [HC3-alpaca-zh-12k (中文-HC3 数据集 alpaca 版)](https://huggingface.co)
-  - [superclue-c3-alpaca-zh-5k (中文-superclue 阅读理解)](https://huggingface.co)
-  - [tiger-alpaca-zh-0.5m (中文-虎博基本 alpaca 生成中文问题)](https://huggingface.co)
-  - [zhihu-alpaca-zh-10k (中文-知乎问答)](https://huggingface.co)
-  - 其它数据集陆续整理开放中...
+-  指令数据集 (数据集开放到 huggingface）
+
+  | 类型 | 数据集          |   数量 | 
+  | ---------- |------------| --- |
+  | 头脑风暴 |  [dolly-Brainstorming-en-1.7k ()](https://huggingface.co) | 1.7k
+  | 分类 |   [dolly-Classification-en-2k (分类)](https://huggingface.co) | 2k
+  |数学问题 | [gsm-8k-en (数学问题)](https://huggingface.co) | 8k
+  | 代码 |   [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co) | 2k
+  | 食谱生成 | [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co) | 2k
+  | 病历生成 |  [mt-note-generation-en (病历生成)](https://huggingface.co) | 450
+  | 多轮对话 | [OIG-multichat-en-50k (多轮对话)](https://huggingface.co) | 50k 
+  | 综合问答 | [stackexchange-qa-en-0.5m (综合问答)](https://huggingface.co) | 0.5m
+  | alpaca英文|   [tiger-alpaca-en-50k（基于alpaca生成）](https://huggingface.co) | 50k
+  | WIKI问答| [wiki-qa-bart-alpaca-en-10k (WIKI问答)](https://huggingface.co)|10k
+  | 如何做类教程|  [youtube-howto-en-50k (youtube中howto类教程)](https://huggingface.co) | 50k
+  | firefly数据集清洗版 | [firefly-alpaca-zh-20k (中文-firefly数据集)](https://huggingface.co) | 20k
+  | HC3数据集 | [HC3-alpaca-zh-12k (中文-HC3数据集)](https://huggingface.co) | 12k
+  | 阅读理解 |  [superclue-c3-alpaca-zh-5k (中文-superclue阅读理解)](https://huggingface.co) | 5k
+  | alpaca中文|  [tiger-alpaca-zh-0.5m (中文-基于alpaca生成)](https://huggingface.co) | 0.5m
+  | 知乎问答|  [zhihu-zh-10k (中文-知乎问答)](https://huggingface.co) | 10k
+  
+  >  其它数据集陆续整理开放中...
+  
 
 ### 领域数据
 
-<<<<<<< HEAD
+
 - 开放金融、法律、百科相关领域数据，作为rethink外部数据源
     - [金融-研报](https://huggingface.co)
     - [金融-财报](https://huggingface.co)
     - [法律](https://huggingface.co)
     - [百科](https://huggingface.co)
 
-## 测评
-
-在7项传统NLP任务上进行，以TigerBot-7B-V1为基准，归一化并平均各模型的得分，结果如下：
-=======
-- 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
-  - [金融研报](https://huggingface.co)
-  - [金融-财报](https://huggingface.co)
-  - [法律](https://huggingface.co)
-  - [百科](https://huggingface.co)
 
 ## 测评
 
