@@ -292,6 +292,8 @@ print(response.text)
 
 ### 插件（Plug-ins）
 
+![image](image/api/rethink/case-3.gif)
+
 #### Rethink
 
 TigerBot 提供的一种辅助性外脑搜索方式
@@ -742,28 +744,22 @@ print(response.text)
 
 </details>
 
-## 案例
-
-<details><summary><b>编码</b></summary>
-
-![image](image/api/case-3.png)
-
-</details>
-
-<details><summary><b>论文大纲</b></summary>
+## Chat 案例
 
 ![image](image/api/case-4.png)
 
-</details>
+---
 
-<details><summary><b>常识问答</b></summary>
+![image](image/api/case-1.png)
+
+---
+
+![image](image/api/case-2.png)
+
+---
+
+![image](image/api/case-3.png)
+
+---
 
 ![image](image/api/case-5.png)
-
-</details>
-
-<details><summary><b>领域问答</b></summary>
-
-![image](image/api/case-6.png)
-
-</details>
