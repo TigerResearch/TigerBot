@@ -33,7 +33,7 @@ pip install -r requirements.txt
 <summary>Tigerbot-7B</summary>
 
 | Tigerbot-7B                                    | Bits | memory(GB) |
-| ---------------------------------------------- | ---- |------------|
+| ---------------------------------------------- | ---- | ---------- |
 | [Tigerbot-7B-base](https://huggingface.co)     | 16   | 17.2       |
 | [Tigerbot-7B-sft](https://huggingface.co)      | 16   | 17.2       |
 | [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | 8.5        |
@@ -41,9 +41,9 @@ pip install -r requirements.txt
 <summary>Tigerbot-176B)</summary>
 
 | Tigerbot-176B                                    | Bits | memory(GB) |
-| ------------------------------------------------ | ---- |--------| 
-| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |        |
-| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |        | 
+| ------------------------------------------------ | ---- | ---------- |
+| [Tigerbot-176B-sft](https://huggingface.co)      | 16   |            |
+| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |            |
 
 ## 训练和推理
 
@@ -166,6 +166,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ### 预训练数据
 
 - 中英自然语言文本（以下数据集开放到 huggingface）
+<<<<<<< HEAD
 - 
 | 类型                                   |  磁盘占用 |
 | ------------------------------------- |------------|
@@ -175,6 +176,15 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 | [英文书籍](https://huggingface.co)     | 22G      | 
 | [英文互联网](https://huggingface.co)   | 6.9G       | 
 | [英文百科](https://huggingface.co)     | 22G    |
+=======
+
+  - [中文书籍](https://huggingface.co)
+  - [中文互联网](https://huggingface.co)
+  - [中文百科](https://huggingface.co)
+  - [英文书籍](https://huggingface.co)
+  - [英文互联网](https://huggingface.co)
+  - [英文百科](https://huggingface.co)
+>>>>>>> 05c3cd2 (apia)
 
 - 完整预训练数据占比如图所示:
 
@@ -189,28 +199,28 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 微调数据
 
--  alpaca 格式指令数据集 (数据集开放到 huggingface）
-    
-    - [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co)
-    - [dolly-Classification-en-2k (分类)](https://huggingface.co)
-    - [gsm-8k-alpaca-en (数学问题)](https://huggingface.co)
-    - [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co)
-    - [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co)
-    - [mt-note-generation-en (病历生成)](https://huggingface.co)
-    - [OIG-multichat-alpaca-en-50k (多轮对话)](https://huggingface.co)
-    - [stackexchange-qa-alpaca-en-0.5m (综合问答)](https://huggingface.co)
-    - [tiger-alpaca-en-50k（虎博基本alpaca自有生成）](https://huggingface.co)
-    - [wiki-qa-bart-alpaca-en-10k (WIKI问答)](https://huggingface.co)
-    - [youtube-howto-en-50k (youtube中howto类教程)](https://huggingface.co)
-    - [firefly-alpaca-zh-20k (中文-firefly数据集alpaca版)](https://huggingface.co)
-    - [HC3-alpaca-zh-12k (中文-HC3数据集alpaca版)](https://huggingface.co)
-    - [superclue-c3-alpaca-zh-5k (中文-superclue阅读理解)](https://huggingface.co)
-    - [tiger-alpaca-zh-0.5m (中文-虎博基本alpaca生成中文问题)](https://huggingface.co)
-    - [zhihu-alpaca-zh-10k (中文-知乎问答)](https://huggingface.co)
-    - 其它数据集陆续整理开放中...
+- alpaca 格式指令数据集 (数据集开放到 huggingface）
+  - [dolly-Brainstorming-en-1.7k (头脑风暴)](https://huggingface.co)
+  - [dolly-Classification-en-2k (分类)](https://huggingface.co)
+  - [gsm-8k-alpaca-en (数学问题)](https://huggingface.co)
+  - [kaggle-leetcodesolutions-en-2k (代码)](https://huggingface.co)
+  - [kaggle-recipes-en-2k (食谱生成)](https://huggingface.co)
+  - [mt-note-generation-en (病历生成)](https://huggingface.co)
+  - [OIG-multichat-alpaca-en-50k (多轮对话)](https://huggingface.co)
+  - [stackexchange-qa-alpaca-en-0.5m (综合问答)](https://huggingface.co)
+  - [tiger-alpaca-en-50k（虎博基本 alpaca 自有生成）](https://huggingface.co)
+  - [wiki-qa-bart-alpaca-en-10k (WIKI 问答)](https://huggingface.co)
+  - [youtube-howto-en-50k (youtube 中 howto 类教程)](https://huggingface.co)
+  - [firefly-alpaca-zh-20k (中文-firefly 数据集 alpaca 版)](https://huggingface.co)
+  - [HC3-alpaca-zh-12k (中文-HC3 数据集 alpaca 版)](https://huggingface.co)
+  - [superclue-c3-alpaca-zh-5k (中文-superclue 阅读理解)](https://huggingface.co)
+  - [tiger-alpaca-zh-0.5m (中文-虎博基本 alpaca 生成中文问题)](https://huggingface.co)
+  - [zhihu-alpaca-zh-10k (中文-知乎问答)](https://huggingface.co)
+  - 其它数据集陆续整理开放中...
 
 ### 领域数据
 
+<<<<<<< HEAD
 - 开放金融、法律、百科相关领域数据，作为rethink外部数据源
     - [金融-研报](https://huggingface.co)
     - [金融-财报](https://huggingface.co)
@@ -220,6 +230,17 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 ## 测评
 
 在7项传统NLP任务上进行，以TigerBot-7B-V1为基准，归一化并平均各模型的得分，结果如下：
+=======
+- 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
+  - [金融研报](https://huggingface.co)
+  - [金融-财报](https://huggingface.co)
+  - [法律](https://huggingface.co)
+  - [百科](https://huggingface.co)
+
+## 测评
+
+在 7 项传统 NLP 任务上进行，并以 TigerBot-7B-V1 为基准，归一化并平均各模型的得分，结果如下：
+>>>>>>> 05c3cd2 (apia)
 ![image](image/auto-valuation.png)
 
 ## API
@@ -255,9 +276,7 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": [
-      "北京"
-    ]
+    "result": ["北京"]
   }
 }
 ```
@@ -292,9 +311,7 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": [
-      "刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"
-    ]
+    "result": ["刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"]
   }
 }
 ```
@@ -750,5 +767,11 @@ print(response.text)
 <details><summary><b>编码</b></summary>
 
 ![image](image/api/case-3.png)
+
+</details>
+
+<details><summary><b>论文大纲</b></summary>
+
+![image](image/api/case-4.png)
 
 </details>
