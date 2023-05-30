@@ -294,7 +294,7 @@ print(response.text)
 
 TigerBot 提供的一种辅助性外脑搜索方式
 
-<details><summary><b>Example request</b></summary>
+<details><summary>Example request</summary>
 
 ```python
 import requests
@@ -331,7 +331,7 @@ print(response.text)
 
 自定义自己的知识库，提供自己专属的外脑搜索
 
-<details><summary><b>Rethink 创建</b></summary>
+<details><summary>Rethink 创建</summary>
 
 ```python
 import requests
@@ -365,7 +365,7 @@ print(response.text)
 
 </details>
 
-<details><summary><b>Datasets 导入</b></summary>
+<details><summary>Datasets 导入</summary>
 
 ```python
 import requests
@@ -402,7 +402,7 @@ print(response.text)
 
 </details>
 
-<details><summary><b> Rethink 使用</b></summary>
+<details><summary>Rethink 使用</summary>
 
 ```python
 import requests
@@ -439,7 +439,7 @@ print(response.text)
 
 </details>
 
-<details><summary><b>Datasets 列表</b></summary>
+<details><summary>Datasets 列表</summary>
 
 ```python
 import requests
@@ -487,7 +487,7 @@ print(response.text)
 
 </details>
 
-<details><summary><b>Rethinks 列表</b></summary>
+<details><summary>Rethinks 列表</summary>
 
 ```python
 import requests
@@ -742,20 +742,24 @@ print(response.text)
 
 ## Chat 案例
 
-![image](image/api/case-4.png)
+![image](image/api/case-48.png)
 
 ---
 
-![image](image/api/case-1.png)
+![image](image/api/case-9.png)
 
 ---
 
-![image](image/api/case-2.png)
+![image](image/api/case-10.png)
 
 ---
 
-![image](image/api/case-3.png)
+![image](image/api/case-11.png)
 
 ---
 
-![image](image/api/case-5.png)
+![image](image/api/case-12.png)
+
+---
+
+![image](image/api/case-12.png)
