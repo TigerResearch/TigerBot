@@ -166,7 +166,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 预训练数据
 
-- 中英自然语言文本（以下数据集开放到 huggingface）
+- 中英自然语言文本，当前开源总量105G（以下数据集开放到 huggingface）
 
   | 类型                                   |  磁盘占用 |  来源 |
   | ------------------------------------- |------------| ---|
@@ -191,7 +191,7 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ### 微调数据
 
-- 指令数据集 (数据集开放到 huggingface）
+- 指令数据集, 当前开源120W问答对，磁盘空间1.1G (数据集开放到 huggingface）
 
     | 类型          | 语言 |  数据集 |  数量 | 来源 |
     | --------------------------------|--- | ------------| ---| --- | 
