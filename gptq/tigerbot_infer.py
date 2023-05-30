@@ -123,7 +123,6 @@ if __name__ == '__main__':
     max_memory = get_balanced_memory(model)
     device_map = infer_auto_device_map(model, max_memory=max_memory,
                                        no_split_module_classes=["BloomBlock"])
-    print("Using the following device map for the model:", device_map)
     model = dispatch_model(model, device_map=device_map, offload_buffers=True)
     tokenizer = AutoTokenizer.from_pretrained(args.model, padding_side="left", truncation_side='left')
     tok_ins = "\n\n### Instruction:\n"
