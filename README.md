@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-   🌐 <a href="https://tigerbot.com/" target="_blank">网站</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
+   🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
 </p>
 
 
