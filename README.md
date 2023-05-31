@@ -19,6 +19,7 @@
 
 TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI InstructGPT论文在公开NLP数据集上的自动评测，TigerBot-7B达到OpenAI同样大小模型的综合表现的96%，并且这只是我们的MVP，在此我们将如下探索成果开源：
 - 模型：tigerbot-7b, tigerbot-7b-base，tigerbot-180b (research version)，
+- 代码：基本训练和推理代码，包括双卡推理180B模型的压缩和推理代码，
 - 数据：预训练100G, 微调1G或100万条数据，
 - API: chat, plugin, finetune, 让用户能在半小时内无代码的训练和使用专属于自己的大模型和数据，
 - 2-3个领域数据，广邀大模型应用开发者，一起打造中国的世界级的应用。
@@ -26,7 +27,7 @@ TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI 
 我们在BLOOM基础上，在模型架构和算法上做了如下优化：
 - 指令完成监督微调的创新算法以获得更好的可学习型(learnability)，
 - 运用ensemble和probalistic modeling的方法实现更可控的事实性(factuality)和创造性(generativeness)，
-- 在并行训练上，我们突破了deep-speed等主流框架中若干通信和内存问题，使得我们的训练在千卡环境下数月无间断，
+- 在并行训练上，我们突破了deep-speed等主流框架中若干内存和通信问题，使得在千卡环境下数月无间断，
 - 对中文语言的更不规则的分布，从tokenizer到训练算法上做了更适合的算法优化。
 
 ## 目录
@@ -63,7 +64,7 @@ pip install -r requirements.txt
 | [Tigerbot-7B-sft](https://huggingface.co)      | 16   | 17.2       |
 | [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | 8.5        |
 
-<summary>Tigerbot-176B)</summary>
+<summary>Tigerbot-180B</summary>
 
 | Tigerbot-180B                                    | Bits | memory(GB) |
 | ------------------------------------------------ | ---- | ---------- |
