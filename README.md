@@ -17,8 +17,11 @@
 
 ## 最近更新
 
-TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI InstructGPT论文中的在公开NLP数据集上的自动评测数据，\
-TigerBot-7B达到OpenAI同样大小模型综合表现的96%
+TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI InstructGPT论文在公开NLP数据集上的自动评测，TigerBot-7B达到OpenAI同样大小模型的综合表现的96%，并且这只是我们的MVP，在此我们将如下探索成果开源：
+- 模型：tigerbot-7b, tigerbot-7b-base，tigerbot-180b (research version)，
+- 数据：预训练100G, 微调1G或100万条数据，
+- API: chat, plugin, finetune, 让用户能在半小时内无代码的训练和使用专属于自己的大模型和数据，
+- 2-3个领域数据，广邀大模型应用开发者，一起打造中国的世界级的应用。
 
 我们在BLOOM基础上，在模型架构和算法上做了如下优化：
 - 指令完成监督微调的创新算法以获得更好的可学习型(learnability)，
@@ -62,10 +65,10 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-176B)</summary>
 
-| Tigerbot-176B                                    | Bits | memory(GB) |
+| Tigerbot-180B                                    | Bits | memory(GB) |
 | ------------------------------------------------ | ---- | ---------- |
-| [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 347.6      |
-| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | 108.5      |
+| [Tigerbot-180B-sft](https://huggingface.co)      | 16   | 347.6      |
+| [Tigerbot-180B-sft-int4](https://huggingface.co) | 4    | 108.5      |
 
 ## 训练和推理
 
