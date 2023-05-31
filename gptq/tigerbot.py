@@ -180,7 +180,7 @@ def model_pack(model, quantizers, wbits, groupsize):
     return model
 
 
-def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True, warmup_autotune=True):
+def load_quant(model, checkpoint, wbits, groupsize=-1, eval=True, warmup_autotune=True):
     config = AutoConfig.from_pretrained(model)
 
     def noop(*args, **kwargs):
@@ -212,16 +212,8 @@ def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True
     else:
         model.load_state_dict(torch.load(checkpoint))
 
-    if eval:
-        quant.make_quant_attn(model)
-        quant.make_quant_norm(model)
-        if fused_mlp:
-            quant.make_fused_mlp(model)
-
     if warmup_autotune:
         quant.autotune_warmup_linear(model, transpose=not (eval))
-        if eval and fused_mlp:
-            quant.autotune_warmup_fused(model)
     model.seqlen = 2048
     print('Done.')
     return model

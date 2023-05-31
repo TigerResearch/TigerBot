@@ -53,16 +53,8 @@ def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True
     else:
         model.load_state_dict(torch.load(checkpoint))
 
-    if eval:
-        quant.make_quant_attn(model)
-        quant.make_quant_norm(model)
-        if fused_mlp:
-            quant.make_fused_mlp(model)
-
     if warmup_autotune:
         quant.autotune_warmup_linear(model, transpose=not (eval))
-        if eval and fused_mlp:
-            quant.autotune_warmup_fused(model)
     model.seqlen = 2048
     print('Done.')
 
@@ -123,6 +115,7 @@ if __name__ == '__main__':
     max_memory = get_balanced_memory(model)
     device_map = infer_auto_device_map(model, max_memory=max_memory,
                                        no_split_module_classes=["BloomBlock"])
+    print("Using the following device map for the model:", device_map)
     model = dispatch_model(model, device_map=device_map, offload_buffers=True)
     tokenizer = AutoTokenizer.from_pretrained(args.model, padding_side="left", truncation_side='left')
     tok_ins = "\n\n### Instruction:\n"
