@@ -82,12 +82,12 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '--max_input_length', type=int, default=1024,
+        '--max_input_length', type=int, default=512,
         help='The maximum length of the input prompt.'
     )
 
     parser.add_argument(
-        '--max_generate_length', type=int, default=2048,
+        '--max_generate_length', type=int, default=1024,
         help='The maximum length the generated tokens can have. Corresponds to the length of the input prompt + max_new_tokens'
     )
 
