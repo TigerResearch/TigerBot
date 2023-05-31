@@ -187,7 +187,10 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 完整预训练数据占比如图所示:
 
-![image](image/pretrain.png)
+<p align="center" width="100%">
+<img src="image/pretrain.png" alt="Tiger" style="width: 65%; display: block; margin: auto;"></a>
+</p>
+
 
 - 中文书籍及代码细分:
 
