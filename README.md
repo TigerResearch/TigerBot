@@ -301,14 +301,14 @@ print(response.text)
 
 ### [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
 
-Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B 和 Tigerbot-176B 两种模型的选择
+Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B 和 Tigerbot-180B 两种模型的选择
 
-### 插件（Plug-ins）
+### [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
 
 - [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
-  TigerBot 提供的自研插件，可直接通过 api 进行调用
+  <p>TigerBot 提供的自研插件，可直接通过 api 进行调用</p>
 - [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
-  用户管理自己的数据，训练自己的插件
+  <p>用户管理自己的数据，训练自己的插件</p>
 
 ### [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
 
