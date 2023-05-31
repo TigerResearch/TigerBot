@@ -43,7 +43,7 @@ pip install -r requirements.txt
 <summary>Tigerbot-176B)</summary>
 
 | Tigerbot-176B                                    | Bits | memory(GB) |
-| ------------------------------------------------ | ---- |------------|
+| ------------------------------------------------ | ---- | ---------- |
 | [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 347.6      |
 | [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | 108.5      |
 
@@ -144,7 +144,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python infer.py --model_path ${MODEL_DIR}
 
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
-切换到gptq目录
+切换到 gptq 目录
 
 ```
 cd gptq
@@ -172,18 +172,18 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ### 预训练数据
 
-- <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>中文开源预训练集 - 55G，包含中文书籍、中文互联网、中文百科  [hugging face]</a>
-- <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>英文开源预训练集 - 51G，包含英文书籍、英文互联网、英文百科  [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>中文开源预训练集 - 55G，包含中文书籍、中文互联网、中文百科 [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>英文开源预训练集 - 51G，包含英文书籍、英文互联网、英文百科 [hugging face]</a>
 
-  | 类型                                | 磁盘占用 | 来源 |
-    | ----------------------------------- | -------- |----|
+  | 类型       | 磁盘占用 | 来源 |
+  | ---------- | -------- | ---- |
   | 中文书籍   | 12G      | 自研 |
   | 中文互联网 | 25G      | 自研 |
   | 中文百科   | 19G      | 自研 |
   | 英文书籍   | 22G      | 开源 |
   | 英文互联网 | 6.9G     | 开源 |
   | 英文百科   | 22G      | 开源 |
-  | **总量**  | **105G** |    |
+  | **总量**   | **105G** |      |
 
 - 完整预训练数据占比如图所示:
 
@@ -211,27 +211,27 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 指令数据集, 当前开源 120W 问答对，磁盘空间 1.1G (数据集开放到 huggingface）
 
-  | 类型         | 语言 | 数据集                                                   | 数量        | 来源   |
-    | ------------ | ---- | -------------------------------------------------------- | ----------- | ------ |
-  | alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)           | 0.5m        | 自研   |
-  | 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)               | 1k          | 自研   |
-  | 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)               | 1k          | 自研   |
-  | 猜谜语       | 中文 | [tigerbot-riddle-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-riddle-qa-1k)             | 1k          | 自研   |
-  | 阅读理解     | 中文 | [tigerbot-superclue-c3-zh-5k](https://huggingface.co/datasets/TigerResearch/tigerbot-superclue-c3-zh-5k)             | 5k          | 自研\* |
-  | 问答         | 中文 | [tigerbot-HC3-zh-12k](https://huggingface.co/datasets/TigerResearch/tigerbot-HC3-zh-12k)                     | 12k         | 开源   |
-  | 知乎问答     | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-zhihu-zh-10k)                   | 10k         | 开源   |
-  | alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)    | 50k         | 自研   |
-  | 头脑风暴     | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)    | 1.7k        | 开源   |
-  | 分类         | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)     | 2k          | 开源   |
-  | 数学问题     | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                      | 8k          | 开源   |
+  | 类型         | 语言 | 数据集                                                                                                                           | 数量        | 来源   |
+  | ------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------ |
+  | alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)                                 | 0.5m        | 自研   |
+  | 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)                                      | 1k          | 自研   |
+  | 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)                                         | 1k          | 自研   |
+  | 猜谜语       | 中文 | [tigerbot-riddle-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-riddle-qa-1k)                                     | 1k          | 自研   |
+  | 阅读理解     | 中文 | [tigerbot-superclue-c3-zh-5k](https://huggingface.co/datasets/TigerResearch/tigerbot-superclue-c3-zh-5k)                         | 5k          | 自研\* |
+  | 问答         | 中文 | [tigerbot-HC3-zh-12k](https://huggingface.co/datasets/TigerResearch/tigerbot-HC3-zh-12k)                                         | 12k         | 开源   |
+  | 知乎问答     | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-zhihu-zh-10k)                                     | 10k         | 开源   |
+  | alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)                                   | 50k         | 自研   |
+  | 头脑风暴     | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)       | 1.7k        | 开源   |
+  | 分类         | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2k          | 开源   |
+  | 数学问题     | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                                           | 8k          | 开源   |
   | 代码         | 英文 | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2k          | 自研\* |
-  | 食谱生成     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)           | 2k          | 开源   |
-  | 病历生成     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)          | 450         | 开源   |
-  | 多轮对话     | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)           | 50k         | 自研\* |
-  | 综合问答     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)       | 0.5m        | 开源   |
-  | wiki 问答    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)            | 10k         | 开源   |
-  | 如何做类教程 | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)           | 50k         | 开源   |
-  | **总量**     |      |                                                         | **120W 条** |
+  | 食谱生成     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2k          | 开源   |
+  | 病历生成     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 450         | 开源   |
+  | 多轮对话     | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)                     | 50k         | 自研\* |
+  | 综合问答     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)             | 0.5m        | 开源   |
+  | wiki 问答    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)                       | 10k         | 开源   |
+  | 如何做类教程 | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50k         | 开源   |
+  | **总量**     |      |                                                                                                                                  | **120W 条** |
 
   > 更多数据集陆续整理开放中...
 
@@ -239,12 +239,12 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
 
-  | 类型                                | 数量        |
-    | ----------------------------------- | ----------- |
+  | 类型                                                                                | 数量        |
+  | ----------------------------------------------------------------------------------- | ----------- |
   | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 5000 篇     |
-  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin) | 1000 篇     |
-  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)      | 1 部(刑法） |
-  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)      | 10W 词条    |
+  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 1000 篇     |
+  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 1 部(刑法） |
+  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条    |
 
 ## 测评
 
@@ -269,485 +269,6 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
     * 数据导入
     * api 调用
 
-<<<<<<< HEAD
-payload = {
-    "text": "中国的首都",
-    "modelVersion": "tigerbot-gauss"
-}
-
-response = requests.post(url, headers=headers, json=payload)
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "北京"
-    ]
-  }
-}
-```
-
-</details>
-
-### 插件（Plug-ins）
-
-![image](image/api/rethink/case-1.png)
-
-#### Rethink
-
-TigerBot 提供的一种辅助性外脑搜索方式
-
-<details><summary>Example request</summary>
-
-```python
-import requests
-
-uri = "https://api.tigerbot.com/bot-service/ai_service/rethink"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    "text": "刘德华与梁朝伟合演的电影",
-    "pluginName": "wiki"
-}
-
-response = requests.post(uri, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"
-    ]
-  }
-}
-```
-
-</details>
-
-#### Custom Rethink
-
-自定义自己的知识库，提供自己专属的外脑搜索
-
-<details><summary>Rethink 创建</summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/create_plugin"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-payload = {
-    'name': 'Your pluginName'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "pluginId": "pls3862",
-    "name": "api_test_v1",
-    "canUse": false,
-    "createTime": "2023-05-13 15:29:49"
-  }
-}
-```
-
-</details>
-
-<details><summary>Datasets 导入</summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/add_dataset"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'pluginId': "Your pluginId"
-}
-
-your_json_file_path = '/Users/rethink/data.json'
-
-files = {'file': open(your_json_file_path, 'rb')}
-
-response = requests.post(url, headers=headers, data=payload, files=files)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "datasetId": 1821
-  }
-}
-```
-
-</details>
-
-<details><summary>Rethink 使用</summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/rethink"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'pluginId': 'Your pluginId',
-    'text': '被家暴了怎么办',
-    'stopOnEmptyData': False
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "首先，要及时向警方报案，提供详细的信息和证据，协助警方调查取证。同时，要及时就医，并按照医生的建议进行治疗。如果情况严重，可以考虑向法院起诉，寻求法律保护。此外，可以向专业机构寻求帮助，如心理咨询师、社工等，以获得更多的支持和指导。"
-    ]
-  }
-}
-```
-
-</details>
-
-<details><summary>Datasets 列表</summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/get_dataset_list"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'pluginId': 'Your pluginId'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "list": [
-      {
-        "pluginId": "pls3862",
-        "dataId": 1820,
-        "processStatus": 5,
-        "processStatusName": "已成功",
-        "msg": "",
-        "fileUrl": "https://x-pai.algolet.com/common/u/11/2305/2023/13/c93a783e657f7114aed66db8be31746c.json?Expires=1841645361&OSSAccessKeyId=LTAI5t8HoYusAPr5MffHTauz&Signature=OhfzUAzZJ%2BRoD1ui22w3jVu%2BzwA%3D",
-        "fileName": "社会法.json",
-        "createTime": "2023-05-13 16:09:23"
-      }
-    ],
-    "pageNum": 1,
-    "pageSize": 20,
-    "total": 1,
-    "hasMore": false
-  }
-}
-```
-
-</details>
-
-<details><summary>Rethinks 列表</summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/plugin/custom/get_user_plugin_list"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'pageNum': 1,
-    'pageSize': 2
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "list": [
-      {
-        "id": "pls3860",
-        "name": "api0512Test",
-        "canUse": true,
-        "createTime": "2023-05-12 23:39:15"
-      },
-      {
-        "id": "pls3861",
-        "name": "api0513Test",
-        "canUse": true,
-        "createTime": "2023-05-13 11:59:45"
-      }
-    ],
-    "pageNum": 1,
-    "pageSize": 0,
-    "total": 7,
-    "hasMore": true
-  }
-}
-```
-
-</details>
-
-### 微调（Fine-Tunes）【[Datasets 样例](https://x-pai.algolet.com/bot/fine_tune/example.json?OSSAccessKeyId=sauBoVUnLI0kHXam&Expires=2044204946&Signature=czP1qqq3KCRm3YO5jniGzRaAGBw%3D)】
-
-<details><summary><b>fine-tune 创建</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/upload_train_data"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-your_json_file_path = '/Users/fine_tuning/data.json'
-
-files = {'file': open(your_json_file_path, 'rb')}
-
-response = requests.post(url, headers=headers, files=files)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "ftId": "ft2",
-    "name": "my_fine_tune0514",
-    "dataset": {
-      "fileName": "data_sample.json",
-      "url": "https://x-pai.algolet.com/common/ft_u/11/2023/14/7719f1a15bf8356e5cca1367b7f9e07a.json?Expires=1841749770&OSSAccessKeyId=LTAI5t8HoYusAPr5MffHTauz&Signature=LllW3b5EYZ5vsxn344LWnXLPjAc%3D"
-    },
-    "createTime": "2023-05-14 20:41:57",
-    "status": 2,
-    "statusName": "训练中",
-    "serviceStatus": 0,
-    "serviceStatusName": "未上线",
-    "msg": ""
-  }
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 训练</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/start_train"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'ftId': 'Your ftId'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": null
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 使用</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/call"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-payload = {
-    'ftId': 'Your ftId',
-    'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
-    ]
-  }
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 下线</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/offline"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY,
-}
-
-payload = {
-    'ftId': 'Your ftId'
-}
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": null
-}
-```
-
-</details>
-
-<details><summary><b>fine-tune 列表</b></summary>
-
-```python
-import requests
-
-url = "https://api.tigerbot.com/bot-service/ft/get_fine_tune_list"
-
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-
-payload = {
-    'pageNum': 1,
-    'pageSize': 6
-}
-
-response = requests.post(url, headers=headers, json=payload)
-
-print(response.text)
-```
-
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "list": [
-      {
-        "ftId": "ft1",
-        "name": "wsen_01",
-        "dataset": {
-          "fileName": "data_sample.json",
-          "url": "https://x-pai.algolet.com/common/ft_u/11/2023/14/7719f1a15bf8356e5cca1367b7f9e07a.json?Expires=1841737900&OSSAccessKeyId=LTAI5t8HoYusAPr5MffHTauz&Signature=XAR3x7BL5szqZ9QfMHJPuENf56o%3D"
-        },
-        "createTime": "2023-05-14 17:18:38",
-        "status": 2,
-        "statusName": "训练中",
-        "serviceStatus": 0,
-        "serviceStatusName": "未上线",
-        "msg": ""
-      },
-      {
-        "ftId": "ft2",
-        "name": "my_fine_tune0514",
-        "dataset": null,
-        "createTime": "2023-05-14 20:41:57",
-        "status": 2,
-        "statusName": "训练中",
-        "serviceStatus": 0,
-        "serviceStatusName": "未上线",
-        "msg": ""
-      }
-    ],
-    "pageNum": 1,
-    "pageSize": 5,
-    "total": 2,
-    "hasMore": false
-  }
-}
-```
-
-</details>
 - [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
   - 创建
   - 训练
