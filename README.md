@@ -17,7 +17,11 @@
 
 ## 最近更新
 
-We launched!
+We launched! TigerBot是一个多语言多任务的大规模语言模型(LLM)。我们在BLOOM基础上，在模型架构和算法上做了如下优化：
+- 指令完成监督微调的创新算法以获得更好的可学习型(learnability)，
+- 运用ensemble和probalistic modeling的方法实现更可控的事实性(factuality)和创造性(generativeness)，
+- 在并行训练上，我们突破了deep-speed等主流框架中若干通信和内存问题，是的我们的训练在千卡环境下数月无间断，
+- 对中文语言的更不规则的分布，从tokenizer到训练算法上做了更适合的算法优化。
 
 ## 目录
 
