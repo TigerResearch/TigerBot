@@ -191,7 +191,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
   | 英文书籍   | 22G      | 开源 |
   | 英文互联网 | 6.9G     | 开源 |
   | 英文百科   | 22G      | 开源 |
-  | **总量**   | **105G** |      |
+  | **总量**   | **106G** |      |
 
 - 完整预训练数据占比如图所示:
 
@@ -211,7 +211,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 模型中使用的微调数据的搜集思想如下：
 
-  a. 参考 Alpaca,扩充中英文 seed_tasks,增加一些中文习惯种子问题，基于此生成 2m 中文(本次开源 0.5m)及 0.1m(本次开源 50k)
+  a. 参考 Alpaca,扩充中英文 seed_tasks,增加一些中文习惯种子问题，基于此生成 2m 中文(本次开源 0.5m)及 0.1m英文(本次开源 50k)
 
   b. 基于人工写题及答案、网络搜集方式，整理加工问答集数据，在开源列表中标识为[自研]部分，本次开放部分数据
 
