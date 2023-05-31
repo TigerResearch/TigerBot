@@ -315,8 +315,8 @@ https://www.tigerbot.com
 
 #### 联系邮箱
 
-cong.fu@tigerobo.com
-wei.cai@tigerobo.com
+<p>cong.fu@tigerobo.com</p>
+<p>wei.cai@tigerobo.com</p>
 
 #### 企业微信
 
