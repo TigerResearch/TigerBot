@@ -18,9 +18,9 @@
 ## 最近更新
 
 TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI InstructGPT论文在公开NLP数据集上的自动评测，TigerBot-7B达到OpenAI同样大小模型的综合表现的96%，并且这只是我们的MVP，在此我们将如下探索成果开源：
-- 模型：tigerbot-7b, tigerbot-7b-base，tigerbot-180b (research version)，
+- 模型：TigerBot-7B, TigerBot-7B-base，TigerBot-180B (research version)，
 - 代码：基本训练和推理代码，包括双卡推理180B模型的压缩和推理代码，
-- 数据：预训练100G, 微调1G或100万条数据，
+- 数据：预训练100G, 监督微调1G或100万条数据，
 - API: chat, plugin, finetune, 让用户能在半小时内无代码的训练和使用专属于自己的大模型和数据，
 - 领域数据：涵盖金融，法律，百科，广邀大模型应用开发者，一起打造中国的世界级的应用。
 
