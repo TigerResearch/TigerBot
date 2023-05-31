@@ -42,9 +42,9 @@ pip install -r requirements.txt
 <summary>Tigerbot-176B)</summary>
 
 | Tigerbot-176B                                    | Bits | memory(GB) |
-| ------------------------------------------------ | ---- | ---------- |
+| ------------------------------------------------ | ---- |------------|
 | [Tigerbot-176B-sft](https://huggingface.co)      | 16   | 347.6      |
-| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    |            |
+| [Tigerbot-176B-sft-int4](https://huggingface.co) | 4    | 108.5      |
 
 ## 训练和推理
 
