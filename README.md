@@ -1,8 +1,16 @@
 # TigerBot
 
 <p align="center" width="100%">
-<img src="http://x-pai.algolet.com/bot/img/logo_core.png" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
+<img src="image/tiger.jpg" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
 </p>
+<p align="center">
+<font face="黑体" color=#ff8c00 size=5"> A Cutting-edge Foundation for your very own LLM. 以世界级的基础大模型，贡献于中国式的创新。</font>
+</p>
+
+<p align="center">
+   🌐 <a href="https://tigerbot.com/" target="_blank">网站</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
+</p>
+
 
 ## 最近更新
 
