@@ -13,8 +13,10 @@
 - [训练和推理](#训练和推理)
 - [开源数据集](#开源数据集)
 - [测评](#测评)
+- [平台介绍](#平台介绍)
 - [API](#API)
 - [案例](#案例)
+- [联系我们](#联系我们)
 
 ## 环境安装
 
@@ -251,25 +253,32 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ![image](image/auto-valuation.png)
 
-## API 【[完整文档](https://www.tigerbot.com/api-reference)】
+## 平台介绍 【[平台地址](https://www.tigerbot.com)】
 
-### Authentication
+- 支持申请获邀请码参与试用 【[申请入口](https://www.tigerbot.com)】
+- 支持在线对话 【[对话入口](https://www.tigerbot.com/chat)】
+- 支持在线 Plug-ins
+- API 文档
+- 案例演示
 
-获取唯一标识：API_KEY, 所有的 api 接口都需要用到
+## API
 
-### 对话（Chat-API）
+### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】
 
-<details><summary><b>Example request</b></summary>
+- [申请](https://www.tigerbot.com)
 
-```python
-import requests
+* [获取 API_KEY](https://www.tigerbot.com)
 
-url = "https://api.tigerbot.com/bot-service/ai_service/gpt"
+- [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
 
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
+* [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
+  - Rethink
+  - Custom Rethink
+    - 创建
+    * 数据导入
+    * api 调用
 
+<<<<<<< HEAD
 payload = {
     "text": "中国的首都",
     "modelVersion": "tigerbot-gauss"
@@ -748,6 +757,13 @@ print(response.text)
 ```
 
 </details>
+- [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
+  - 创建
+  - 训练
+  - 上线
+  - 调用
+  - 下线
+  - 列表
 
 ## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
@@ -772,3 +788,7 @@ print(response.text)
 ---
 
 ![image](image/api/case-13.png)
+
+## 联系我们
+
+![image](image/contact.jpg)
