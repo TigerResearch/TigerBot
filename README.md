@@ -13,10 +13,9 @@
 - [训练和推理](#训练和推理)
 - [开源数据集](#开源数据集)
 - [测评](#测评)
-- [平台介绍](#平台介绍)
 - [API](#API)
 - [案例](#案例)
-- [联系我们](#联系我们)
+- [平台](#平台)
 
 ## 环境安装
 
@@ -252,14 +251,6 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 在 7 项 NLP 任务上进行模型测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation.png)
-
-## 平台介绍 【[平台地址](https://www.tigerbot.com)】
-
-- 支持申请获邀请码参与试用 【[申请入口](https://www.tigerbot.com)】
-- 支持在线对话 【[对话入口](https://www.tigerbot.com/chat)】
-- 支持在线 Plug-ins
-- API 文档
-- 案例演示
 
 ## API
 
@@ -789,6 +780,16 @@ print(response.text)
 
 ![image](image/api/case-13.png)
 
-## 联系我们
+## 平台
+
+#### 产品链接
+
+https://www.tigerbot.com
+
+#### 邮箱地址
+
+cong.fu@tigerobo.com
+
+#### 企业微信
 
 ![image](image/contact.jpg)
