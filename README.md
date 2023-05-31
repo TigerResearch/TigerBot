@@ -291,7 +291,7 @@ print(response.text)
 }
 ```
 
-### Authentication
+### [Authentication](https://www.tigerbot.com/api-reference/authentication)
 
 使用 API，需先在 TigerBot 平台上进行申请，申请通过后获取 API_KEY，即可快速训练体验
 
