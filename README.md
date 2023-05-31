@@ -256,28 +256,63 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## API
 
-### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】
+TigerBot 提供了三种 API，包括 Chat-API，Plug-ins，Fine-Tunes。
 
-- [申请](https://www.tigerbot.com)
+### 调用示例
 
-* [获取 API_KEY](https://www.tigerbot.com)
+```python
+import requests
 
-- [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
+url = "https://api.tigerbot.com/bot-service/ft/call"
 
-* [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
-  - [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
-  - [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
-    - [创建](https://www.tigerbot.com/api-reference/plugins-custom-create)
-    * [数据导入](https://www.tigerbot.com/api-reference/plugins-custom-add-datasets)
-    - [接口调用](https://www.tigerbot.com/api-reference/plugins-custom-rethink)
+headers = {
+  'Authorization': 'Bearer ' + API_KEY
+}
+payload = {
+  'ftId': 'Your ftId',
+  'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
+}
 
-- [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
-  - [创建](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
-  - [训练](https://www.tigerbot.com/api-reference/fine-tune-train)
-  - [上线](https://www.tigerbot.com/api-reference/fine-tune-retrieve)
-  - [调用](https://www.tigerbot.com/api-reference/fine-tune-use)
-  - [下线](https://www.tigerbot.com/api-reference/fine-tune-cancel)
-  - [列表](https://www.tigerbot.com/api-reference/fine-tune-list)
+response = requests.post(url, headers=headers, json=payload)
+
+print(response.text)
+
+```
+
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "result": [
+      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
+    ]
+  }
+}
+```
+
+### Authentication
+
+使用 API，需先在 TigerBot 平台上进行申请，申请通过后获取 API_KEY，即可快速训练体验
+
+- [申请试用](https://www.tigerbot.com)
+- [获取 API_KEY](https://www.tigerbot.com/api-reference/my-api-key)
+<!-- ### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】 -->
+
+### [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
+
+Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B 和 Tigerbot-176B 两种模型的选择
+
+### 插件（Plug-ins）
+
+- [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
+  TigerBot 提供的自研插件，可直接通过 api 进行调用
+- [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
+  用户管理自己的数据，训练自己的插件
+
+### [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
+
+无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
 
 ## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
