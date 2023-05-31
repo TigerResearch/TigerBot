@@ -247,7 +247,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ![image](image/auto-valuation.png)
 
-## API
+## API 【[完整文档](https://www.tigerbot.com/api-reference)】
 
 ### Authentication
 
@@ -741,9 +741,9 @@ print(response.text)
 
 </details>
 
-## Chat 案例
+## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
-![image](image/api/case-48.png)
+![image](image/api/case-8.png)
 
 ---
 
