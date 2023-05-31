@@ -191,7 +191,6 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 <img src="image/pretrain.png" alt="Tiger" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-
 - 中文书籍及代码细分:
 
 <p width="100%">
@@ -314,6 +313,11 @@ https://www.tigerbot.com
 
 021-63888086
 
+#### 联系邮箱
+
+cong.fu@tigerobo.com
+wei.cai@tigerobo.com
+
 #### 企业微信
 
-![image](image/contact.jpg)
+<img src="image/contact.jpg" alt="Tiger" style="width: 260px;  "></a>
