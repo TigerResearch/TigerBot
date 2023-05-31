@@ -144,15 +144,19 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python infer.py --model_path ${MODEL_DIR}
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
 切换到gptq目录
+
 ```
 cd gptq
 ```
+
 #### 模型量化
+
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-4bit-128g.pt
 ```
 
 #### 量化模型单卡推理
+
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
 ```
@@ -171,7 +175,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>英文开源预训练集 - 51G，包含英文书籍、英文互联网、英文百科  [hugging face]</a>
 
   | 类型                                | 磁盘占用 | 来源 |
-  | ----------------------------------- | -------- |----|
+    | ----------------------------------- | -------- |----|
   | 中文书籍   | 12G      | 自研 |
   | 中文互联网 | 25G      | 自研 |
   | 中文百科   | 19G      | 自研 |
@@ -207,7 +211,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 - 指令数据集, 当前开源 120W 问答对，磁盘空间 1.1G (数据集开放到 huggingface）
 
   | 类型         | 语言 | 数据集                                                   | 数量        | 来源   |
-  | ------------ | ---- | -------------------------------------------------------- | ----------- | ------ |
+    | ------------ | ---- | -------------------------------------------------------- | ----------- | ------ |
   | alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)           | 0.5m        | 自研   |
   | 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)               | 1k          | 自研   |
   | 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)               | 1k          | 自研   |
@@ -235,7 +239,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 - 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
 
   | 类型                                | 数量        |
-  | ----------------------------------- | ----------- |
+    | ----------------------------------- | ----------- |
   | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 5000 篇     |
   | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin) | 1000 篇     |
   | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)      | 1 部(刑法） |
@@ -280,7 +284,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["北京"]
+    "result": [
+      "北京"
+    ]
   }
 }
 ```
@@ -321,7 +327,9 @@ print(response.text)
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "result": ["刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"]
+    "result": [
+      "刘德华与 梁朝伟合拍的电影有《无间道》和《花样年 华》。"
+    ]
   }
 }
 ```
