@@ -248,6 +248,14 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
 
 ![image](image/auto-valuation.png)
 
+## 平台介绍 【[平台地址](https://www.tigerbot.com)】
+
+- 支持申请获邀请码参与试用 【[申请入口](https://www.tigerbot.com)】
+- 支持在线对话 【[对话入口](https://www.tigerbot.com/chat)】
+- 支持在线 Plug-ins
+- API 文档
+- 案例演示
+
 ## API
 
 ### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】
@@ -272,14 +280,6 @@ CUDA_VISIBLE_DEVICES=0,1 python infer ${MODEL_DIR} --wbits 4 --groupsize 128 --l
   - 调用
   - 下线
   - 列表
-
-## 平台介绍 【[平台地址](https://www.tigerbot.com)】
-
-- 支持申请获邀请码参与试用 【[申请入口](https://www.tigerbot.com)】
-- 支持在线对话 【[对话入口](https://www.tigerbot.com/chat)】
-- 支持在线 Plug-ins
-- Api 文档查看
-- 案例演示
 
 ## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
