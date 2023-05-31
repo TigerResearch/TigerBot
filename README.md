@@ -265,19 +265,19 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 - [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
 
 * [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
-  - Rethink
-  - Custom Rethink
-    - 创建
-    * 数据导入
-    * api 调用
+  - [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
+  - [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
+    - [创建](https://www.tigerbot.com/api-reference/plugins-custom-create)
+    * [数据导入](https://www.tigerbot.com/api-reference/plugins-custom-add-datasets)
+    - [接口调用](https://www.tigerbot.com/api-reference/plugins-custom-rethink)
 
 - [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
-  - 创建
-  - 训练
-  - 上线
-  - 调用
-  - 下线
-  - 列表
+  - [创建](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
+  - [训练](https://www.tigerbot.com/api-reference/fine-tune-train)
+  - [上线](https://www.tigerbot.com/api-reference/fine-tune-retrieve)
+  - [调用](https://www.tigerbot.com/api-reference/fine-tune-use)
+  - [下线](https://www.tigerbot.com/api-reference/fine-tune-cancel)
+  - [列表](https://www.tigerbot.com/api-reference/fine-tune-list)
 
 ## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
