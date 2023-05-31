@@ -4,6 +4,9 @@ from accelerate import infer_auto_device_map, dispatch_model
 import torch
 import fire
 
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 tok_ins = "\n\n### Instruction:\n"
 tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res

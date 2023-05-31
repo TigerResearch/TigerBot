@@ -8,6 +8,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, modeli
 from accelerate.utils import get_balanced_memory
 from accelerate import infer_auto_device_map, dispatch_model
 
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 
 def get_model(model):
     def skip(*args, **kwargs):
