@@ -4,7 +4,10 @@
 <img src="image/tiger.jpg" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
 </p>
 <p align="center">
-<font face="黑体" color=#ff8c00 size=5"> A Cutting-edge Foundation for your very own LLM. 以世界级的基础大模型，贡献于中国式的创新。</font>
+<font face="黑体" color=orange size=5"> A Cutting-edge Foundation for your very own LLM. </font>
+</p>
+<p align="center">
+<font face="黑体" color=orange size=5"> 以世界级的基础大模型，贡献于中国式的创新。 </font>
 </p>
 
 <p align="center">
