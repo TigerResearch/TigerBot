@@ -183,7 +183,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
   | 英文书籍   | 22G      | 开源 |
   | 英文互联网 | 6.9G     | 开源 |
   | 英文百科   | 22G      | 开源 |
-  | **总量**   | **105G** |      |
+  | **总量**   | **106G** |      |
 
 - 完整预训练数据占比如图所示:
 
