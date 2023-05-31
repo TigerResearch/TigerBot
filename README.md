@@ -310,9 +310,9 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 https://www.tigerbot.com
 
-#### 邮箱地址
+#### 联系电话
 
-cong.fu@tigerobo.com
+021-63888086
 
 #### 企业微信
 
