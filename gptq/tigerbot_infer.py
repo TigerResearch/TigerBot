@@ -9,19 +9,8 @@ from accelerate.utils import get_balanced_memory
 from accelerate import infer_auto_device_map, dispatch_model
 
 import os
+
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
-
-def get_model(model):
-    def skip(*args, **kwargs):
-        pass
-
-    torch.nn.init.kaiming_uniform_ = skip
-    torch.nn.init.uniform_ = skip
-    torch.nn.init.normal_ = skip
-    model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=torch.float16)
-    model.seqlen = 2048
-    return model
 
 
 def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True, warmup_autotune=True):
