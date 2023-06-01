@@ -346,27 +346,12 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B
 
 ## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
-![image](image/api/case-8.png)
-
----
-
-![image](image/api/case-9.png)
-
----
-
-![image](image/api/case-10.png)
-
----
-
-![image](image/api/case-11.png)
-
----
-
-![image](image/api/case-12.png)
-
----
-
-![image](image/api/case-13.png)
+![image](image/api/case-1.png)
+![image](image/api/case-2.png)
+![image](image/api/case-3.png)
+![image](image/api/case-4.png)
+![image](image/api/case-5.png)
+![image](image/api/case-6.png)
 
 ## 平台
 
