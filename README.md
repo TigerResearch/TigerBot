@@ -59,11 +59,11 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                    | Bits | memory(GB) |
-| ---------------------------------------------- | ---- | ---------- |
-| [Tigerbot-7B-base](https://huggingface.co)     | 16   | 17.2       |
-| [Tigerbot-7B-sft](https://huggingface.co)      | 16   | 17.2       |
-| [Tigerbot-7B-sft-int4](https://huggingface.co) | 4    | 8.5        |
+| Tigerbot-7B                                                                            | Bits | memory(GB) |
+|----------------------------------------------------------------------------------------| ---- | ---------- |
+| [Tigerbot-7B-base](https://huggingface.co/TigerResearch/tigerbot-7b-base)              | 16   | 17.2       |
+| [Tigerbot-7B-sft](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                | 16   | 17.2       |
+| [Tigerbot-7B-4bit](https://huggingface.co/TigerResearch/tigerbot-7b-GPTQ-4bit-128g)    | 4    | 8.5        |
 
 <summary>Tigerbot-180B</summary>
 
