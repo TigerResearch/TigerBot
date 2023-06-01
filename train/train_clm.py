@@ -122,7 +122,7 @@ deepspeed \
 --include="localhost:0,1,2,3" \
 ./train_clm.py \
 --deepspeed ./ds_config/ds_config_zero3.json \
---model_name_or_path ./tigerbot_560m \
+--model_name_or_path TigerResearch/tigerbot-7b-base \
 --dataset_name TigerResearch/dev_pretrain \
 --do_train \
 --output_dir ./ckpt-clm \
