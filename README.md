@@ -14,21 +14,22 @@
    🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
 </p>
 
-
 ## 最近更新
 
-TigerBot是一个多语言多任务的大规模语言模型(LLM)。根据OpenAI InstructGPT论文在公开NLP数据集上的自动评测，TigerBot-7B达到OpenAI同样大小模型的综合表现的96%，并且这只是我们的MVP，在此我们将如下探索成果开源：
+TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenAI InstructGPT 论文在公开 NLP 数据集上的自动评测，TigerBot-7B 达到 OpenAI 同样大小模型的综合表现的 96%，并且这只是我们的 MVP，在此我们将如下探索成果开源：
+
 - 模型：TigerBot-7B, TigerBot-7B-base，TigerBot-180B (research version)，
-- 代码：基本训练和推理代码，包括双卡推理180B模型的量化和推理代码，
-- 数据：预训练100G，从2TB过滤后的数据中经过去噪去重清洗而得；监督微调1G或100万条数据，按比例涵盖用户指令常见的10大类120小类任务，
+- 代码：基本训练和推理代码，包括双卡推理 180B 模型的量化和推理代码，
+- 数据：预训练 100G，从 2TB 过滤后的数据中经过去噪去重清洗而得；监督微调 1G 或 100 万条数据，按比例涵盖用户指令常见的 10 大类 120 小类任务，
 - API: chat, plugin, finetune, 让用户能在半小时内无代码的训练和使用专属于自己的大模型和数据，
 - 领域数据：涵盖金融，法律，百科，广邀大模型应用开发者，一起打造中国的世界级的应用。
 
-我们在BLOOM基础上，在模型架构和算法上做了如下优化：
+我们在 BLOOM 基础上，在模型架构和算法上做了如下优化：
+
 - 指令完成监督微调的创新算法以获得更好的可学习型(learnability)，
-- 运用ensemble和probalistic modeling的方法实现更可控的事实性(factuality)和创造性(generativeness)，
-- 在并行训练上，我们突破了deep-speed等主流框架中若干内存和通信问题，使得在千卡环境下数月无间断，
-- 对中文语言的更不规则的分布，从tokenizer到训练算法上做了更适合的算法优化。
+- 运用 ensemble 和 probalistic modeling 的方法实现更可控的事实性(factuality)和创造性(generativeness)，
+- 在并行训练上，我们突破了 deep-speed 等主流框架中若干内存和通信问题，使得在千卡环境下数月无间断，
+- 对中文语言的更不规则的分布，从 tokenizer 到训练算法上做了更适合的算法优化。
 
 ## 目录
 
@@ -196,7 +197,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ### 预训练数据
 
-基于GPT3的pretrain的数据分布，采集中文书籍，互联网，和百科类数据，并通过数据源质量分过滤和tf-idf soft deduping，从20TB数据过滤到2TB，保持语言和类目的比例，并在此基础上随机抽样100G数据开源：
+基于 GPT3 的 pretrain 的数据分布，采集中文书籍，互联网，和百科类数据，并通过数据源质量分过滤和 tf-idf soft deduping，从 20TB 数据过滤到 2TB，保持语言和类目的比例，并在此基础上随机抽样 100G 数据开源：
 
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>中文开源预训练集 - 55G，包含中文书籍、中文互联网、中文百科 [hugging face]</a>
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>英文开源预训练集 - 51G，包含英文书籍、英文互联网、英文百科 [hugging face]</a>
@@ -229,14 +230,14 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 模型中使用的微调数据的搜集思想如下：
 
-  a. 从用户指令的自然分布，人工标注总结10大类，120小类任务，例如，事实性问答，开放式创作，语法分析，代码编辑等，
-  
-  b. self-instruct: 参考Alpaca self-instruct方法，扩充中英文seed_tasks，增加一些中文习惯种子问题，基于此生成2M中文(本次开源 0.5M)及0.1M英文(本次开源 50k)，
-  
+  a. 从用户指令的自然分布，人工标注总结 10 大类，120 小类任务，例如，事实性问答，开放式创作，语法分析，代码编辑等，
+
+  b. self-instruct: 参考 Alpaca self-instruct 方法，扩充中英文 seed_tasks，增加一些中文习惯种子问题，基于此生成 2M 中文(本次开源 0.5M)及 0.1M 英文(本次开源 50k)，
+
   c. human-labeling: 基于人工写题及答案、网络搜集方式，整理加工问答集数据，在开源列表中标识为[自研]部分，本次开放部分数据，
-  
+
   d. open-source data cleaning: 基于各类公开数据集转换清洗，其中[自研*]部分，表示基于原始数据进行二次开发后得到，[开源]部分数据集一般原始数据即为较规整的问答数据，进行简单清洗得到,
-  
+
   e. 总的数据分布符合用户指令自然分布。
 
 #### 数据开源
@@ -344,7 +345,7 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B
 
 无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
 
-## Chat 案例 【[完整案例](https://www.tigerbot.com/cases)】
+## 案例 【[完整案例](https://www.tigerbot.com/cases)】
 
 ![image](image/api/case-1.png)
 ![image](image/api/case-2.png)
