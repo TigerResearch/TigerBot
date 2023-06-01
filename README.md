@@ -345,7 +345,7 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B
 
 无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
 
-## 案例 【[完整案例](https://www.tigerbot.com/cases)】
+## 案例
 
 ![image](image/api/case-1.png)
 ![image](image/api/case-2.png)
