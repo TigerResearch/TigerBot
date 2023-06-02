@@ -40,7 +40,7 @@ TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenA
 - [测评](#测评)
 - [API](#API)
 - [案例](#案例)
-- [平台](#平台)
+- [平台](#加入我们)
 
 ## 环境安装
 
@@ -60,7 +60,7 @@ pip install -r requirements.txt
 <summary>Tigerbot-7B</summary>
 
 | Tigerbot-7B                                                                                 | Bits | memory(GB) |
-|---------------------------------------------------------------------------------------------| ---- | ---------- |
+| ------------------------------------------------------------------------------------------- | ---- | ---------- |
 | [tigerbot-7b-base](https://huggingface.co/TigerResearch/tigerbot-7b-base)                   | 16   | 17.2       |
 | [tigerbot-7b-sft](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                     | 16   | 17.2       |
 | [tigerbot-7b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 <summary>Tigerbot-180B</summary>
 
 | Tigerbot-180B                                         | Bits | memory(GB) |
-|-------------------------------------------------------| ---- | ---------- |
+| ----------------------------------------------------- | ---- | ---------- |
 | [tigerbot-180b-sft](https://huggingface.co)           | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g](https://huggingface.co) | 4    | 108.5      |
 
@@ -272,12 +272,12 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 - 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
 
-  | 类型                                                                                | 数量        |
-  | ----------------------------------------------------------------------------------- | ----------- |
-  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇     |
-  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇     |
-  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11类5.5W条款 |
-  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条    |
+  | 类型                                                                                | 数量            |
+  | ----------------------------------------------------------------------------------- | --------------- |
+  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 5000 篇         |
+  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 1000 篇         |
+  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
+  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
 
 ## 测评
 
@@ -354,7 +354,7 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B
 ![image](image/api/case-5.png)
 ![image](image/api/case-6.png)
 
-## 平台
+## 加入我们
 
 #### 产品链接
 
@@ -366,8 +366,8 @@ https://www.tigerbot.com
 
 #### 联系邮箱
 
-<p>cong.fu@tigerobo.com</p>
-<p>wei.cai@tigerobo.com</p>
+<p>cong.fu@tigerbot.com</p>
+<p>wei.cai@tigerbot.com</p>
 
 #### 企业微信
 
