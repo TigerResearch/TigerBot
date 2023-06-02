@@ -162,7 +162,7 @@ deepspeed \
 启动命令行模型推理命如下：
 
 #### 单卡推理
-
+`tigerbot-7b-sft` 推理可在1张RXT3090上进行
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
@@ -170,9 +170,9 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
 
 #### 多卡推理
-
+`tigerbot-180b-sft` 推理可在5张A100(80G)上进行
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python infer.py --model_path ${MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
 
 ### 量化
@@ -186,21 +186,20 @@ cd gptq
 ```
 
 #### 模型量化
-
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型单卡推理
-
+`tigerbot-7b-sft-4bit-128g` 推理可在一张RTX3090上进行
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型多卡推理
-
+`tigerbot-180b-sft-4bit-128g` 推理可在两张A100(80G)上进行
 ```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-180b-sft-4bit-128g.pt
 ```
 
 ## 开源数据集
