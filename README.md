@@ -67,9 +67,9 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-180B-Research</summary>
 
-| Tigerbot-180B-Research                                                                          | Bits | memory(GB) |
-|-------------------------------------------------------------------------------------------------| ---- | ---------- |
-| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                                       | 16   | 347.6      |
+| Tigerbot-180B-Research                                                                             | Bits | memory(GB) |
+| -------------------------------------------------------------------------------------------------- | ---- | ---------- |
+| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                   | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-7b-research-4bit-128g) | 4    | 108.5      |
 
 ## 训练和推理
@@ -152,18 +152,23 @@ deepspeed \
 ```
 
 ### 推理
+
 你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
+
 <p width="100%">
     <img src="image/terminal_case.jpeg" alt="命令行推理" style="width: 100%; min-width: 200px;">
 </p>
 
 启动命令行模型推理命如下：
+
 #### 单卡推理
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
+
 你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
+
 #### 多卡推理
 
 ```
@@ -374,15 +379,12 @@ https://www.tigerbot.com
 <p>cong.fu@tigerbot.com</p>
 <p>wei.cai@tigerbot.com</p>
 
-#### 企业微信
+#### 微信讨论群
 
-<img src="image/contact.jpg" alt="Tiger" style="width: 260px;  "></a>
-
+<img src="image/tigerbot-group-1.png" alt="Tiger" style="width: 260px;  "></a>
 
 ## 局限性与免责声明
 
-当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用TigerBot系列模型生成的内容，请勿将生成的有害内容进行传播。
+当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用 TigerBot 系列模型生成的内容，请勿将生成的有害内容进行传播。
 
 项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
-
-
