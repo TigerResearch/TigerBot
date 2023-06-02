@@ -1,10 +1,11 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from accelerate.utils import get_balanced_memory
-from accelerate import infer_auto_device_map, dispatch_model
-import torch
-import fire
-
 import os
+
+import fire
+import torch
+from accelerate import infer_auto_device_map, dispatch_model
+from accelerate.utils import get_balanced_memory
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 tok_ins = "\n\n### Instruction:\n"
