@@ -152,13 +152,18 @@ deepspeed \
 ```
 
 ### 推理
+你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
+<p width="100%">
+    <img src="image/terminal_case.jpeg" alt="命令行推理" style="width: 100%; min-width: 200px;">
+</p>
 
+启动命令行模型推理命如下：
 #### 单卡推理
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
-
+你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
 #### 多卡推理
 
 ```
