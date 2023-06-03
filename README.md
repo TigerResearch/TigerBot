@@ -307,9 +307,13 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## 测评
 
-在 7 项 NLP 任务上进行模型测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
+在7项英文NLP任务上，对SFT模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
 
-![image](image/auto-valuation.png)
+![image](image/auto-valuation-1.png)
+
+在7项英文NLP任务和4项中文NLP任务上，对Pretrain模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
+
+![image](image/auto-valuation-2.png)
 
 ## API
 
