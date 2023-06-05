@@ -2,6 +2,8 @@ import argparse
 
 import torch
 import quant
+import glob
+from collections import OrderedDict
 
 from utils import find_layers, DEV
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, modeling_utils
@@ -43,7 +45,17 @@ def load_quant(model, checkpoint, wbits, groupsize=-1, fused_mlp=True, eval=True
         from safetensors.torch import load_file as safe_load
         model.load_state_dict(safe_load(checkpoint))
     else:
-        model.load_state_dict(torch.load(checkpoint))
+        cp_files = glob.glob(checkpoint)
+        print(cp_files)
+        if len(cp_files) == 1:
+            model.load_state_dict(torch.load(checkpoint))
+        else:
+            cp_files = sorted(cp_files)
+            state_dic = OrderedDict({})
+            for file in cp_files:
+                state_dic.update(torch.load(file))
+            model.load_state_dict(state_dic)
+            del state_dic
 
     if warmup_autotune:
         quant.autotune_warmup_linear(model, transpose=not (eval))
