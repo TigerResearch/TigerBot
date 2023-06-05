@@ -2,6 +2,7 @@ import os
 
 import fire
 import torch
+import readline
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -82,8 +83,11 @@ def main(
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
         output = model.generate(**inputs, **generation_kwargs)
-        result = tokenizer.decode(output[0], skip_special_tokens=False, spaces_between_special_tokens=False)
-        answer = result.rsplit(tok_res, 1)[1].rstrip(tokenizer.eos_token)
+        answer = ''
+        for tok_id in output[0][inputs['input_ids'].shape[1]:]:
+            if tok_id != tokenizer.eos_token_id:
+                answer += tokenizer.decode(tok_id)
+
         sess_text += tok_res + answer
 
         print("=" * 100)
