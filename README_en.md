@@ -44,8 +44,8 @@ We train our models based on BLOOM and make some optimizations as follows:
 ## Contents
 
 - [Install](#Install)
-- [Model Weights](#Model Weights)
-- [Training and Inference](#Training and Inference)
+- [Model Weights](#Model-Weights)
+- [Training and Inference](#Training-and-Inference)
 - [Datasets](#Datasets)
 - [Evaluation](#Evaluation)
 - [API](#API)
