@@ -309,8 +309,8 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
   | 类型                                                                                | 数量            |
   | ----------------------------------------------------------------------------------- | --------------- |
-  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 5000 篇         |
-  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 1000 篇         |
+  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇         |
+  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇         |
   | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
   | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
 
