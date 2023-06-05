@@ -70,7 +70,7 @@ pip install -r requirements.txt
 | Tigerbot-180B-Research                                                                             | Bits | memory(GB) |
 | -------------------------------------------------------------------------------------------------- | ---- | ---------- |
 | [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                   | 16   | 347.6      |
-| [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-7b-research-4bit-128g) | 4    | 108.5      |
+| [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 ## 训练和推理
 
@@ -187,19 +187,19 @@ cd gptq
 
 #### 模型量化
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save tigerbot-7b-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型单卡推理
-`tigerbot-7b-sft-4bit-128g` 推理可在一张RTX3090上进行
+[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张RTX3090上进行
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-7b-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型多卡推理
-`tigerbot-180b-sft-4bit-128g` 推理可在两张A100(80G)上进行
+[`tigerbot-180b-research-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) 推理可在两张A100(80G)上进行
 ```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load tigerbot-180b-sft-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load {MODEL_DIR}/tigerbot-180b-sft-4bit-128g.pt
 ```
 
 ## 开源数据集
