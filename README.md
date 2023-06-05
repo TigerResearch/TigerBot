@@ -9,10 +9,15 @@
 <p align="center">
 <font face="黑体" color=orange size=5"> 以世界级的基础大模型，贡献于中国式的创新。 </font>
 </p>
-
 <p align="center">
    🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
 </p>
+<h4 align="left">
+    <p>
+        <b>中文说明</b> |
+        <a href="https://github.com/TigerResearch/TigerBot/blob/main/README_en.md">English</a>
+    <p>
+</h4>
 
 ## 最近更新
 
