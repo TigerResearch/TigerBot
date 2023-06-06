@@ -166,8 +166,6 @@ You can infer with command line. Input `clear` to clean history and input `exit`
     <img src="image/terminal_case.jpeg" alt="命令行推理" style="width: 100%; min-width: 200px;">
 </p>
 
-Commands to infer
-
 #### Infer with single GPU
 
 `tigerbot-7b-sft` can be loaded for inference on RXT3090 GPU
