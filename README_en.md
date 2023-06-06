@@ -18,7 +18,7 @@
 
 ## News
 
-TigerBot is a multi-language and multitask LLM. We evaluated our MVP model on public NLP datasets and found that our
+TigerBot is a series of multi-language and multitask LLMs. We evaluated our MVP model on public NLP datasets and found that our
 model reached 96% of performance of OpenAI InstructGPT at the same model size. We hereby open-source our explorations as following:
 
 - Model：TigerBot-7B, TigerBot-7B-base，TigerBot-180B (research version),
