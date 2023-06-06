@@ -14,7 +14,7 @@
 </p>
 <h4 align="left">
     <p>
-        <b>中文说明</b> |
+        <b>中文</b> |
         <a href="https://github.com/TigerResearch/TigerBot/blob/main/README_en.md">English</a>
     <p>
 </h4>

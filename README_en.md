@@ -18,9 +18,8 @@
 
 ## News
 
-TigerBot is a multi-language and multitask LLM. We evaluate our MVP model on public NLP datasets and find that our
-model reach 96% of performance of OpenAI InstructGPT
-at the same model size. We opensource our explorations as following:
+TigerBot is a multi-language and multitask LLM. We evaluated our MVP model on public NLP datasets and found that our
+model reached 96% of performance of OpenAI InstructGPT at the same model size. We hereby open-source our explorations as following:
 
 - Model：TigerBot-7B, TigerBot-7B-base，TigerBot-180B (research version),
 - Code:
@@ -28,18 +27,15 @@ at the same model size. We opensource our explorations as following:
     2. Model quantization with GPTQ.
     3. Inference on single GPU or multiple GPUs.
 - Data:
-    1. Pre-training data: 100 GB pretraining data deduplicated and filtered low quality content from 2TB corpus.
-    2. SFT data: 1 GB (millions of) textual instructions. This dataset consists of 10 major user-instruction categories
-       and 120 subcategories.
+    1. Pre-training data: 100GB pretraining data deduplicated and filtered low quality content from 2TB corpus.
+    2. SFT data: 1GB (millions of) textual instructions. This dataset consists of 10 major user-instruction categories and 120 subcategories.
     3. Domain-specific data: We provide data into different domains: finance, law, and wikipedia.
-- API: We provide APIs including chat, plugin, and finetune which allow users to create their own models and
-  applications easily.
+- API: We provide APIs including chat, plugin, and finetune which allow users to create their own models and applications easily.
 
 We train our models based on BLOOM and make some optimizations as follows:
 
-- Creative algorithms to make model more learnability in supervised fine-tuning.
-- Improve the memory management and multi-node communication of distributed training with deepspeed. It guarantees
-  months model training without failures.
+- Stringer and more elegant supervised learning algorithms to achieve higher learnability in supervised fine-tuning.
+- Improve the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu enviroment with zero downtime.
 
 ## Contents
 
