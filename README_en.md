@@ -193,7 +193,7 @@ go to the path of gptq
 cd gptq
 ```
 
-#### Model Quantization
+#### Model quantization
 
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
@@ -223,7 +223,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## Datasets
 
-### Pretraining datasets
+### Pretraining Datasets
 
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>Chinese Pretraining Corpus - 55G [hugging face]</a>
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>English Pretraining Corpus - 51G [hugging face]</a>
@@ -252,13 +252,13 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ### Supervised Fine-tuning Datasets
 
-#### Data Collection
+#### Data collection
 - We collect SFT data as follows:
   a. self-instruct
   b. human-labeling
   c. open-source data cleaning
 
-#### Data Cleaning
+#### Data cleaning
 We clean and filter data as follows:
 - rule-based and keyword-based ways to filter low quality and unsafe contents.
 - deduplicate
@@ -314,7 +314,7 @@ Results against bloom-7b1.
 
 TigerBot provide APIs including Chat-API，Plug-ins，Fine-Tunes.
 
-### How to use API
+### How to Use APIs
 
 ```python
 import requests
