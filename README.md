@@ -172,8 +172,6 @@ deepspeed \
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
 
-你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
-
 #### 多卡推理
 `tigerbot-180b-sft` 推理可在5张A100(80G)上进行
 ```
