@@ -205,7 +205,6 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order 
 
 [`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) can be loaded for
 inference on RXT3090 GPU
-inference on RXT3090 GPU
 
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
@@ -270,7 +269,7 @@ We clean and filter data as follows:
 - 1200K Instruction-following dataset (download it from huggingface)
 
   | Type         | Language | Dataset                                                                                                                           | Number | Source |
-  | ------------ | ---- |--------|----| ------ |
+  |--| ---- |--------|----| ------ |
   | alpaca-zh  | zh | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)                                 | 500K   | TigerBot |
   | wiki-qa     | zh | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)                                      | 1K     | TigerBot |
   | book-qa     | zh | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)                                         | 1K     | TigerBot |
@@ -283,13 +282,13 @@ We clean and filter data as follows:
   | classify         | en | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2K     | Public |
   | math     | en | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                                           | 8K     | Public |
   | code         | en | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2K     | TigerBot |
-  | recipe     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2K     | Public |
-  | medical-note     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 0.45K  | Public |
-  | multi-run   | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)                     | 50K    | TigerBot |
-  | general     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)             | 500K    | Public |
-  | wiki-qa    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)                       | 10K     | Public |
-  | youtube-howto | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50K     | Public |
-  | **Total**     |      |                                                                                                                                  | **1200K** |
+  | recipe     | en | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2K     | Public |
+  | medical-note     | en | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 0.45K  | Public |
+  | multi-run   | en | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)                     | 50K    | TigerBot |
+  | general     | en | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)             | 500K    | Public |
+  | wiki-qa    | en | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)                       | 10K     | Public |
+  | youtube-howto | en | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50K     | Public |
+  | **Total**     |  |                                                                                                                                  | **1200K** |
 
 
 ### Domain-specific Data
@@ -304,12 +303,12 @@ We clean and filter data as follows:
 
 ## Evaluation
 We evaluate our SFT models on seven public NLP datasets, and compare these with OpenAI-InstructGPT. 
-The base is OpenAI-InstructGPT-6B-SFT.
+Results against OpenAI-InstructGPT-6B-SFT.
 
 ![image](image/auto-valuation-1.png)
 
 We evaluate our Pretrained models on seven public NLP datasets.
-The base is bloom-7b1.
+Results against bloom-7b1.
 
 ![image](image/auto-valuation-2.png)
 
