@@ -32,10 +32,12 @@ model reached 96% of performance of OpenAI InstructGPT at the same model size. W
     3. Domain-specific data: We provide data into different domains: finance, law, and wikipedia.
 - API: We provide APIs including chat, plugin, and finetune which allow users to create their own models and applications easily.
 
-We train our models based on BLOOM and make some optimizations as follows:
+We pretrained and supervised fine-tuned our models, starting from a vanilla BLOOM, and made some algorithmic innovations so far:
 
-- Stringer and more elegant supervised learning algorithms to achieve higher learnability in supervised fine-tuning.
-- Improve the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu enviroment with zero downtime.
+- A stronger yet more elegant supervised learning algorithms to achieve higher learnability in supervised fine-tuning.
+- We implemented a probabilistic modeling and ensemble approach to achieve better factuality and generativeness.
+- We improved the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu enviroment with zero downtime.
+- We used a specialized tokenizer and supervised training algorithm better suited for otherwise more skewed Chinese language distribution.
 
 ## Contents
 
