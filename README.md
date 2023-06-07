@@ -425,7 +425,7 @@ https://www.tigerbot.com
 
 #### 微信讨论群
 
-<img src="image/qiyeweichat.png" alt="Tiger" style="width: 260px;  "></a>
+<img src="image/contact2.png" alt="Tiger" style="width: 260px;  "></a>
 
 ## 局限性与免责声明
 
