@@ -72,9 +72,9 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-180B-Research</summary>
 
-| Tigerbot-180B-Research                                                                             | Bits | memory(GB) |
-| -------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                   | 16   | 347.6      |
+| Tigerbot-180B-Research                                                                               | Bits | memory(GB) |
+| ---------------------------------------------------------------------------------------------------- | ---- | ---------- |
+| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                     | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 ## 训练和推理
@@ -167,13 +167,17 @@ deepspeed \
 启动命令行模型推理命如下：
 
 #### 单卡推理
-`tigerbot-7b-sft` 推理可在1张RXT3090上进行
+
+`tigerbot-7b-sft` 推理可在 1 张 RXT3090 上进行
+
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
 
 #### 多卡推理
-`tigerbot-180b-sft` 推理可在5张A100(80G)上进行
+
+`tigerbot-180b-sft` 推理可在 5 张 A100(80G)上进行
+
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
@@ -189,22 +193,29 @@ cd gptq
 ```
 
 #### 模型量化
+
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型单卡推理
-[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张RTX3090上进行
+
+[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张 RTX3090 上进行
+
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
 
 #### 量化模型多卡推理
-[`tigerbot-180b-research-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) 推理可在两张A100(80G)上进行
+
+[`tigerbot-180b-research-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) 推理可在两张 A100(80G)上进行
+
 ```
 CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load {MODEL_DIR}/tigerbot-4bit-128g.pt
 ```
+
 若量化模型为多个分片存储，推理命令如下
+
 ```
 CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load "{MODEL_DIR}/tigerbot-4bit-128g-*.pt"
 ```
@@ -255,23 +266,25 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
   d. open-source data cleaning: 基于各类公开数据集转换清洗，其中[自研*]部分，表示基于原始数据进行二次开发后得到，[开源]部分数据集一般原始数据即为较规整的问答数据，进行简单清洗得到；
 
   e. 总的数据分布符合用户指令自然分布。
-  
+
 #### 数据清洗
 
-- 由于各类数据质量存在差异，通过Alpaca Self-Instruct生成的数据亦存在各种问题。因此，我们经过细致的人工校验和分类，总结出一套全面且系统化的数据清洗规则与方法。
+- 由于各类数据质量存在差异，通过 Alpaca Self-Instruct 生成的数据亦存在各种问题。因此，我们经过细致的人工校验和分类，总结出一套全面且系统化的数据清洗规则与方法。
 - 整体规则可以划分为**过滤类规则**和**清洗类规则**两大类。其中，命中过滤规则的数据项将被弃用，而清洗规则旨在处理并保留所需的数据。
 - 同时，在数据梳理与积累的过程中，我们也不断对清洗规则进行迭代和优化。
 - 通用清洗规则描述如下所示：
- 
+
   a. 过滤类-敏感词规则：基于积累的敏感词库，清洗丢弃涉政、涉黄、涉暴、涉恐等数据项；
-  
-  b. 过滤类-无效输入输出：此类规则主要针对Self-Instruct生成数据缺陷进行专项清理，根据输入输出分别制定规则，以丢弃一些无效的数据项；
-    > 无效输入如"<一段文本>"，无效输出如"[图画]"；
-  
+
+  b. 过滤类-无效输入输出：此类规则主要针对 Self-Instruct 生成数据缺陷进行专项清理，根据输入输出分别制定规则，以丢弃一些无效的数据项；
+
+  > 无效输入如"<一段文本>"，无效输出如"[图画]"；
+
   c. 清洗类-关键词规则：根据整理的关键词/正则列表进行数据的替换，包括：清理特殊标志位字符、清理非可见字符、清理标签、繁简转换等；
-  
+
   d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数据，如指令与输入重复等，如下所示：
-    > ```{"instruction": "描述如何做一道红烧肉。请提供食材和详细的步骤。", "input": "请描述如何做一道红烧肉，提供食材和详细步骤。", ...}```
+
+  > `{"instruction": "描述如何做一道红烧肉。请提供食材和详细的步骤。", "input": "请描述如何做一道红烧肉，提供食材和详细步骤。", ...}`
 
 #### 数据开源
 
@@ -307,18 +320,18 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
   | 类型                                                                                | 数量            |
   | ----------------------------------------------------------------------------------- | --------------- |
-  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇         |
+  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇           |
   | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇         |
   | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
   | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
 
 ## 测评
 
-在7项英文NLP任务上，对SFT模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
+在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation-1.png)
 
-在7项英文NLP任务和4项中文NLP任务上，对Pretrain模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
+在 7 项英文 NLP 任务和 4 项中文 NLP 任务上，对 Pretrain 模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation-2.png)
 
@@ -383,6 +396,7 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B
 无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
 
 ## 案例
+
 <details><summary><b>生成案例</b></summary>
 
 ![image](./image/api/case-1.png)
@@ -411,7 +425,7 @@ https://www.tigerbot.com
 
 #### 微信讨论群
 
-<img src="image/contact.png" alt="Tiger" style="width: 260px;  "></a>
+<img src="image/qiyeweichat.png" alt="Tiger" style="width: 260px;  "></a>
 
 ## 局限性与免责声明
 
