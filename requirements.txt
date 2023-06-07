@@ -1,7 +1,7 @@
 safetensors==0.3.0
 datasets==2.10.1
 accelerate==0.17.1
-triton==2.0.0
+triton==2.0.0.post1
 protobuf==3.20.2
 transformers==4.28.1
 scikit-learn==1.0.2
