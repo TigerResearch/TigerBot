@@ -2,6 +2,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import fire
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 
 def main(
     model_path: str="TigerResearch/tigerbot-7b-base",
