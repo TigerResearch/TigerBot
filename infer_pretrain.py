@@ -64,7 +64,7 @@ def main(
     }
 
     while True:
-        raw_text = input("prompt >>> ")
+        raw_text = input("prompt(\"exit\" to end) >>> ")
         if not raw_text:
             print('prompt should not be empty!')
             continue
