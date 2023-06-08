@@ -46,6 +46,9 @@ TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenA
 - [API](#API)
 - [案例](#案例)
 - [加入我们](#加入我们)
+- [致谢](#致谢)
+- [友情链接](#友情链接)
+- [局限性与免责声明](#局限性与免责声明)
 
 ## 环境安装
 
@@ -426,8 +429,21 @@ https://www.tigerbot.com
 
 <img src="image/contact2.png" alt="Tiger" style="width: 260px;  "></a>
 
+- [致谢](#致谢)
+- [友情链接](#友情链接)
+- [局限性与免责声明](#局限性与免责声明)
+
+## 致谢
+- [Bloom](https://arxiv.org/abs/2211.05100): 我们基于Bloom架构进行训练
+- [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
+
+## 友情链接
+
+- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab版本体验TigerBot
+- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在Windows系统上使用TigerBot
+
 ## 局限性与免责声明
 
 当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用 TigerBot 系列模型生成的内容，请勿将生成的有害内容进行传播。
 
-项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
+如需将模型公开使用或者商用，模型服务所产生的不良影响或者有害言论由服务方负责，本项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
