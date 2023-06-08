@@ -446,6 +446,7 @@ https://www.tigerbot.com
 
 - [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab版本体验TigerBot
 - [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在Windows系统上使用TigerBot
+- [Run TigerBot on langchain and webui](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot) 基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现
 
 ## 局限性与免责声明
 
