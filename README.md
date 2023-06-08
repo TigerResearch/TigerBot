@@ -168,7 +168,7 @@ deepspeed \
 
 #### 单卡推理
 
-`tigerbot-7b-sft` 推理可在 1 张 RXT3090 上进行
+`tigerbot-7b-sft` 推理可在 1 张 RXT3090 上进行, `tigerbot-7b-sft-4bit-128g`量化版本模型需要参照[量化](###量化)模块的推理代码。
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
@@ -187,7 +187,6 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
 切换到 gptq 目录
-
 ```
 cd gptq
 ```
@@ -201,7 +200,7 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order 
 #### 量化模型单卡推理
 
 [`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张 RTX3090 上进行
-
+其中，`${MODEL_DIR}` 为你的模型配置文件路径，
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
