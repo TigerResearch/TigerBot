@@ -50,8 +50,8 @@ def main(
         padding=True,
         truncation=True
     )
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > 1024:
-        tokenizer.model_max_length = 1024
+    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
+        tokenizer.model_max_length = max_generate_length
 
     generation_kwargs = {
         "top_p": 0.95,
