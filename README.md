@@ -69,16 +69,16 @@ pip install -r requirements.txt
 
 | Tigerbot-7B                                                                                 | Bits | memory(GB) |
 | ------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-7b-base](https://huggingface.co/TigerResearch/tigerbot-7b-base)                   | 16   | 17.2       |
-| [tigerbot-7b-sft](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                     | 16   | 17.2       |
-| [tigerbot-7b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
+| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                     | 16   | 17.2       |
+| [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base)                   | 16   | 17.2       |
+| [tigerbot-7b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
 
 <summary>Tigerbot-180B-Research</summary>
 
 | Tigerbot-180B-Research                                                                               | Bits | memory(GB) |
 | ---------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                     | 16   | 347.6      |
-| [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
+| [tigerbot-180b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-180b-research)                     | 16   | 347.6      |
+| [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 ## 训练和推理
 
