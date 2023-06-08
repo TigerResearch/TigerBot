@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import fire
+import os
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
