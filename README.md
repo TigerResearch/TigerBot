@@ -176,6 +176,11 @@ deepspeed \
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
+`tigerbot-7b-base` 则用续写（非问答）的推理代码。
+
+```
+CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
+```
 
 #### 多卡推理
 
