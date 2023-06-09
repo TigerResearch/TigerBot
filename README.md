@@ -19,7 +19,11 @@
     <p>
 </h4>
 
-## 最近更新
+## 最新更新
+
+- [6/08/2023] TigerBot已经可以在colab, windows, langchang和webui跑啦(#友情链接)，感谢 @wordweb @runfuture !
+
+## 摘要
 
 TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenAI InstructGPT 论文在公开 NLP 数据集上的自动评测，TigerBot-7B 达到 OpenAI 同样大小模型的综合表现的 96%，并且这只是我们的 MVP，在此我们将如下探索成果开源：
 
