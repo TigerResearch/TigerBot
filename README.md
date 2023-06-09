@@ -311,8 +311,8 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 #### 数据开源
 
 - 指令数据集, 当前开源 120W 问答对，磁盘空间 1.1G (数据集开放到 huggingface，中英文指令明细及下载如下表）
-- <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>中文-微调指令集-合集-53W条-下载 [hugging face]</a>
-- <a href=https://huggingface.co/datasets/TigerResearch/sft_en>英文-微调指令集-合集-67W条-下载 [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>中文-微调指令集-合集 - 53W条 - 下载 [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_en>英文-微调指令集-合集 - 67W条 - 下载 [hugging face]</a>
 
   | 类型         | 语言 | 数据集                                                                                                                           | 数量        | 来源   |
   | ------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------ |
