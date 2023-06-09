@@ -115,7 +115,7 @@ def main(
             break
         if raw_text.strip() == "clear":
             print('session cleared.')
-            sess_text = ""
+            history = []
             continue
         print("=" * 100)
         res_len = 0
