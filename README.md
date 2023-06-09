@@ -21,6 +21,7 @@
 
 ## 最新更新
 
+- [6/09/2023] 新增stream infer和web demo，感谢 @Tlntin ！
 - [6/08/2023] TigerBot已经可以在[colab, windows, langchang和webui](#友情链接)上跑啦，感谢 @wordweb @runfuture !
 
 ## 摘要
