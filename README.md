@@ -21,7 +21,7 @@
 
 ## 最新更新
 
-- [6/08/2023] TigerBot已经可以在colab, windows, langchang和webui跑啦[友情链接](#友情链接)，感谢 @wordweb @runfuture !
+- [6/08/2023] TigerBot已经可以在colab, windows, langchang和webui跑啦（[友情链接]）(#友情链接)，感谢 @wordweb @runfuture !
 
 ## 摘要
 
