@@ -169,9 +169,24 @@ You can infer with command line. Input `clear` to clean history and input `exit`
 #### Infer with single GPU
 
 `tigerbot-7b-sft` can be loaded for inference on RXT3090 GPU
-
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
+```
+
+If you want to enable streaming output, please replace `infer.py` with `infer_stream.py`, and the output will change from one-shot output to sentence-by-sentence output.
+```
+CUDA_VISIBLE_DEVICES=0 python infer_stream.py --model_path ${MODEL_DIR}
+```
+
+If you want to enable the web interface for Q&A, change the model path corresponding to model_path on line 12 of `web_demo.py` to the path where your model is located, and then run the following command to enable the web interface.
+```
+CUDA_VISIBLE_DEVICES=0 python web_demo.py
+```
+
+`tigerbot-7b-base` uses continuation (non-question answering) inference code.
+
+```
+CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
 
 #### Infer with multiple GPUS
