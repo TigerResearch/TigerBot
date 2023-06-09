@@ -180,11 +180,21 @@ deepspeed \
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
+如果要启用流式输出，请将`infer.py`换成`infer_stream.py`，输出将从一次性输出变成逐句输出。
+```
+CUDA_VISIBLE_DEVICES=0 python infer_stream.py --model_path ${MODEL_DIR}
+```
+如果要启用web界面进行问答，将`web_demo.py`第12行的model_path对应的模型路径改成你的模型所在路径即可，然后运行下面的命令启用web界面。
+```
+CUDA_VISIBLE_DEVICES=0 python web_demo.py
+```
+
 `tigerbot-7b-base` 则用续写（非问答）的推理代码。
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
+
 
 #### 多卡推理
 
