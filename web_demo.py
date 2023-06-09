@@ -122,8 +122,8 @@ with gr.Blocks() as demo:
                 submitBtn = gr.Button("Submit", variant="primary")
         with gr.Column(scale=1):
             emptyBtn = gr.Button("Clear History")
-            max_input_length = gr.Slider(0, 512, value=1024, step=1.0, label="Maximum input length", interactive=True)
-            max_generate_length = gr.Slider(0, 1024, value=2048, step=1.0, label="Maximum generate length", interactive=True)
+            max_input_length = gr.Slider(0, 1024, value=512, step=1.0, label="Maximum input length", interactive=True)
+            max_generate_length = gr.Slider(0, 2048, value=1024, step=1.0, label="Maximum generate length", interactive=True)
             top_p = gr.Slider(0, 1, value=0.7, step=0.01, label="Top P", interactive=True)
             temperature = gr.Slider(0, 1, value=0.95, step=0.01, label="Temperature", interactive=True)
 
