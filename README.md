@@ -21,8 +21,8 @@
 
 ## 最新更新
 
-- [6/09/2023] 新增stream infer和web demo，感谢 @Tlntin ！
-- [6/08/2023] TigerBot已经可以在[colab, windows, langchang和webui](#友情链接)上跑啦，感谢 @wordweb @runfuture !
+- [6/09/2023] 新增 stream infer 和 web demo，感谢 @Tlntin ！
+- [6/08/2023] TigerBot 已经可以在[colab, windows, langchang 和 webui](#友情链接)上跑啦，感谢 @wordweb @runfuture !
 
 ## 摘要
 
@@ -72,17 +72,17 @@ pip install -r requirements.txt
 
 <summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                                                                 | Bits | memory(GB) |
-| ------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                     | 16   | 17.2       |
-| [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base)                   | 16   | 17.2       |
+| Tigerbot-7B                                                                                               | Bits | memory(GB) |
+| --------------------------------------------------------------------------------------------------------- | ---- | ---------- |
+| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                      | 16   | 17.2       |
+| [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base)              | 16   | 17.2       |
 | [tigerbot-7b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
 
 <summary>Tigerbot-180B-Research</summary>
 
-| Tigerbot-180B-Research                                                                               | Bits | memory(GB) |
-| ---------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-180b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-180b-research)                     | 16   | 347.6      |
+| Tigerbot-180B-Research                                                                                             | Bits | memory(GB) |
+| ------------------------------------------------------------------------------------------------------------------ | ---- | ---------- |
+| [tigerbot-180b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-180b-research)                      | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 ## 训练和推理
@@ -181,11 +181,15 @@ deepspeed \
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
+
 如果要启用流式输出，请将`infer.py`换成`infer_stream.py`，输出将从一次性输出变成逐句输出。
+
 ```
 CUDA_VISIBLE_DEVICES=0 python infer_stream.py --model_path ${MODEL_DIR}
 ```
-如果要启用web界面进行问答，将`web_demo.py`第12行的model_path对应的模型路径改成你的模型所在路径即可，然后运行下面的命令启用web界面。
+
+如果要启用 web 界面进行问答，将`web_demo.py`第 12 行的 model_path 对应的模型路径改成你的模型所在路径即可，然后运行下面的命令启用 web 界面。
+
 ```
 CUDA_VISIBLE_DEVICES=0 python web_demo.py
 ```
@@ -195,7 +199,6 @@ CUDA_VISIBLE_DEVICES=0 python web_demo.py
 ```
 CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
-
 
 #### 多卡推理
 
@@ -210,6 +213,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
 切换到 gptq 目录
+
 ```
 cd gptq
 ```
@@ -224,6 +228,7 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order 
 
 [`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张 RTX3090 上进行
 其中，`${MODEL_DIR}` 为你的模型配置文件路径，
+
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
 ```
@@ -311,8 +316,8 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 #### 数据开源
 
 - 指令数据集, 当前开源 120W 问答对，磁盘空间 1.1G (数据集开放到 huggingface，中英文指令明细及下载如下表）
-- <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>中文-微调指令集-合集 - 53W条 - 下载 [hugging face]</a>
-- <a href=https://huggingface.co/datasets/TigerResearch/sft_en>英文-微调指令集-合集 - 67W条 - 下载 [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>中文-微调指令集-合集 - 53W 条 - 下载 [hugging face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_en>英文-微调指令集-合集 - 67W 条 - 下载 [hugging face]</a>
 
   | 类型         | 语言 | 数据集                                                                                                                           | 数量        | 来源   |
   | ------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------ |
@@ -406,7 +411,7 @@ print(response.text)
 
 ### [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
 
-Chat-API 为 TigerBot 对外提供的可直接使用的 api，支持 Tigerbot-7B 和 Tigerbot-180B 两种模型的选择
+Chat-API 为 TigerBot 对外提供的可直接使用的 api，当前支持 Tigerbot-7B
 
 ### [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
 
@@ -456,14 +461,14 @@ https://www.tigerbot.com
 - [局限性与免责声明](#局限性与免责声明)
 
 ## 致谢
-- [Bloom](https://arxiv.org/abs/2211.05100): 我们基于Bloom架构进行训练
+
+- [Bloom](https://arxiv.org/abs/2211.05100): 我们基于 Bloom 架构进行训练
 - [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
 
 ## 友情链接
 
-- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab版本体验TigerBot
-- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在Windows系统上使用TigerBot
-- [Run TigerBot on langchain and webui](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot) 基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现
+- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
+- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在 Windows 系统上使用 TigerBot
 
 ## 局限性与免责声明
 
