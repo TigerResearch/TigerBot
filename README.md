@@ -117,7 +117,7 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 如果返回的结果是(8, 0)，那么 TORCH_CUDA_ARCH_LIST="8.0"
 
 #### 启动训练
-
+启动`tigerbot-7b`训练至少需要1 x A100 (40GB), 启动`tigerbot-180b`至少需要16 x A100 (40GB)
 ```
 deepspeed \
 --include="localhost:0,1,2,3" \
@@ -144,7 +144,7 @@ deepspeed \
 ```
 
 ### 微调
-
+启动`tigerbot-7b`训练至少需要1 x A100 (40GB), 启动`tigerbot-180b`至少需要16 x A100 (40GB)
 #### 启动训练
 
 ```
