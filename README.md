@@ -86,11 +86,13 @@ pip install -r requirements.txt
 | [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 
-除了在huggingface上加载外，还可以通过以下链接下载模型压缩文件
+除了在huggingface上加载外，还可以通过以下链接下载模型打包文件
 
 [tigerbot-7b-sft (chat model)](https://resource.tigerbot.com/opensource/tigerbot-7b-sft-0ba4d6f.tar)
 
 [tigerbot-7b-sft-4bit-128g (quant model)](https://resource.tigerbot.com/opensource/tigerbot-7b-sft-4bit-128g-5483954.tar)
+
+[tigerbot-180b-sft-4bit-128g (quant model)](https://resource.tigerbot.com/opensource/tigerbot-180b-research-4bit-128g-a72c4eb.tar)
 
 
 ## 训练和推理
