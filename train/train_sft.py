@@ -67,18 +67,16 @@ def main():
     if sft_config.dataset_name:
         ds = datasets.load_dataset(sft_config.dataset_name)
         train_ds, validation_ds = ds['train'], ds['validation']
+        raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
     else:
         # Split 20% of train data as validation data
         if not sft_config.validate_file_path:
             train_ds, validation_ds = datasets.load_dataset('json', data_files=sft_config.train_file_path,
                                                             split=['train[:80%]', 'train[80%:]'])
+            raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
         else:
-            train_ds = datasets.load_dataset("json", data_files=sft_config.train_file_path)
-            validation_ds = datasets.load_dataset("json", data_files=sft_config.validate_file_path)
-
-    raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
-    column_names = raw_datasets["train"].column_names if training_args.do_train else raw_datasets[
-        "validation"].column_names
+            raw_datasets = datasets.load_dataset("json", data_files={'train': sft_config.train_file_path,
+                                                                     'validation': sft_config.validate_file_path})
 
     def process_supervised(record):
         input_s = record['instruction'] + '\n' + (record['input'] or '')
@@ -86,6 +84,9 @@ def main():
         tokenized = tokenizer([input_s, output_s])
         token_ids = [tok_id for tok_ids in tokenized['input_ids'] for tok_id in tok_ids]
         attention_mask = [mask for masks in tokenized['attention_mask'] for mask in masks]
+        if token_ids[-1] != tokenizer.eos_token_id:
+            token_ids += [tokenizer.eos_token_id]
+            attention_mask += [1]
         processed_record = {
             "input_ids": token_ids[:sft_config.max_length],
             "attention_mask": attention_mask[:sft_config.max_length],

@@ -66,21 +66,24 @@ def main():
     if pretrain_config.dataset_name:
         ds = datasets.load_dataset(pretrain_config.dataset_name)
         train_ds, validation_ds = ds['train'], ds['validation']
+        raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
     else:
         # Split 20% of train data as validation data
         if not pretrain_config.validate_file_path:
             train_ds, validation_ds = datasets.load_dataset('json', data_files=pretrain_config.train_file_path,
                                                             split=['train[:80%]', 'train[80%:]'])
+            raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
         else:
-            train_ds = datasets.load_dataset("json", data_files=pretrain_config.train_file_path)
-            validation_ds = datasets.load_dataset("json", data_files=pretrain_config.validate_file_path)
+            raw_datasets = datasets.load_dataset("json", data_files={'train': pretrain_config.train_file_path,
+                                                                     'validation': pretrain_config.validate_file_path})
 
-    raw_datasets = datasets.DatasetDict({"train": train_ds, "validation": validation_ds})
     column_names = raw_datasets["train"].column_names if training_args.do_train else raw_datasets[
         "validation"].column_names
 
     def process_pretrain(batch):
-        tokenized = tokenizer(batch[pretrain_config.text_key_name])
+        texts = batch[pretrain_config.text_key_name]
+        texts = [text if text.endswith(tokenizer.eos_token) else text + tokenizer.eos_token for text in texts]
+        tokenized = tokenizer(texts)
         for k in tokenized.keys():
             batch[k] = [e[:pretrain_config.max_length] for e in tokenized[k]]
         batch['labels'] = batch['input_ids'].copy()
