@@ -92,7 +92,7 @@ def main():
             "labels": token_ids.copy()[:sft_config.max_length]
         }
         # ignore input label, label is ignored if value is -100
-        processed_record["labels"][:len(tokenized["input_ids"][0])] = [-100] * len(tokenized["input_ids"][0])
+        processed_record["labels"][:min(len(tokenized["input_ids"][0]), sft_config.max_length)] = [-100] * min(len(tokenized["input_ids"][0]), sft_config.max_length)
         return {k: torch.tensor(v, dtype=torch.int) for k, v in processed_record.items()}
 
     with training_args.main_process_first(desc="Process supervised dataset"):
