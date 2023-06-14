@@ -168,7 +168,7 @@ You can infer with command line. Input `clear` to clean history and input `exit`
 
 #### Infer with single GPU
 
-`tigerbot-7b-sft` can be loaded for inference on RXT3090 GPU
+`tigerbot-7b-sft` can be loaded for inference on RTX3090 GPU
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
@@ -217,7 +217,7 @@ CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order 
 #### Quantized model infer with single GPU
 
 [`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) can be loaded for
-inference on RXT3090 GPU
+inference on RTX3090 GPU
 
 ```
 CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
