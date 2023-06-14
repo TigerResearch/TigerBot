@@ -95,8 +95,9 @@ pip install -r requirements.txt
 
 [tigerbot-7b-sft-4bit-128g (quant model)](https://resource.tigerbot.com/opensource/tigerbot-7b-sft-4bit-128g-5483954.tar)
 
-[tigerbot-180b-sft-4bit-128g (quant model)](https://resource.tigerbot.com/opensource/tigerbot-180b-research-4bit-128g-a72c4eb.tar)
+[tigerbot-180b-sft (chat model)](https://resource.tigerbot.com/opensource/tigerbot-180b-research-28ff41f.tar)
 
+[tigerbot-180b-sft-4bit-128g (quant model)](https://resource.tigerbot.com/opensource/tigerbot-180b-research-4bit-128g-a72c4eb.tar)
 
 ## 训练和推理
 
