@@ -190,7 +190,7 @@ deepspeed \
 
 #### 单卡推理
 
-`tigerbot-7b-sft` 推理可在 1 张 RXT3090 上进行, `tigerbot-7b-sft-4bit-128g`量化版本模型需要参照[量化](###量化)模块的推理代码。
+`tigerbot-7b-sft` 推理可在 1 张 RTX3090 上进行, `tigerbot-7b-sft-4bit-128g`量化版本模型需要参照[量化](###量化)模块的推理代码。
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
