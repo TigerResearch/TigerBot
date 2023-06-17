@@ -95,7 +95,7 @@ pip install -r requirements.txt
 启动训练前安装 DeepSpeed
 
 ```
-git clone https://github.com/microsoft/DeepSpeed/
+git clone git@github.com:microsoft/DeepSpeed.git
 cd DeepSpeed
 rm -rf build
 TORCH_CUDA_ARCH_LIST="8.0" DS_BUILD_CPU_ADAM=1 DS_BUILD_UTILS=1 pip install . \
