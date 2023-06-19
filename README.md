@@ -88,6 +88,8 @@ pip install -r requirements.txt
 | [tigerbot-180b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-180b-research)                      | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
+除了huggingface，模型也可以从[百度网盘](https://pan.baidu.com/s/1rcRs2MISGmcrZTZF06pVdg?pwd=0726)获取（其中tigerbot-180b-sft需要下载part1/part2两部分）
+
 ## 训练和推理
 
 ### 预训练
