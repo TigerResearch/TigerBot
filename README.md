@@ -478,6 +478,7 @@ https://www.tigerbot.com
 ## 友情链接
 
 - [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](https://github.com/wordweb/Tiger-qq-bot)
+- [基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot)
 - [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
 - [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在 Windows 系统上使用 TigerBot
 
