@@ -20,7 +20,7 @@
 </h4>
 
 ## 最新发布
-- [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用 感谢 @wordweb ！
+- [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
 <p align="center" width="100%">
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
