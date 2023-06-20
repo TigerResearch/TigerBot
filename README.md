@@ -20,7 +20,10 @@
 </h4>
 
 ## 最新发布
-
+- [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用 感谢 @wordweb ！
+<p align="center" width="100%">
+	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
 - [6/13/2023] plug-in api升级，放出：[搜索结果数量、prompt前缀和tf-idf, embedding mixture weights](#API)
 - [6/13/2023] 模型已支持更迅速的[本地下载](#模型下载)
 - [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](#友情链接)，感谢 @wordweb ！
