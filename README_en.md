@@ -256,7 +256,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 - Distribution of Pre-training Data
 
 <p align="center" width="100%">
-<img src="image/pretrain.png" alt="Tiger" style="width: 65%; display: block; margin: auto;"></a>
+<img src="image/pretrain_v2.png" alt="Tiger" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
 - Distribution of zh-book and coding data.
