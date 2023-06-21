@@ -26,7 +26,7 @@ def get_model(model):
 
 
 def main(
-    model_path: str = "tigerbot-7b-sft",
+    model_path: str,
     max_input_length: int = 512,
     max_generate_length: int = 1024,
 ):
