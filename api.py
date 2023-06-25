@@ -90,7 +90,7 @@ async def create_item(request: Request):
         "status": 200,
         "time": time
     }
-    log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(response) + '"'
+    # log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(response) + '"'
     # print(log)
     torch_gc()
     return answer
@@ -177,6 +177,7 @@ async def stream_chat(request: Request):
                     temperature=temperature,
                 )
                 await asyncio.sleep(STREAM_DELAY)
+    torch_gc()
     return EventSourceResponse(
         event_generator(
             prompt,
