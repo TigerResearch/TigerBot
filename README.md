@@ -195,19 +195,19 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 如果要启用流式输出，请将`infer.py`换成`infer_stream.py`，输出将从一次性输出变成逐句输出。
 
 ```
-CUDA_VISIBLE_DEVICES=0 python infer_stream.py --model_path ${MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0 python ./infer/infer_stream.py --model_path ${MODEL_DIR}
 ```
 
 如果要启用 web 界面进行问答，将`web_demo.py`第 12 行的 model_path 对应的模型路径改成你的模型所在路径即可，然后运行下面的命令启用 web 界面。
 
 ```
-CUDA_VISIBLE_DEVICES=0 python web_demo.py
+CUDA_VISIBLE_DEVICES=0 python ./apps/web_demo.py
 ```
 
 `tigerbot-7b-base` 则用续写（非问答）的推理代码。
 
 ```
-CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0 python ./infer/infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
 
 #### 多卡推理
@@ -223,17 +223,17 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 如果要启用api,需要先安装fastapi，将193行的模型路径改成你的，然后运行服务。
 ```bash
 pip install "fastapi[all]"
-python api.py
+python ./apps/api.py
 ```
 
 之后可以测试客户端通过web服务调用api(演示的是同步调用，理论上可以写成异步)
 ```bash
-python3 client.py
+python ./apps/client.py
 ```
 
 也可以通过之前的web页面来调用web服务生成文字。
 ```bash
-python web_api_demo.py
+python ./apps/web_api_demo.py
 ```
 
 ### 量化
