@@ -1,38 +1,12 @@
-import torch
 import os
 import gradio as gr
-from accelerate import infer_auto_device_map, dispatch_model
-from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer
 import mdtex2html
-from infer_stream import get_model
+import sseclient
+import requests
+import json
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024
-model_path = "tigerbot-7b-sft"
-print(f"loading model: {model_path}...")
-model = get_model(model_path)
-
-max_memory = get_balanced_memory(model)
-device_map = infer_auto_device_map(model, max_memory=max_memory,
-                                   no_split_module_classes=["BloomBlock"])
-print("Using the following device map for the model:", device_map)
-model = dispatch_model(model, device_map=device_map, offload_buffers=True)
-
-device = torch.cuda.current_device()
-
-tokenizer = AutoTokenizer.from_pretrained(
-    model_path,
-    cache_dir=None,
-    model_max_length=max_generate_length,
-    padding_side="left",
-    truncation_side='left',
-    padding=True,
-    truncation=True
-)
-if tokenizer.model_max_length is None or tokenizer.model_max_length > 1024:
-    tokenizer.model_max_length = 1024
-
 """Override Chatbot.postprocess"""
 
 
@@ -84,21 +58,32 @@ def parse_text(text):
 
 
 def predict(input, chatbot, max_input_length, max_generate_length, top_p, temperature, history):
+    if history is None:
+        history = []
     chatbot.append((parse_text(input), ""))
-    for response, history in model.stream_chat(
-            tokenizer,
-            input,
-            history,
-            max_input_length=max_input_length,
-            max_generate_length=max_generate_length,
-            top_p=top_p,
-            temperature=temperature
-    ):
-        if response is None:
+    session = requests.Session()
+    url = 'http://localhost:8000/stream_chat'
+    data = {
+        "prompt": input,
+        "history": history,
+        "max_input_length": max_input_length,
+        "max_generate_length": max_generate_length,
+        "top_p": top_p,
+        "temperature": temperature,
+    }
+    headers = {'Content-Type': 'application/json'}
+    event_source = sseclient.SSEClient(url, json=data, headers=headers,
+                                       session=session)
+    for event in event_source:
+        # 将事件传递给回调函数进行处理
+        data = json.loads(event.data)
+        if not data["finish"]:
+            response = data["response"]
+            history = data["history"]
+            chatbot[-1] = (parse_text(input), parse_text(response))
+            yield chatbot, history
+        else:
             break
-        chatbot[-1] = (parse_text(input), parse_text(response))       
-
-        yield chatbot, history
 
 
 def reset_user_input():

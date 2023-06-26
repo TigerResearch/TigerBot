@@ -218,6 +218,24 @@ CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DI
 CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
 
+
+#### 部署API
+如果要启用api,需要先安装fastapi，将193行的模型路径改成你的，然后运行服务。
+```bash
+pip install "fastapi[all]"
+python api.py
+```
+
+之后可以测试客户端通过web服务调用api(演示的是同步调用，理论上可以写成异步)
+```bash
+python3 client.py
+```
+
+也可以通过之前的web页面来调用web服务生成文字。
+```bash
+python web_api_demo.py
+```
+
 ### 量化
 
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：

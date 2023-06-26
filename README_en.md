@@ -197,6 +197,24 @@ CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DI
 CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
 
+
+#### Deploy API
+If you want to enable api, you need to install fastapi first, change the model path on line 193 to yours, and then run the service.
+```bash
+pip install "fastapi[all]"
+python api.py
+```
+
+After that, you can test that the client calls the api through the web service (the demonstration is a synchronous call, which can be written asynchronously in theory)
+```bash
+python3-client.py
+```
+
+It is also possible to call the web service to generate text through the previous web page.
+```bash
+python web_api_demo.py
+```
+
 ### Quantization
 
 We use [GPTQ](https://github.com/IST-DASLab/gptq) and [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa) to
