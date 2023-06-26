@@ -5,7 +5,16 @@ from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
 from transformers import AutoTokenizer
 import mdtex2html
-from infer_stream import get_model
+
+def get_model(model):
+    def skip(*args, **kwargs):
+        pass
+
+    torch.nn.init.kaiming_uniform_ = skip
+    torch.nn.init.uniform_ = skip
+    torch.nn.init.normal_ = skip
+    model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=torch.float16)
+    return model
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024
