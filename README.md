@@ -20,6 +20,7 @@
 </h4>
 
 ## 最新发布
+- [6/26/2023] TigerBot now is on desktop! [使用TigerBot和Svelte框架制作的聊天机器人](#友情链接)，感谢 @SaraiQX ！
 - [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
 
 <p align="center" width="100%">
@@ -60,7 +61,7 @@ TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenA
 - [案例](#案例)
 - [加入我们](#加入我们)
 - [致谢](#致谢)
-- [友情链接](#友情链接)
+- [开发者生态](#开发者生态)
 - [局限性与免责声明](#局限性与免责声明)
 
 ## 环境安装
@@ -493,8 +494,9 @@ https://www.tigerbot.com
 - [Bloom](https://arxiv.org/abs/2211.05100): 我们基于 Bloom 架构进行训练
 - [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
 
-## 友情链接
+## 开发者生态
 
+- [使用TigerBot和Svelte框架制作的聊天机器人，可快速打包成桌面应用](https://github.com/SaraiQX/tigerbot-svelte-app)
 - [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](https://github.com/wordweb/Tiger-qq-bot)
 - [基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot)
 - [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
