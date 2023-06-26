@@ -5,8 +5,7 @@ import torch
 import readline
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer
-from modeling_bloom import BloomForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from typing import List, Tuple
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -21,7 +20,7 @@ def get_model(model):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    model = BloomForCausalLM.from_pretrained(model, torch_dtype=torch.float16)
+    model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=torch.float16)
     return model
 
 
