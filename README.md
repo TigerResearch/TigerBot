@@ -20,7 +20,7 @@
 </h4>
 
 ## 最新发布
-- [6/26/2023] TigerBot now is on desktop! [使用TigerBot和Svelte框架制作的聊天机器人](#友情链接)，感谢 @SaraiQX ！
+- [6/26/2023] TigerBot now is on desktop! [使用TigerBot和Svelte框架制作的聊天机器人](#开发者生态)，感谢 @SaraiQX ！
 - [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
 
 <p align="center" width="100%">
@@ -29,9 +29,9 @@
 
 - [6/13/2023] plug-in api升级，放出：[搜索结果数量、prompt前缀和tf-idf, embedding mixture weights](#API)
 - [6/13/2023] 模型已支持更迅速的[本地下载](#模型下载)
-- [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](#友情链接)，感谢 @wordweb ！
+- [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](#开发者生态)，感谢 @wordweb ！
 - [6/09/2023] 新增 stream infer 和 web demo，感谢 @Tlntin ！
-- [6/08/2023] TigerBot 已经可以在[colab, windows, langchang 和 webui](#友情链接)上跑啦，感谢 @wordweb @runfuture !
+- [6/08/2023] TigerBot 已经可以在[colab, windows, langchang 和 webui](#开发者生态)上跑啦，感谢 @wordweb @runfuture !
 
 ## 摘要
 
