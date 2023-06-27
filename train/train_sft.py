@@ -79,7 +79,7 @@ def main():
                                                                      'validation': sft_config.validate_file_path})
 
     def process_supervised(record):
-        input_s = record['instruction'] + '\n' + (record['input'] or '')
+        input_s = record['instruction'] + (('\n' + record['input']) if record.get('input') else '')
         output_s = record['output']
         tokenized = tokenizer([input_s, output_s])
         token_ids = [tok_id for tok_ids in tokenized['input_ids'] for tok_id in tok_ids]

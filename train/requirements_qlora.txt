@@ -1,0 +1,5 @@
+transformers==4.30.2
+peft@git+https://github.com/huggingface/peft.git@eb01b5ee1dfeb6fdacc73dc2fb1dd674bb6868ac
+accelerate==0.20.3
+einops==0.6.1
+bitsandbytes==0.39.0
