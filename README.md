@@ -20,8 +20,13 @@
 </h4>
 
 ## 最新发布
+- [6/27/2023] 在单张3090上使用qlora微调tigerbot-7b-sft。peft在加速训练（16倍）、减少硬件要求的同时，防止了对下游数据的过拟合。
+<p align="center" width="100%">
+	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
+
 - [6/26/2023] TigerBot now is on desktop! [使用TigerBot和Svelte框架制作的聊天机器人](#开发者生态)，感谢 @SaraiQX ！
-- [6/20/2023] tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
+- [6/20/2023] Tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
 
 <p align="center" width="100%">
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
