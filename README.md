@@ -20,7 +20,7 @@
 </h4>
 
 ## 最新发布
-- [6/27/2023] 在单张3090上使用qlora微调tigerbot-7b-sft。peft在加速训练（16倍）、减少硬件要求的同时，防止了对下游数据的过拟合。
+- [6/27/2023] PEFT TigerBot with QLoRA: 在单张3090上使用qlora微调tigerbot-7b-sft，加速16倍，和/或减少GPU3/4，同时防止了对下游数据的过拟合。
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
