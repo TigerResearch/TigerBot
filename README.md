@@ -20,7 +20,7 @@
 </h4>
 
 ## 最新发布
-- [6/27/2023] PEFT TigerBot with QLoRA: 在单张3090上使用qlora微调tigerbot-7b-sft，加速16倍，和/或减少GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[wiki](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[weights](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
+- [6/27/2023] PEFT TigerBot with QLoRA: 在单张3090上使用qlora微调tigerbot-7b-sft，加速16倍，和/或减少GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[wiki](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
