@@ -4,12 +4,15 @@ import json
 import datetime
 import asyncio
 import os
+import sys
 import torch
 from sse_starlette.sse import EventSourceResponse
-from infer_stream import get_model
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
 from transformers import AutoTokenizer
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from other_infer.infer_stream import get_model
+
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 

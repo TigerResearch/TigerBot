@@ -7,7 +7,7 @@ def predict(prompt, history=None):
     if history is None:
         history = []
     session = requests.Session()
-    url = 'http://localhost:8000/stream_chat'
+    url = 'http://127.0.0.1:8000/stream_chat'
     data = {"prompt": prompt, "history": history}
     headers = {'Content-Type': 'application/json'}
     event_source = sseclient.SSEClient(url, json=data, headers=headers, session=session)
