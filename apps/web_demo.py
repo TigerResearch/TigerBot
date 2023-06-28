@@ -1,61 +1,13 @@
 import torch
 import os
+import sys
 import gradio as gr
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
 from transformers import AutoTokenizer
 import mdtex2html
-
-def get_model(model):
-    def skip(*args, **kwargs):
-        pass
-
-    torch.nn.init.kaiming_uniform_ = skip
-    torch.nn.init.uniform_ = skip
-    torch.nn.init.normal_ = skip
-    model = AutoModelForCausalLM.from_pretrained(model, torch_dtype=torch.float16)
-    return model
-
-def stream_chat(
-        target,
-        tokenizer,
-        input,
-        history: List[Tuple[str, str]] = None,
-        top_p: float = 0.95,
-        temperature: float = 0.8,
-        max_input_length: int = 512,
-        max_generate_length: int = 1024,
-):
-    generation_kwargs = {
-        "top_p": top_p,
-        "temperature": temperature,
-        "max_length": max_generate_length,
-        "eos_token_id": tokenizer.eos_token_id,
-        "pad_token_id": tokenizer.pad_token_id,
-        "early_stopping": True,
-        "no_repeat_ngram_size": 4,
-    }
-    global model
-    query_text = input.strip()
-    input_text = get_prompt(query_text, history)
-    inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
-    device = torch.cuda.current_device()
-    inputs = {k: v.to(device) for k, v in inputs.items()}
-    streamer = TextIteratorStreamer(tokenizer=tokenizer)
-    kwargs = dict(inputs, streamer=streamer, **generation_kwargs)
-    thread = Thread(target=target, kwargs=kwargs)
-    thread.start()
-    generated_text = ""
-    new_response = ""
-    for new_text in streamer:
-        if len(new_text) == 0:
-            continue
-        generated_text += new_text
-        if len(generated_text) > len(input_text):
-            response = new_text.rstrip("</s>")
-            new_response += response
-            new_history = history + [(query_text, new_response)]
-            yield new_response, new_history
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from other_infer.infer_stream import get_model
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024

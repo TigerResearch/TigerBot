@@ -175,18 +175,18 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 
 If you want to enable streaming output, please replace `infer.py` with `infer_stream.py`, and the output will change from one-shot output to sentence-by-sentence output.
 ```
-CUDA_VISIBLE_DEVICES=0 python infer_stream.py --model_path ${MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_stream.py --model_path ${MODEL_DIR}
 ```
 
 If you want to enable the web interface for Q&A, change the model path corresponding to model_path on line 12 of `web_demo.py` to the path where your model is located, and then run the following command to enable the web interface.
 ```
-CUDA_VISIBLE_DEVICES=0 python web_demo.py
+CUDA_VISIBLE_DEVICES=0 python ./apps/web_demo.py
 ```
 
 `tigerbot-7b-base` uses continuation (non-question answering) inference code.
 
 ```
-CUDA_VISIBLE_DEVICES=0 python infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
+CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
 
 #### Infer with multiple GPUS
@@ -205,14 +205,19 @@ pip install "fastapi[all]"
 python api.py
 ```
 
-After that, you can test that the client calls the api through the web service (the demonstration is a synchronous call, which can be written asynchronously in theory)
+Then you can test the client to call the api through the web service
 ```bash
-python3-client.py
+python ./apps/client.py
+```
+
+The client can also call the API asynchronously through the web service
+```bash
+python ./apps/async_client.py
 ```
 
 It is also possible to call the web service to generate text through the previous web page.
 ```bash
-python web_api_demo.py
+python ./apps/web_api_demo.py
 ```
 
 ### Quantization
