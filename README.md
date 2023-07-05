@@ -37,7 +37,7 @@
 - [6/13/2023] 模型已支持更迅速的[本地下载](#模型下载)
 - [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型 qq 群知识库 bot 应用实现](#开发者生态)，感谢 @wordweb ！
 - [6/09/2023] 新增 stream infer 和 web demo，感谢 @Tlntin ！
-- [6/08/2023] TigerBot 已经可以在[colab, windows, langchang 和 webui](#开发者生态)上跑啦，感谢 @wordweb @runfuture !
+- [6/08/2023] TigerBot 已经可以在[colab, windows, langchain 和 webui](#开发者生态)上跑啦，感谢 @wordweb @runfuture !
 
 ## 摘要
 
