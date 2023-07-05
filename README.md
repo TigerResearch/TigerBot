@@ -20,21 +20,22 @@
 </h4>
 
 ## 最新发布
-- [6/27/2023] PEFT TigerBot with QLoRA: 在单张3090上使用qlora微调tigerbot-7b-sft，加速16倍，和/或减少GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
+
+- [6/27/2023] PEFT TigerBot with QLoRA: 在单张 3090 上使用 qlora 微调 tigerbot-7b-sft，加速 16 倍，和/或减少 GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-- [6/26/2023] TigerBot now is on desktop! [使用TigerBot和Svelte框架制作的聊天机器人](#开发者生态)，感谢 @SaraiQX ！
-- [6/20/2023] Tigerbot的云端api如何在langchian中替代openai来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
+- [6/26/2023] TigerBot now is on desktop! [使用 TigerBot 和 Svelte 框架制作的聊天机器人](#开发者生态)，感谢 @SaraiQX ！
+- [6/20/2023] Tigerbot 的云端 api 如何在 langchian 中替代 openai 来应用(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) 感谢 @wordweb ！
 
 <p align="center" width="100%">
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-- [6/13/2023] plug-in api升级，放出：[搜索结果数量、prompt前缀和tf-idf, embedding mixture weights](#API)
+- [6/13/2023] plug-in api 升级，放出：[搜索结果数量、prompt 前缀和 tf-idf, embedding mixture weights](#API)
 - [6/13/2023] 模型已支持更迅速的[本地下载](#模型下载)
-- [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](#开发者生态)，感谢 @wordweb ！
+- [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型 qq 群知识库 bot 应用实现](#开发者生态)，感谢 @wordweb ！
 - [6/09/2023] 新增 stream infer 和 web demo，感谢 @Tlntin ！
 - [6/08/2023] TigerBot 已经可以在[colab, windows, langchang 和 webui](#开发者生态)上跑啦，感谢 @wordweb @runfuture !
 
@@ -99,7 +100,7 @@ pip install -r requirements.txt
 | [tigerbot-180b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-180b-research)                      | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
-除了huggingface，模型也可以从[百度网盘](https://pan.baidu.com/s/1rcRs2MISGmcrZTZF06pVdg?pwd=0726)获取（其中tigerbot-180b-sft需要下载part1/part2两部分）
+除了 huggingface，模型也可以从[百度网盘](https://pan.baidu.com/s/1rcRs2MISGmcrZTZF06pVdg?pwd=0726)获取（其中 tigerbot-180b-sft 需要下载 part1/part2 两部分）
 
 ## 训练和推理
 
@@ -125,7 +126,9 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 如果返回的结果是(8, 0)，那么 TORCH_CUDA_ARCH_LIST="8.0"
 
 #### 启动训练
-启动`tigerbot-7b`训练至少需要1 x A100 (40GB), 启动`tigerbot-180b`至少需要16 x A100 (40GB)
+
+启动`tigerbot-7b`训练至少需要 1 x A100 (40GB), 启动`tigerbot-180b`至少需要 16 x A100 (40GB)
+
 ```
 deepspeed \
 --include="localhost:0,1,2,3" \
@@ -152,7 +155,9 @@ deepspeed \
 ```
 
 ### 微调
-启动`tigerbot-7b`训练至少需要1 x A100 (40GB), 启动`tigerbot-180b`至少需要16 x A100 (40GB)
+
+启动`tigerbot-7b`训练至少需要 1 x A100 (40GB), 启动`tigerbot-180b`至少需要 16 x A100 (40GB)
+
 #### 启动训练
 
 ```
@@ -224,25 +229,29 @@ CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_pretrain.py --model_path ${PRE
 CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
 
+#### 部署 API
 
-#### 部署API
-如果要启用api,需要先安装fastapi，将193行的模型路径改成你的，然后运行服务。
+如果要启用 api,需要先安装 fastapi，将 193 行的模型路径改成你的，然后运行服务。
+
 ```bash
 pip install "fastapi[all]"
 python ./apps/api.py
 ```
 
-之后可以测试客户端通过web服务调用api
+之后可以测试客户端通过 web 服务调用 api
+
 ```bash
 python ./apps/client.py
 ```
 
-也可以客户端通过web服务异步调用api
+也可以客户端通过 web 服务异步调用 api
+
 ```bash
 python ./apps/async_client.py
 ```
 
-也可以通过之前的web页面来调用web服务生成文字。
+也可以通过之前的 web 页面来调用 web 服务生成文字。
+
 ```bash
 python ./apps/web_api_demo.py
 ```
@@ -290,6 +299,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ### 预训练数据
 
+<details>
 基于 GPT3 的 pretrain 的数据分布，采集中文书籍，互联网，和百科类数据，并通过数据源质量分过滤和 tf-idf soft deduping，从 20TB 数据过滤到 2TB，保持语言和类目的比例，并在此基础上随机抽样 100G 数据开源：
 
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>中文开源预训练集 - 55G，包含中文书籍、中文互联网、中文百科 - 下载 [hugging face]</a>
@@ -316,82 +326,92 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 <p width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
+</details>
 
 ### 微调数据
 
-#### 数据搜集
+<details> 
+<summary><b>数据搜集</b></summary>
 
-- 模型中使用的微调数据的搜集思想如下：
+模型中使用的微调数据的搜集思想如下：
 
-  a. 从用户指令的自然分布，人工标注总结 10 大类，120 小类任务，例如，事实性问答，开放式创作，语法分析，代码编辑等；
+a. 从用户指令的自然分布，人工标注总结 10 大类，120 小类任务，例如，事实性问答，开放式创作，语法分析，代码编辑等；
 
-  b. self-instruct: 参考 Alpaca self-instruct 方法，扩充中英文 seed_tasks，增加一些中文习惯种子问题，基于此生成 2M 中文(本次开源 0.5M)及 0.1M 英文(本次开源 50k)；
+b. self-instruct: 参考 Alpaca self-instruct 方法，扩充中英文 seed_tasks，增加一些中文习惯种子问题，基于此生成 2M 中文(本次开源 0.5M)及 0.1M 英文(本次开源 50k)；
 
-  c. human-labeling: 基于人工写题及答案、网络搜集方式，整理加工问答集数据，在开源列表中标识为[自研]部分，本次开放部分数据；
+c. human-labeling: 基于人工写题及答案、网络搜集方式，整理加工问答集数据，在开源列表中标识为[自研]部分，本次开放部分数据；
 
-  d. open-source data cleaning: 基于各类公开数据集转换清洗，其中[自研*]部分，表示基于原始数据进行二次开发后得到，[开源]部分数据集一般原始数据即为较规整的问答数据，进行简单清洗得到；
+d. open-source data cleaning: 基于各类公开数据集转换清洗，其中[自研*]部分，表示基于原始数据进行二次开发后得到，[开源]部分数据集一般原始数据即为较规整的问答数据，进行简单清洗得到；
 
-  e. 总的数据分布符合用户指令自然分布。
+e. 总的数据分布符合用户指令自然分布。
 
-#### 数据清洗
-
+</details>
+<details> 
+<summary><b>数据清洗</b></summary>
 - 由于各类数据质量存在差异，通过 Alpaca Self-Instruct 生成的数据亦存在各种问题。因此，我们经过细致的人工校验和分类，总结出一套全面且系统化的数据清洗规则与方法。
 - 整体规则可以划分为**过滤类规则**和**清洗类规则**两大类。其中，命中过滤规则的数据项将被弃用，而清洗规则旨在处理并保留所需的数据。
 - 同时，在数据梳理与积累的过程中，我们也不断对清洗规则进行迭代和优化。
 - 通用清洗规则描述如下所示：
 
-  a. 过滤类-敏感词规则：基于积累的敏感词库，清洗丢弃涉政、涉黄、涉暴、涉恐等数据项；
+a. 过滤类-敏感词规则：基于积累的敏感词库，清洗丢弃涉政、涉黄、涉暴、涉恐等数据项；
 
-  b. 过滤类-无效输入输出：此类规则主要针对 Self-Instruct 生成数据缺陷进行专项清理，根据输入输出分别制定规则，以丢弃一些无效的数据项；
+b. 过滤类-无效输入输出：此类规则主要针对 Self-Instruct 生成数据缺陷进行专项清理，根据输入输出分别制定规则，以丢弃一些无效的数据项；
 
-  > 无效输入如"<一段文本>"，无效输出如"[图画]"；
+> 无效输入如"<一段文本>"，无效输出如"[图画]"；
 
-  c. 清洗类-关键词规则：根据整理的关键词/正则列表进行数据的替换，包括：清理特殊标志位字符、清理非可见字符、清理标签、繁简转换等；
+c. 清洗类-关键词规则：根据整理的关键词/正则列表进行数据的替换，包括：清理特殊标志位字符、清理非可见字符、清理标签、繁简转换等；
 
-  d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数据，如指令与输入重复等，如下所示：
+d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数据，如指令与输入重复等，如下所示：
 
-  > `{"instruction": "描述如何做一道红烧肉。请提供食材和详细的步骤。", "input": "请描述如何做一道红烧肉，提供食材和详细步骤。", ...}`
+> `{"instruction": "描述如何做一道红烧肉。请提供食材和详细的步骤。", "input": "请描述如何做一道红烧肉，提供食材和详细步骤。", ...}`
 
-#### 数据开源
+</details>
 
+<details> 
+<summary><b>数据开源</b></summary>
 - 指令数据集, 当前开源 120W 问答对，磁盘空间 1.1G (数据集开放到 huggingface，中英文指令明细及下载如下表）
 - <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>中文-微调指令集-合集 - 53W 条 - 下载 [hugging face]</a>
 - <a href=https://huggingface.co/datasets/TigerResearch/sft_en>英文-微调指令集-合集 - 67W 条 - 下载 [hugging face]</a>
 
-  | 类型         | 语言 | 数据集                                                                                                                           | 数量        | 来源   |
-  | ------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------ |
-  | alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)                                 | 0.5m        | 自研   |
-  | 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)                                      | 1k          | 自研   |
-  | 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)                                         | 1k          | 自研   |
-  | 猜谜语       | 中文 | [tigerbot-riddle-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-riddle-qa-1k)                                     | 1k          | 自研   |
-  | 阅读理解     | 中文 | [tigerbot-superclue-c3-zh-5k](https://huggingface.co/datasets/TigerResearch/tigerbot-superclue-c3-zh-5k)                         | 5k          | 自研\* |
-  | 问答         | 中文 | [tigerbot-HC3-zh-12k](https://huggingface.co/datasets/TigerResearch/tigerbot-HC3-zh-12k)                                         | 12k         | 开源   |
-  | 知乎问答     | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-zhihu-zh-10k)                                     | 10k         | 开源   |
-  | alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)                                   | 50k         | 自研   |
-  | 头脑风暴     | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)       | 1.7k        | 开源   |
-  | 分类         | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2k          | 开源   |
-  | 数学问题     | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                                           | 8k          | 开源   |
-  | 代码         | 英文 | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2k          | 自研\* |
-  | 食谱生成     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2k          | 开源   |
-  | 病历生成     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 450         | 开源   |
-  | 多轮对话     | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)                     | 50k         | 自研\* |
-  | 综合问答     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)             | 0.5m        | 开源   |
-  | wiki 问答    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)                       | 10k         | 开源   |
-  | 如何做类教程 | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50k         | 开源   |
-  | **总量**     |      |                                                                                                                                  | **120W 条** |
+| 类型         | 语言 | 数据集                                                                                                                           | 数量        | 来源   |
+| ------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------ |
+| alpaca 中文  | 中文 | [tigerbot-alpaca-zh-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-zh-0.5m)                                 | 0.5m        | 自研   |
+| 百科问答     | 中文 | [tigerbot-wiki-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-zh-1k)                                      | 1k          | 自研   |
+| 名著问答     | 中文 | [tigerbot-book-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-book-qa-1k)                                         | 1k          | 自研   |
+| 猜谜语       | 中文 | [tigerbot-riddle-qa-1k](https://huggingface.co/datasets/TigerResearch/tigerbot-riddle-qa-1k)                                     | 1k          | 自研   |
+| 阅读理解     | 中文 | [tigerbot-superclue-c3-zh-5k](https://huggingface.co/datasets/TigerResearch/tigerbot-superclue-c3-zh-5k)                         | 5k          | 自研\* |
+| 问答         | 中文 | [tigerbot-HC3-zh-12k](https://huggingface.co/datasets/TigerResearch/tigerbot-HC3-zh-12k)                                         | 12k         | 开源   |
+| 知乎问答     | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-zhihu-zh-10k)                                     | 10k         | 开源   |
+| alpaca 英文  | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)                                   | 50k         | 自研   |
+| 头脑风暴     | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)       | 1.7k        | 开源   |
+| 分类         | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2k          | 开源   |
+| 数学问题     | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                                           | 8k          | 开源   |
+| 代码         | 英文 | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2k          | 自研\* |
+| 食谱生成     | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2k          | 开源   |
+| 病历生成     | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 450         | 开源   |
+| 多轮对话     | 英文 | [tigerbot-OIG-multichat-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-OIG-multichat-en-50k)                     | 50k         | 自研\* |
+| 综合问答     | 英文 | [tigerbot-stackexchange-qa-en-0.5m](https://huggingface.co/datasets/TigerResearch/tigerbot-stackexchange-qa-en-0.5m)             | 0.5m        | 开源   |
+| wiki 问答    | 英文 | [tigerbot-wiki-qa-bart-en-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-qa-bart-en-10k)                       | 10k         | 开源   |
+| 如何做类教程 | 英文 | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50k         | 开源   |
+| **总量**     |      |                                                                                                                                  | **120W 条** |
 
-  > 更多数据集陆续整理开放中...
+> 更多数据集陆续整理开放中...
+
+</details>
 
 ### 领域数据
 
-- 开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
+<details>
+  开放金融、法律、百科相关领域数据，作为 rethink 外部数据源
 
-  | 类型                                                                                | 数量            |
-  | ----------------------------------------------------------------------------------- | --------------- |
-  | [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇           |
-  | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇         |
-  | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
-  | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
+| 类型                                                                                | 数量            |
+| ----------------------------------------------------------------------------------- | --------------- |
+| [金融-研报](https://huggingface.co/datasets/TigerResearch/tigerbot-research-plugin) | 2W 篇           |
+| [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇         |
+| [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
+| [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
+
+</details>
 
 ## 测评
 
@@ -463,9 +483,9 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，当前支持 Tiger
 
 无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
 
-## 案例
+## 其他
 
-<details><summary><b>生成案例</b></summary>
+<details><summary><b>案例</b></summary>
 
 ![image](./image/api/case-1.png)
 ![image](image/api/case-2.png)
@@ -476,7 +496,7 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，当前支持 Tiger
 
 </details>
 
-## 加入我们
+<details><summary><b>加入我们</b></summary>
 
 #### 产品链接
 
@@ -499,21 +519,21 @@ https://www.tigerbot.com
 - [友情链接](#友情链接)
 - [局限性与免责声明](#局限性与免责声明)
 
-## 致谢
+</details>
 
+<details><summary><b>致谢</b></summary>
 - [Bloom](https://arxiv.org/abs/2211.05100): 我们基于 Bloom 架构进行训练
 - [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
+</details>
 
-## 开发者生态
-
-- [使用TigerBot和Svelte框架制作的聊天机器人，可快速打包成桌面应用](https://github.com/SaraiQX/tigerbot-svelte-app)
-- [基于本地知识库的 TigerBot 大语言模型qq群知识库bot应用实现](https://github.com/wordweb/Tiger-qq-bot)
-- [基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot)
+<details><summary><b>友情链接</b></summary>
 - [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
 - [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在 Windows 系统上使用 TigerBot
+</details>
 
-## 局限性与免责声明
-
+<details><summary><b>局限性与免责声明</b></summary>
 当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用 TigerBot 系列模型生成的内容，请勿将生成的有害内容进行传播。
 
 如需将模型公开使用或者商用，模型服务所产生的不良影响或者有害言论由服务方负责，本项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
+
+</details>
