@@ -496,6 +496,15 @@ Chat-API 为 TigerBot 对外提供的可直接使用的 api，当前支持 Tiger
 
 </details>
 
+<details><summary><b>开发者生态</b></summary>
+
+- [使用 TigerBot 和 Svelte 框架制作的聊天机器人，可快速打包成桌面应用](https://github.com/SaraiQX/tigerbot-svelte-app)
+- [基于本地知识库的 TigerBot 大语言模型 qq 群知识库 bot 应用实现](https://github.com/wordweb/Tiger-qq-bot)
+- [基于本地知识库的 TigerBot、ChatGLM 等大语言模型应用实现](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot)
+- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
+- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在 Windows 系统上使用 TigerBot
+</details>
+
 <details><summary><b>加入我们</b></summary>
 
 #### 产品链接
@@ -515,20 +524,11 @@ https://www.tigerbot.com
 
 <img src="image/qiyewechat.png" alt="Tiger" style="width: 260px;  "></a>
 
-- [致谢](#致谢)
-- [友情链接](#友情链接)
-- [局限性与免责声明](#局限性与免责声明)
-
 </details>
 
 <details><summary><b>致谢</b></summary>
 - [Bloom](https://arxiv.org/abs/2211.05100): 我们基于 Bloom 架构进行训练
 - [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
-</details>
-
-<details><summary><b>友情链接</b></summary>
-- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb) - Colab 版本体验 TigerBot
-- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/) - 在 Windows 系统上使用 TigerBot
 </details>
 
 <details><summary><b>局限性与免责声明</b></summary>
