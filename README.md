@@ -22,8 +22,8 @@
 ## 最新发布
 
 - [7/08/2023] TigerBot 2013.07 (V2) release :fire: 
-	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
-	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
+	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；[测评](#测评)[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；[测评](#测评)[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
 	- tigerbot-7b 开启搜索模式，对接主流中英文搜索引擎，和结构化工具（如天气，股市，计算器等），打开LLM+search的应用场景，chat-api也同步开放；[[TigerBot with search mode :earth_asia:](https://www.tigerbot.com/chat)]
 	- tigerbot-api 全新升级，开放LLM应用开发常用的api工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)。[[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
 	
@@ -315,13 +315,13 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## 测评
 
-V2版SFT模型测评结果
-
-![image](image/evaluation_sft_v2.jpg)
-
-V2版base模型测评结果
+tigerbot-7b-base v2 模型测评结果
 
 ![image](image/evaluation_base_v2.jpg)
+
+tigerbot-7b-sft v2 模型测评结果
+
+![image](image/evaluation_sft_v2.jpg)
 
 <details> 
 <summary><b>V1版SFT和base模型测评结果</b></summary>
