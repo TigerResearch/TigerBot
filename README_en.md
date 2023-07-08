@@ -339,9 +339,11 @@ We clean and filter data as follows:
 
 ## Evaluation
 
-Evaluation result of V2 version SFT and and base model
+Evaluation result of V2 version SFT model
 
 ![image](image/evaluation_sft_v2.jpg)
+
+Evaluation result of V2 version base model
 
 ![image](image/evaluation_base_v2.jpg)
 
