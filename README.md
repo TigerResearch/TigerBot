@@ -21,12 +21,11 @@
 
 ## 最新发布
 
-- [7/08/2023] TigerBot 2013.07 (V2) release :fire: 
-	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
-	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
-	- tigerbot-7b 开启搜索模式，对接主流中英文搜索引擎，和结构化工具（如天气，股市，计算器等），打开LLM+search的应用场景，chat-api也同步开放；[[TigerBot with search mode (default off) :earth_asia:](https://www.tigerbot.com/chat)][[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-upgraded-with-internet-search)]
-	- tigerbot-api 全新升级，开放LLM应用开发常用的api工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)。[[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
-	
+- [7/08/2023] TigerBot 2013.07 (V2) release :fire:
+  - tigerbot-7b-base (v2), 在 1.5TB 高质量数据上充分预训练（千卡耗时 4 周，算力成本～ 300 万），在中英文公开数据测评优于 bloom/llama 同等模型 15-30%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+  - tigerbot-7b-sft (v2), 在 base-v2 基础上微调的 sft-v2 在 2000 万/20G 高质量清洗和配比的数据上充分训练，在 9 项公开预料测评上优于 sft-v1 9.3%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
+  - tigerbot-7b 开启搜索模式，对接主流中英文搜索引擎，和结构化工具（如天气，股市，计算器等），打开 LLM+search 的应用场景，chat-api 也同步开放；[[TigerBot with search mode (default off) :earth_asia:](https://www.tigerbot.com/chat)][[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-upgraded-with-internet-search)]
+  - tigerbot-api 全新升级，开放 LLM 应用开发常用的 api 工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)。[[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
 - [6/27/2023] PEFT TigerBot with QLoRA: 在单张 3090 上使用 qlora 微调 tigerbot-7b-sft，加速 16 倍，和/或减少 GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
@@ -118,7 +117,7 @@ pip install -r requirements.txt
   - tigerbot-7b-base-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]
   - Tigerbot-7b-base-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]
 
-</details> 
+</details>
 
 ## 训练和推理
 
@@ -462,6 +461,7 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 
 <details><summary><b>示例</b></summary>
 <img src="image/api/demo/chat.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+<img src="image/api/demo/chat2.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [plugin](https://www.tigerbot.com/api-reference/plugin)
