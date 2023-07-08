@@ -433,6 +433,16 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 
 ## 测评
 
+V2版SFT和base模型测评结果
+
+![image](image/evaluation_sft_v2.jpg)
+
+![image](image/evaluation_base_v2.jpg)
+
+<details>
+
+V1版SFT和base模型测评结果
+
 在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation-1.png)
@@ -440,6 +450,8 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 在 7 项英文 NLP 任务和 4 项中文 NLP 任务上，对 Pretrain 模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
 
 ![image](image/auto-valuation-2.png)
+
+</details>
 
 ## API
 

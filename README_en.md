@@ -338,6 +338,16 @@ We clean and filter data as follows:
   | [Wiki](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)                   | 100K     |
 
 ## Evaluation
+
+Evaluation result of V2 version SFT and and base model
+
+![image](image/evaluation_sft_v2.jpg)
+
+![image](image/evaluation_base_v2.jpg)
+
+<details>
+Evaluation result of V1 version SFT and and base model
+
 We evaluate our SFT models on seven public NLP datasets, and compare these with OpenAI-InstructGPT. 
 Results against OpenAI-InstructGPT-6B-SFT.
 
@@ -347,6 +357,8 @@ We evaluate our Pretrained models on seven public NLP datasets.
 Results against bloom-7b1.
 
 ![image](image/auto-valuation-2.png)
+
+</details>
 
 ## API
 
