@@ -67,8 +67,8 @@ TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenA
 - [环境安装](#环境安装)
 - [模型下载](#模型下载)
 - [训练和推理](#训练和推理)
-- [开源数据集](#开源数据集)
 - [测评](#测评)
+- [开源数据集](#开源数据集)
 - [API](#API)
 - [其他](#其他)
 
@@ -313,6 +313,29 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load "${MODEL_DIR}/tigerbot-4bit-128g-*.pt"
 ```
 
+## 测评
+
+V2版SFT模型测评结果
+
+![image](image/evaluation_sft_v2.jpg)
+
+V2版base模型测评结果
+
+![image](image/evaluation_base_v2.jpg)
+
+<details> 
+<summary><b>V1版SFT和base模型测评结果</b></summary>
+
+在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
+
+![image](image/auto-valuation-1.png)
+
+在 7 项英文 NLP 任务和 4 项中文 NLP 任务上，对 Pretrain 模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
+
+![image](image/auto-valuation-2.png)
+
+</details>
+
 ## 开源数据集
 
 ### 预训练数据
@@ -428,30 +451,6 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 | [金融-财报](https://huggingface.co/datasets/TigerResearch/tigerbot-earning-plugin)  | 2500 篇         |
 | [法律](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)           | 11 类 5.5W 条款 |
 | [百科](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)          | 10W 词条        |
-
-</details>
-
-## 测评
-
-V2版SFT模型测评结果
-
-![image](image/evaluation_sft_v2.jpg)
-
-V2版base模型测评结果
-
-![image](image/evaluation_base_v2.jpg)
-
-<details>
-
-V1版SFT和base模型测评结果
-
-在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
-
-![image](image/auto-valuation-1.png)
-
-在 7 项英文 NLP 任务和 4 项中文 NLP 任务上，对 Pretrain 模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
-
-![image](image/auto-valuation-2.png)
 
 </details>
 
