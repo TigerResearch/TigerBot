@@ -25,7 +25,7 @@
 	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；
 	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；
 	- tigerbot-7b 开启搜索模式，对接主流中英文搜索引擎，和结构化工具（如天气，股市，计算器等），打开LLM+search的应用场景，chat-api也同步开放；
-	- tigerbot-api 全新升级，开放LLM应用开发常用的api工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)；<a href="https://www.tigerbot.com/api-reference/chat">TigerBot-API</a>
+	- tigerbot-api 全新升级，开放LLM应用开发常用的api工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)。[<a href="https://www.tigerbot.com/api-reference/chat">TigerBot-API</a>]
 	
 - [6/27/2023] PEFT TigerBot with QLoRA: 在单张 3090 上使用 qlora 微调 tigerbot-7b-sft，加速 16 倍，和/或减少 GPU3/4，同时防止了对下游数据的过拟合。[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
 <p align="center" width="100%">
