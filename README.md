@@ -22,8 +22,8 @@
 ## 最新发布
 
 - [7/08/2023] TigerBot 2013.07 (V2) release :fire: 
-	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；
-	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；
+	- tigerbot-7b-base (v2), 在1.5TB高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于bloom/llama同等模型15-30%；[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+	- tigerbot-7b-sft (v2), 在base-v2基础上微调的sft-v2在2000万/20G高质量清洗和配比的数据上充分训练，在9项公开预料测评上优于sft-v1 9.3%；[[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
 	- tigerbot-7b 开启搜索模式，对接主流中英文搜索引擎，和结构化工具（如天气，股市，计算器等），打开LLM+search的应用场景，chat-api也同步开放；
 	- tigerbot-api 全新升级，开放LLM应用开发常用的api工具，包括：LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image)。[<a href="https://www.tigerbot.com/api-reference/chat">TigerBot-API</a>]
 	
@@ -103,6 +103,22 @@ pip install -r requirements.txt
 | [tigerbot-180b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
 
 除了 huggingface，模型也可以从[百度网盘](https://pan.baidu.com/s/1rcRs2MISGmcrZTZF06pVdg?pwd=0726)获取（其中 tigerbot-180b-sft 需要下载 part1/part2 两部分）
+
+<details> 
+<summary><b>历史版本</b></summary>
+
+- tigerbot-7b-sft
+
+  - tigerbot-7b-sft-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]
+
+  - tigerbot-7b-sft-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]
+
+- tigerbot-7b-base
+
+  - tigerbot-7b-base-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]
+  - Tigerbot-7b-base-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]
+
+</details> 
 
 ## 训练和推理
 
