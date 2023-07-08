@@ -456,63 +456,50 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 
 ## API
 
-TigerBot 提供了三种 API，包括 Chat-API，Plug-ins，Fine-Tunes。
+<details>
 
-### 调用示例
+### [chat](https://www.tigerbot.com/api-reference/chat)
 
-```python
-import requests
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/chat.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-url = "https://api.tigerbot.com/bot-service/ft/call"
+### [plugin](https://www.tigerbot.com/api-reference/plugin)
 
-headers = {
-  'Authorization': 'Bearer ' + API_KEY
-}
-payload = {
-  'ftId': 'Your ftId',
-  'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
-}
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/plugin.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-response = requests.post(url, headers=headers, json=payload)
+### [finetune](https://www.tigerbot.com/api-reference/finetune)
 
-print(response.text)
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/finetune.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-```
+### [embedding](https://www.tigerbot.com/api-reference/embedding)
 
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
-    ]
-  }
-}
-```
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/embedding.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-### [Authentication](https://www.tigerbot.com/api-reference/authentication)
+### [summarization](https://www.tigerbot.com/api-reference/summarization)
 
-使用 API，需先在 TigerBot 平台上进行申请，申请通过后获取 API_KEY，即可快速训练体验
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/summarization.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-- [申请试用](https://www.tigerbot.com)
-- [获取 API_KEY](https://www.tigerbot.com/api-reference/my-api-key)
-<!-- ### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】 -->
+### [pdf2text](https://www.tigerbot.com/api-reference/pdf2text)
 
-### [对话（Chat-API）](https://www.tigerbot.com/api-reference/request)
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/pdf2text.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-Chat-API 为 TigerBot 对外提供的可直接使用的 api，当前支持 Tigerbot-7B
+### [text2image](https://www.tigerbot.com/api-reference/text2image)
 
-### [插件（Plug-ins）](https://www.tigerbot.com/api-reference/plugins-common)
-
-- [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
-  <p>TigerBot 提供的自研插件，可直接通过 api 进行调用</p>
-- [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
-  <p>用户管理自己的数据，训练自己的插件</p>
-
-### [微调（Fine-Tunes）](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
-
-无需代码，仅需按照数据要求管理上传自己的数据，即可快速训练出基于 TigerBot 大模型能力基础的自己的模型
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/text2image.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
+</details>
 
 ## 其他
 
