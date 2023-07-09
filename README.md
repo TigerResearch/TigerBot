@@ -21,10 +21,10 @@
 
 ## 最新发布
 
-- [7/08/2023] TigerBot 2013.07 (V2) release :fire:
-  - tigerbot-7b-base (v2), 在 1.5TB 高质量数据上充分预训练（千卡耗时 4 周，算力成本～ 300 万），在中英文公开数据测评优于 bloom/llama 同等模型 15-30%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+- [7/08/2023] TigerBot 2023.07 (V2) release :fire:
+  - tigerbot-7b-base (v2), 在 1.5TB 高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于 bloom/llama 同等模型 15-30%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
   
-  - tigerbot-7b-sft (v2), 在 base-v2 基础上微调的 sft-v2 在 2000 万/20G 高质量清洗和配比的数据上充分训练，在 9 项公开预料测评上优于 sft-v1 9.3%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
+  - tigerbot-7b-sft (v2), 在 base-v2 基础上微调的 sft-v2 在2000万/20G 高质量清洗和配比的数据上充分训练，在9项公开语料测评上优于 sft-v1 9.3%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
   
     新模型可通过以下代码加载：
 
