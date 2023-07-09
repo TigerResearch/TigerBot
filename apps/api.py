@@ -5,11 +5,17 @@ import datetime
 import asyncio
 import os
 import sys
+import time
 import torch
 from sse_starlette.sse import EventSourceResponse
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
 from transformers import AutoTokenizer
+from pydantic import BaseModel, Field
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+from typing import Any, Dict, List, Literal, Optional, Union
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from other_infer.infer_stream import get_model
 
@@ -28,7 +34,22 @@ def torch_gc():
             torch.cuda.ipc_collect()
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+
+
+app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_prompt(query, history=None):
@@ -115,16 +136,12 @@ async def stream_chat(request: Request):
         tokenizer.model_max_length = max_generate_length
     STREAM_DELAY = 1  # second
     RETRY_TIMEOUT = 15000  # milisecond
-
-    # def new_messages(prompt, history, max_length, top_p, temperature):
-    #     response, history = 
-    #     yield response, history
-    
+ 
     async def event_generator(
             prompt, history, max_input_length, max_generate_length, top_p, temperature
     ):
-        finished = False
-        message_generator = model.stream_chat(
+        last_message = ["", ""]
+        for message in model.stream_chat(
             tokenizer,
             prompt,
             history=history,
@@ -132,55 +149,38 @@ async def stream_chat(request: Request):
             max_generate_length=max_generate_length,
             top_p=top_p,
             temperature=temperature,
-        )
-        last_message = ["", ""]
-        while not finished:
+        ):
             # If client closes connection, stop sending events
             if await request.is_disconnected():
                 break
-
             # Checks for new messages and return them to client if any
             try:
-                message = next(message_generator)
-                if message[0] is None:
-                    finished = True
-                    temp_dict = {
-                        "response": last_message[0],
-                        "history": last_message[1],
-                        "finish": True
-                    }
-                    yield {
-                        "event": "finish",
-                        "id": "finish_id",
-                        "retry": RETRY_TIMEOUT,
-                        "data": json.dumps(temp_dict, ensure_ascii=False)
-                    }
-                    break
-                else:
-                    temp_dict = {
-                        "response": message[0],
-                        "history": message[1],
-                        "finish": False
-                    }
-                    yield {
-                        "event": "new_message",
-                        "id": "message_id",
-                        "retry": RETRY_TIMEOUT,
-                        "data": json.dumps(temp_dict, ensure_ascii=False)
-                    }
-                    last_message = message
+                temp_dict = {
+                    "response": message[0],
+                    "history": message[1],
+                    "finish": False
+                }
+                yield {
+                    "event": "new_message",
+                    "id": "message_id",
+                    "retry": RETRY_TIMEOUT,
+                    "data": json.dumps(temp_dict, ensure_ascii=False)
+                }
+                last_message = message
             except StopIteration:
-                message_generator = model.stream_chat(
-                    tokenizer,
-                    prompt,
-                    history=history,
-                    max_input_length=max_input_length,
-                    max_generate_length=max_generate_length,
-                    top_p=top_p,
-                    temperature=temperature,
-                )
                 await asyncio.sleep(STREAM_DELAY)
-    torch_gc()
+        temp_dict = {
+            "response": last_message[0],
+            "history": last_message[1],
+            "finish": True
+        }
+        yield {
+            "event": "finish",
+            "id": "finish_id",
+            "retry": RETRY_TIMEOUT,
+            "data": json.dumps(temp_dict, ensure_ascii=False)
+        }
+        torch_gc()
     return EventSourceResponse(
         event_generator(
             prompt,
@@ -193,19 +193,156 @@ async def stream_chat(request: Request):
     )
 
 
+# --- Compatible with OpenAI ChatGPT --- #
+class ModelCard(BaseModel):
+    id: str
+    object: str = "model"
+    created: int = Field(default_factory=lambda: int(time.time()))
+    owned_by: str = "owner"
+    root: Optional[str] = None
+    parent: Optional[str] = None
+    permission: Optional[list] = None
+
+
+class ModelList(BaseModel):
+    object: str = "list"
+    data: List[ModelCard] = []
+
+
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant", "system"]
+    content: str
+
+
+class DeltaMessage(BaseModel):
+    role: Optional[Literal["user", "assistant", "system"]] = None
+    content: Optional[str] = None
+
+
+class ChatCompletionRequest(BaseModel):
+    model: str
+    messages: List[ChatMessage]
+    temperature: Optional[float] = None
+    top_p: Optional[float] = None
+    max_length: Optional[int] = None
+    stream: Optional[bool] = False
+
+
+class ChatCompletionResponseChoice(BaseModel):
+    index: int
+    message: ChatMessage
+    finish_reason: Literal["stop", "length"]
+
+
+class ChatCompletionResponseStreamChoice(BaseModel):
+    index: int
+    delta: DeltaMessage
+    finish_reason: Optional[Literal["stop", "length"]]
+
+
+class ChatCompletionResponse(BaseModel):
+    model: str
+    object: Literal["chat.completion", "chat.completion.chunk"]
+    choices: List[Union[ChatCompletionResponseChoice, ChatCompletionResponseStreamChoice]]
+    created: Optional[int] = Field(default_factory=lambda: int(time.time()))
+
+
+@app.get("/v1/models", response_model=ModelList)
+async def list_models():
+    global model_args
+    model_card = ModelCard(id="gpt-3.5-turbo")
+    return ModelList(data=[model_card])
+
+
+@app.post("/v1/chat/completions", response_model=ChatCompletionResponse)
+async def create_chat_completion(request: ChatCompletionRequest):
+    global model, tokenizer
+
+    if request.messages[-1].role != "user":
+        raise HTTPException(status_code=400, detail="Invalid request")
+    query = request.messages[-1].content
+
+    prev_messages = request.messages[:-1]
+    if len(prev_messages) > 0 and prev_messages[0].role == "system":
+        query = prev_messages.pop(0).content + query
+
+    history = []
+    if len(prev_messages) % 2 == 0:
+        for i in range(0, len(prev_messages), 2):
+            if prev_messages[i].role == "user" and prev_messages[i+1].role == "assistant":
+                history.append([prev_messages[i].content, prev_messages[i+1].content])
+
+    if request.stream:
+        generate = predict(query, history, request.model)
+        return EventSourceResponse(generate, media_type="text/event-stream")
+
+    response, _ = model.chat(tokenizer, query, history=history)
+    choice_data = ChatCompletionResponseChoice(
+        index=0,
+        message=ChatMessage(role="assistant", content=response),
+        finish_reason="stop"
+    )
+
+    return ChatCompletionResponse(model=request.model, choices=[choice_data], object="chat.completion")
+
+
+async def predict(query: str, history: List[List[str]], model_id: str):
+    global model, tokenizer
+
+    choice_data = ChatCompletionResponseStreamChoice(
+        index=0,
+        delta=DeltaMessage(role="assistant"),
+        finish_reason=None
+    )
+    chunk = ChatCompletionResponse(model=model_id, choices=[choice_data], object="chat.completion.chunk")
+    yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
+
+    current_length = 0
+
+    for new_response, _ in model.stream_chat(tokenizer, query, history):
+        if len(new_response) == current_length:
+            continue
+
+        new_text = new_response[current_length:]
+        current_length = len(new_response)
+
+        choice_data = ChatCompletionResponseStreamChoice(
+            index=0,
+            delta=DeltaMessage(content=new_text),
+            finish_reason=None
+        )
+        chunk = ChatCompletionResponse(model=model_id, choices=[choice_data], object="chat.completion.chunk")
+        yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
+
+    choice_data = ChatCompletionResponseStreamChoice(
+        index=0,
+        delta=DeltaMessage(),
+        finish_reason="stop"
+    )
+    chunk = ChatCompletionResponse(model=model_id, choices=[choice_data], object="chat.completion.chunk")
+    yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
+    yield '[DONE]'
+
+
+
 if __name__ == '__main__':
     model_path = "tigerbot-7b-sft"
     model_max_length = 1024
+    use_mutlti_gpu = False
     print(f"loading model: {model_path}...")
     model = get_model(model_path)
-    max_memory = get_balanced_memory(model)
-    device_map = infer_auto_device_map(model, max_memory=max_memory,
-                                       no_split_module_classes=["BloomBlock"])
-    print("Using the following device map for the model:", device_map)
-    model = dispatch_model(model, device_map=device_map, offload_buffers=True)
 
-    device = torch.cuda.current_device()
-
+    # for multi GPU
+    if use_mutlti_gpu:
+        max_memory = get_balanced_memory(model)
+        device_map = infer_auto_device_map(model, max_memory=max_memory,
+                                           no_split_module_classes=["BloomBlock"])
+        print("Using the following device map for the model:", device_map)
+        model = dispatch_model(model, device_map=device_map, offload_buffers=True)
+    # for single GPU
+    else:
+        device = torch.device(CUDA_DEVICE)
+        model = model.to(device)
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
         cache_dir=None,
@@ -215,7 +352,5 @@ if __name__ == '__main__':
         padding=True,
         truncation=True
     )
-    device = torch.device(CUDA_DEVICE)
-    model = model.to(device)
     model.eval()
     uvicorn.run(app, host='0.0.0.0', port=8000, workers=1)
