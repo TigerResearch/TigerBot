@@ -426,7 +426,6 @@ class BloomBlock(nn.Module):
         output_attentions: bool = False,
     ):
         # hidden_states: [batch_size, seq_length, hidden_size]
-
         # Layer norm at the beginning of the transformer layer.
         layernorm_output = self.input_layernorm(hidden_states)
 
@@ -1896,8 +1895,8 @@ class BloomForCausalLM(BloomPreTrainedModel):
         input_text = self.get_prompt(query_text, history)
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True,
                            max_length=max_input_length)
-        device = torch.cuda.current_device()
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+        # device = torch.cuda.current_device()
+        inputs = {k: v.to(self.device) for k, v in inputs.items()}
         # new_response = ""
         for outputs in self.stream_generate(**inputs, **generation_kwargs):
             outputs = outputs.tolist()[0][len(inputs["input_ids"][0]):]
@@ -1905,4 +1904,4 @@ class BloomForCausalLM(BloomPreTrainedModel):
             response = response.rstrip("</s>")
             new_history = history + [(query_text, response)]
             yield response, new_history
-        yield None, None
+        # yield None, None
