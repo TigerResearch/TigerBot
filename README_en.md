@@ -34,7 +34,7 @@
   - You can use tigerbot chat-api with streaming switch [[TigerBot](https://www.tigerbot.com/chat)][[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
   - New features in tigerbot-api, including LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image) [[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
   
-- [6/27/2023] PEFT TigerBot with QLoRA:  Finetune atigerbot-7b-sft model on single RTX3090 with qlora, speeds up by 16 times and reduces GPI3/4, which also preventing overfitting on downstream data[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
+- [6/27/2023] PEFT TigerBot with QLoRA:  finetune a tigerbot-7b-sft model on single RTX3090 with qlora, speeds up by 16 times and reduces GPI3/4, which also preventing overfitting on downstream data[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
 
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
@@ -422,44 +422,44 @@ Results against bloom-7b1.
 
 ### [chat](https://www.tigerbot.com/api-reference/chat)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/chat.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 <img src="image/api/demo/chat2.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [plugin](https://www.tigerbot.com/api-reference/plugin)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/plugin.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [finetune](https://www.tigerbot.com/api-reference/finetune)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/finetune.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [embedding](https://www.tigerbot.com/api-reference/embedding)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/embedding.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [summarization](https://www.tigerbot.com/api-reference/summarization)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/summarization.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [pdf2text](https://www.tigerbot.com/api-reference/pdf2text)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/pdf2text.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 
 ### [text2image](https://www.tigerbot.com/api-reference/text2image)
 
-<details><summary><b>示例</b></summary>
+<details><summary><b>Example</b></summary>
 <img src="image/api/demo/text2image.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
 </details>
 </details>
@@ -503,7 +503,7 @@ https://www.tigerbot.com
 
 #### Wechat
 
-<img src="image/contact.png" alt="Tiger" style="width: 260px;  "></a>
+<img src="image/qiyewechat.png" alt="Tiger" style="width: 260px;  "></a>
 
 ## Limitations and Disclaimers
 Current models may contain hallucinatory, misleading, or discriminatory content. 
