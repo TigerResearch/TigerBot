@@ -48,7 +48,7 @@
 </p>
 
 - [6/13/2023] Plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#API)
-- [6/13/2023] Fast way to [download model](#Model Weights)
+- [6/13/2023] Fast way to [download model](#Model-Weights)
 - [6/13/2023] TigerBot now is on QQ! [QQ bot based on Tigerbot with custom knowledge base](#Community)，thanks to @wordweb ！
 - [6/09/2023] Stream infer and web demo，thanks to @Tlntin ！
 - [6/08/2023] Run tigerBot on [colab, windows, langchain and webui](#Community), thanks to @wordweb @runfuture !
