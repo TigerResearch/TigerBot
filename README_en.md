@@ -20,8 +20,9 @@
 
 - [7/08/2023] TigerBot 2023.07 (V2) release :fire:
    - We introduce tigerbot-7b-base (v2) trained on 1.5TB high quality data. The training was conducted on 1,000 gpus, took about 4 weeks and cost 3,000,000 Yuan (RMB). The evaluations based on public nlp Chinese and English datasets show that it outperforms bloom and llama with the same model size by 15-30%.
-   - We introduce tigerbot-7b-sft (v2) which was built by finetuning tigerbot-7b-base (v2) with 20G high-quality instruction data. It outperforms tigerbot-7b-sft-v1 by 9.3% on nine public datasets evaluation.
-   How to Use：
+   - We introduce tigerbot-7b-sft (v2) which was built by finetuning tigerbot-7b-base (v2) with 20G high quality instruction data. It outperforms tigerbot-7b-sft-v1 by 9.3% on nine public datasets evaluation.
+   
+   - How to Use：
     ```python
     import transformers
     
@@ -46,10 +47,10 @@
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-- [6/13/2023] plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#API)
+- [6/13/2023] Plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#API)
 - [6/13/2023] Fast way to do [model download](#Model Weights)
-- [6/13/2023] TigerBot now is on QQ! [QQ bot with Tigerbot based on custom knowledge base](#Community)，thanks to @wordweb ！
-- [6/09/2023] stream infer and web demo，thanks to @Tlntin ！
+- [6/13/2023] TigerBot now is on QQ! [QQ bot based on Tigerbot with custom knowledge base](#Community)，thanks to @wordweb ！
+- [6/09/2023] Stream infer and web demo，thanks to @Tlntin ！
 - [6/08/2023] Run tigerBot on [colab, windows, langchain and webui](#Community), thanks to @wordweb @runfuture !
 
 ## Abstract
