@@ -18,6 +18,42 @@
 
 ## News
 
+- [7/08/2023] TigerBot 2023.07 (V2) release :fire:
+   - We introduce tigerbot-7b-base (v2) trained on 1.5TB high quality data. The training was conducted on 1,000 gpus, took about 4 weeks and cost 3,000,000 Yuan (RMB). The evaluations based on public nlp Chinese and English datasets show that it outperforms bloom and llama with the same model size by 15-30%.
+   - We introduce tigerbot-7b-sft (v2) which was built by finetuning tigerbot-7b-base (v2) with 20G high-quality instruction data. It outperforms tigerbot-7b-sft-v1 by 9.3% on nine public datasets evaluation.
+   How to Use：
+    ```python
+    import transformers
+    
+    # If you have the v1 version in your cache, set `force_download=True`.
+    model_sft = transformers.AutoModelForCausalLM.from_pretrained('TigerResearch/tigerbot-7b-sft', force_download=True)
+    model_base = transformers.AutoModelForCausalLM.from_pretrained('TigerResearch/tigerbot-7b-base', force_download=True)
+    ```
+  - We are hosting internet plugin which enables web browsing with tigerbot. Tigerbot utilizes some mainstream search engines and some web tools (like weather, stock, calculator) to navigate results and interact with websites. Meanwhile , you can use tigerbot chat-api with internet search switch. [[TigerBot with search mode (default off) :earth_asia:](https://www.tigerbot.com/chat)][[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-upgraded-with-internet-search)]
+  - You can use tigerbot chat-api with streaming switch [[TigerBot](https://www.tigerbot.com/chat)][[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
+  - New features in tigerbot-api, including LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image) [[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
+  
+- [6/27/2023] PEFT TigerBot with QLoRA:  Finetune atigerbot-7b-sft model on single RTX3090 with qlora, speeds up by 16 times and reduces GPI3/4, which also preventing overfitting on downstream data[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
+
+<p align="center" width="100%">
+	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
+
+- [6/26/2023] TigerBot now is on desktop! [Make your own chatbot with tigerbot and Svelte](#Community)，thanks to @SaraiQX ！
+- [6/20/2023] How to use tigerbot api in langchian(<a href="https://github.com/TigerResearch/TigerBot/blob/main/apps/tigerbot_chatapi.py">sample code</a>) thansk to @wordweb ！
+
+<p align="center" width="100%">
+	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
+
+- [6/13/2023] plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#API)
+- [6/13/2023] Fast way to do [model download](#Model Weights)
+- [6/13/2023] TigerBot now is on QQ! [QQ bot with Tigerbot based on custom knowledge base](#Community)，thanks to @wordweb ！
+- [6/09/2023] stream infer and web demo，thanks to @Tlntin ！
+- [6/08/2023] Run tigerBot on [colab, windows, langchain and webui](#Community), thanks to @wordweb @runfuture !
+
+## Abstract
+
 TigerBot is a multi-language and multitask LLM. We evaluated our MVP model on public NLP datasets and found that our
 model reached 96% of performance of OpenAI InstructGPT at the same model size. We hereby open-source our explorations as following:
 
@@ -39,6 +75,7 @@ We pretrained and supervised fine-tuned our models, starting from a vanilla BLOO
 - We improved the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu enviroment with zero downtime.
 - We used a specialized tokenizer and supervised training algorithm better suited for otherwise more skewed Chinese language distribution.
 
+
 ## Contents
 
 - [Install](#Install)
@@ -47,7 +84,7 @@ We pretrained and supervised fine-tuned our models, starting from a vanilla BLOO
 - [Datasets](#Datasets)
 - [Evaluation](#Evaluation)
 - [API](#API)
-- [Cases](#Cases)
+- [Others](#Others)
 
 ## Install
 
@@ -78,6 +115,22 @@ pip install -r requirements.txt
 | -------------------------------------------------------------------------------------------------- | ---- | ---------- |
 | [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                   | 16   | 347.6      |
 | [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
+
+<details> 
+<summary><b>versions</b></summary>
+
+- tigerbot-7b-sft
+
+  - tigerbot-7b-sft-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]
+
+  - tigerbot-7b-sft-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]
+
+- tigerbot-7b-base
+
+  - tigerbot-7b-base-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]
+  - Tigerbot-7b-base-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]
+
+</details>
 
 ## Training and Inference
 
@@ -364,62 +417,55 @@ Results against bloom-7b1.
 
 ## API
 
-TigerBot provide APIs including Chat-API，Plug-ins，Fine-Tunes.
+<details>
 
-### How to Use APIs
+### [chat](https://www.tigerbot.com/api-reference/chat)
 
-```python
-import requests
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/chat.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+<img src="image/api/demo/chat2.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-url = "https://api.tigerbot.com/bot-service/ft/call"
+### [plugin](https://www.tigerbot.com/api-reference/plugin)
 
-headers = {
-    'Authorization': 'Bearer ' + API_KEY
-}
-payload = {
-    'ftId': 'Your ftId',
-    'text': '将以下中文翻译为英文：对此美国的政策制定者目前陷入了困境：一方面要促进增长，另一方面又得降低总债务水平'
-}
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/plugin.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-response = requests.post(url, headers=headers, json=payload)
+### [finetune](https://www.tigerbot.com/api-reference/finetune)
 
-print(response.text)
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/finetune.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-```
+### [embedding](https://www.tigerbot.com/api-reference/embedding)
 
-```json
-{
-  "code": 200,
-  "msg": "操作成功",
-  "data": {
-    "result": [
-      "The dilemma facing US policymakers is how to stimulate growth while lowering the level of total debt."
-    ]
-  }
-}
-```
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/embedding.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-### [Authentication](https://www.tigerbot.com/api-reference/authentication)
+### [summarization](https://www.tigerbot.com/api-reference/summarization)
 
-You can apply API on TigerBot
-- [Apply](https://www.tigerbot.com)
-- [Get API_KEY](https://www.tigerbot.com/api-reference/my-api-key)
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/summarization.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-<!-- ### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】 -->
-<!-- ### 快速使用 【[完整文档](https://www.tigerbot.com/api-reference)】 -->
-### [Chat-API](https://www.tigerbot.com/api-reference/request)
-You can use Tigerbot-7B or Tigerbot-180B by Chat-API
+### [pdf2text](https://www.tigerbot.com/api-reference/pdf2text)
 
-### [Plug-ins](https://www.tigerbot.com/api-reference/plugins-common)
-- [Rethink](https://www.tigerbot.com/api-reference/plugins-common)
-- [Custom Rethink](https://www.tigerbot.com/api-reference/plugins-custom-create)
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/pdf2text.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
 
-### [Fine-Tunes](https://www.tigerbot.com/api-reference/fine-tune-add-datasets)
-Tailor a model to your specific training data
+### [text2image](https://www.tigerbot.com/api-reference/text2image)
 
-## Cases
+<details><summary><b>示例</b></summary>
+<img src="image/api/demo/text2image.png" alt="tigerbot chat-api sample" style="width: 65%; display: block">
+</details>
+</details>
 
-<details><summary><b>Chat Cases</b></summary>
+## Others
+
+<details><summary><b>User cases</b></summary>
 
 ![image](./image/api/case-1.png)
 ![image](image/api/case-2.png)
@@ -430,7 +476,16 @@ Tailor a model to your specific training data
 
 </details>
 
-## Join Us
+<details><summary><b>Community</b></summary>
+
+- [Build desktop chatbot application with Tigerbot and Svelte fast](https://github.com/SaraiQX/tigerbot-svelte-app)
+- [QQ bot based on  Tigerbot with custom knowledge base](https://github.com/wordweb/Tiger-qq-bot)
+- [Application based on  Tigerbot with custom knowledge base](https://github.com/wordweb/langchain-ChatGLM-and-TigerBot)
+- [Run TigerBot on Colab](https://github.com/runfuture/tigerbot/blob/main/test_tigerbot_7b_sft_4bit_128g.ipynb)
+- [Run TigerBot on Windows](https://www.bilibili.com/video/BV1Ru411a7Kq/)
+</details>
+
+<details><summary><b>Join us</b></summary>
 
 #### Our product
 
