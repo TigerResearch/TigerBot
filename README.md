@@ -125,8 +125,10 @@ pip install -r requirements.txt
 - tigerbot-7b-sft
 
   - tigerbot-7b-sft-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]
+  - tigerbot-7b-sft-v2-4bit (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2-4bit-128g)]
 
   - tigerbot-7b-sft-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]
+  - tigerbot-7b-sft-v1-4bit (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1-4bit-128g)]
 
 - tigerbot-7b-base
 
