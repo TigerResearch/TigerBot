@@ -21,6 +21,12 @@
 
 ## 最新发布
 
+- [7/26/2023] TigerBot 开放search-api [[tigerbot-api](https://www.tigerbot.com/api-reference/search)]
+
+<p align="center" width="100%">
+	<img src="image/search_api.png" alt="tigerbot search-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
+
 - [7/08/2023] TigerBot 2023.07 (V2) release [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-Version2)] :fire:
 
   - tigerbot-7b-base (v2), 在 1.5TB 高质量数据上充分预训练（千卡耗时4周，算力成本～300万），在中英文公开数据测评优于 bloom/llama 同等模型 15-30%；[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
