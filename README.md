@@ -21,7 +21,7 @@
 
 ## 最新发布
 
-- [8/03/2023] TigerBot 兼容 OpenAI 接口。[[查看文档](docs/openai_zh.md)]
+- [8/03/2023] TigerBot 兼容 OpenAI 接口。[[查看文档](https://www.tigerbot.com/api-reference/chat?codeLanguage=python-openai)]
 
 - [7/26/2023] TigerBot 开放 search-api [[tigerbot-api](https://www.tigerbot.com/api-reference/search)]
 
