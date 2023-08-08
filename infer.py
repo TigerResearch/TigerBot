@@ -2,8 +2,7 @@ import os
 
 import fire
 import torch
-import readline
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -21,6 +20,8 @@ def main(
 
     model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
 
+    generation_config = GenerationConfig.from_pretrained(model_path)
+
     device = torch.cuda.current_device()
 
     tokenizer = AutoTokenizer.from_pretrained(
@@ -33,15 +34,6 @@ def main(
     )
     if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
         tokenizer.model_max_length = max_generate_length
-
-    generation_kwargs = {
-        "top_p": 0.95,
-        "temperature": 0.8,
-        "max_length": max_generate_length,
-        "eos_token_id": tokenizer.eos_token_id,
-        "pad_token_id": tokenizer.pad_token_id,
-        "early_stopping": True,
-    }
 
     sess_text = ""
     while True:
@@ -62,7 +54,7 @@ def main(
         input_text = prompt_input.format_map({'instruction': sess_text.split(tok_ins, 1)[1]})
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        output = model.generate(**inputs, **generation_kwargs)
+        output = model.generate(**inputs, **generation_config.to_dict())
         answer = ''
         for tok_id in output[0][inputs['input_ids'].shape[1]:]:
             if tok_id != tokenizer.eos_token_id:
