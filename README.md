@@ -1,7 +1,7 @@
 # TigerBot
 
 <p align="center" width="100%">
-<img src="image/tiger.jpg" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
+<img src="image/logo_core.png" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
 </p>
 <p align="center">
 <font face="黑体" color=orange size=5"> A cutting-edge foundation for your very own LLM. </font>
