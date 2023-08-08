@@ -111,12 +111,19 @@ pip install -r requirements.txt
 
 ## 模型下载
 
+<summary>Tigerbot-13B</summary>
+
+| Tigerbot-13B                                                 | Bits | memory(GB) |
+| ------------------------------------------------------------ | ---- | ---------- |
+| [tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat) | 16   | 24.8       |
+| [tigerbot-13b-base](https://huggingface.co/TigerResearch/tigerbot-13b-base) | 16   | 24.8       |
+
 <summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                                                                               | Bits | memory(GB) |
-| --------------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                      | 16   | 17.2       |
-| [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base)              | 16   | 17.2       |
+| Tigerbot-7B                                                  | Bits | memory(GB) |
+| ------------------------------------------------------------ | ---- | ---------- |
+| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft) | 16   | 17.2       |
+| [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base) | 16   | 17.2       |
 | [tigerbot-7b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
 
 <summary>Tigerbot-180B-Research</summary>
