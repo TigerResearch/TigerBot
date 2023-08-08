@@ -348,6 +348,18 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## 测评
 
+使用经典的中英文benchmark自动评测，我们基于opencompass建立自动评测体系（感谢@opencompass），后续会开放评测数据和代码，以提倡reproducibility
+
+tigerbot-13b-base 模型测评结果
+
+![image](image/eval_13b_base.jpg)
+
+tigerbot-13b-chat 模型测评结果
+
+![image](image/eval_13b_chat.jpg)
+
+<details> 
+<summary><b>V2版SFT和base模型测评结果</b></summary>
 tigerbot-7b-base v2 模型测评结果
 
 ![image](image/evaluation_base_v2.jpg)
@@ -356,7 +368,9 @@ tigerbot-7b-sft v2 模型测评结果
 
 ![image](image/evaluation_sft_v2.jpg)
 
-<details> 
+</details>
+
+<details>
 <summary><b>V1版SFT和base模型测评结果</b></summary>
 
 在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
