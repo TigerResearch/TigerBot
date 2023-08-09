@@ -2,14 +2,18 @@ import torch
 import os
 import sys
 import gradio as gr
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, TextIteratorStreamer, GenerationConfig
 import mdtex2html
+from threading import Thread
+import gc
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024
-model_path = "tigerbot-7b-sft"
+model_path = "TigerBot"
 print(f"loading model: {model_path}...")
+device = torch.cuda.current_device()
+generation_config = GenerationConfig.from_pretrained(model_path)
 model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.float16, device_map='auto')
 
 tokenizer = AutoTokenizer.from_pretrained(
@@ -74,20 +78,61 @@ def parse_text(text):
     return text
 
 
-def predict(input, chatbot, max_input_length, max_generate_length, top_p, temperature, history):
+def generate_stream(query,
+                    history,
+                    max_input_length,
+                    max_output_length):
+    tok_ins = "\n\n### Instruction:\n"
+    tok_res = "\n\n### Response:\n"
+    prompt_input = tok_ins + "{instruction}" + tok_res
+
+    sess_text = ""
+    if history:
+        for s in history:
+            sess_text += tok_ins + s["human"] + tok_res + s["assistant"]
+    history.append({"human": query, "assistant": ""})
+
+    sess_text += tok_ins + query.strip()
+    input_text = prompt_input.format_map({'instruction': sess_text.split(tok_ins, 1)[1]})
+    inputs = tokenizer(input_text, return_tensors="pt", truncation=True, max_length=max_input_length)
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+
+    streamer = TextIteratorStreamer(tokenizer,
+                                    skip_prompt=True,
+                                    skip_special_tokens=True,
+                                    spaces_between_special_tokens=False)
+
+    generation_kwargs = generation_config.to_dict()
+    generation_kwargs.update(dict(inputs))
+    generation_kwargs['streamer'] = streamer
+    generation_kwargs['max_new_tokens'] = max_output_length
+
+    thread = Thread(target=model.generate, kwargs=generation_kwargs)
+    thread.start()
+
+    answer = ""
+    for new_text in streamer:
+        if len(new_text) == 0:
+            continue
+        if new_text.endswith(tokenizer.eos_token):
+            new_text = new_text.rsplit(tokenizer.eos_token, 1)[0]
+        answer += new_text
+        history[-1]['assistant'] = answer
+
+        yield answer, history
+
+
+def predict(input, chatbot, max_input_length, max_generate_length, history):
     chatbot.append((parse_text(input), ""))
-    for response, history in model.stream_chat(
-            tokenizer,
+    for response, history in generate_stream(
             input,
             history,
             max_input_length=max_input_length,
-            max_generate_length=max_generate_length,
-            top_p=top_p,
-            temperature=temperature
+            max_output_length=max_generate_length,
     ):
         if response is None:
             break
-        chatbot[-1] = (parse_text(input), parse_text(response))       
+        chatbot[-1] = (parse_text(input), parse_text(response))
 
         yield chatbot, history
 
@@ -115,15 +160,13 @@ with gr.Blocks() as demo:
             emptyBtn = gr.Button("Clear History")
             max_input_length = gr.Slider(0, 1024, value=512, step=1.0, label="Maximum input length", interactive=True)
             max_generate_length = gr.Slider(0, 2048, value=1024, step=1.0, label="Maximum generate length", interactive=True)
-            top_p = gr.Slider(0, 1, value=0.7, step=0.01, label="Top P", interactive=True)
-            temperature = gr.Slider(0, 1, value=0.95, step=0.01, label="Temperature", interactive=True)
 
     history = gr.State([])
 
-    submitBtn.click(predict, [user_input, chatbot, max_input_length, max_generate_length, top_p, temperature, history], [chatbot, history],
+    submitBtn.click(predict, [user_input, chatbot, max_input_length, max_generate_length, history], [chatbot, history],
                     show_progress=True)
     submitBtn.click(reset_user_input, [], [user_input])
 
     emptyBtn.click(reset_state, outputs=[chatbot, history], show_progress=True)
 
-demo.queue().launch(share=False, inbrowser=True)
+demo.queue().launch(share=True, inbrowser=True)
