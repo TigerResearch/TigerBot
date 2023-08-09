@@ -21,6 +21,8 @@ def main(
     model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
 
     generation_config = GenerationConfig.from_pretrained(model_path)
+    generation_config.max_length = max_generate_length
+    print(generation_config)
 
     device = torch.cuda.current_device()
 
