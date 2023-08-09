@@ -2,26 +2,15 @@ import torch
 import os
 import sys
 import gradio as gr
-from accelerate import infer_auto_device_map, dispatch_model
-from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import mdtex2html
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from other_infer.infer_stream import get_model
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024
 model_path = "tigerbot-7b-sft"
 print(f"loading model: {model_path}...")
-model = get_model(model_path)
-
-max_memory = get_balanced_memory(model)
-device_map = infer_auto_device_map(model, max_memory=max_memory,
-                                   no_split_module_classes=["BloomBlock"])
-print("Using the following device map for the model:", device_map)
-model = dispatch_model(model, device_map=device_map, offload_buffers=True)
-
-device = torch.cuda.current_device()
+model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.float16, device_map='auto')
 
 tokenizer = AutoTokenizer.from_pretrained(
     model_path,
