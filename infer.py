@@ -57,10 +57,10 @@ def main(
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
         output = model.generate(**inputs, **generation_config.to_dict())
-        answer = ''
-        for tok_id in output[0][inputs['input_ids'].shape[1]:]:
-            if tok_id != tokenizer.eos_token_id:
-                answer += tokenizer.decode(tok_id)
+        output_str = tokenizer.decode(output[0], skip_special_tokens=False, spaces_between_special_tokens=False)
+        answer = output_str.rsplit(tok_res, 1)[1].strip()
+        if answer.endswith(tokenizer.eos_token):
+            answer = answer.rsplit(tokenizer.eos_token, 1)[0].strip()
 
         sess_text += tok_res + answer
 
