@@ -10,15 +10,14 @@ import torch
 from sse_starlette.sse import EventSourceResponse
 from accelerate import infer_auto_device_map, dispatch_model
 from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from pydantic import BaseModel, Field
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Literal, Optional, Union
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from other_infer.infer_stream import get_model
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -93,6 +92,7 @@ async def create_item(request: Request):
         "early_stopping": True,
         "no_repeat_ngram_size": 4,
     }
+    device = torch.cuda.current_device()
     prompt = prompt.lstrip("\n")
     query = get_prompt(prompt, history)
     query = query.strip()
@@ -136,19 +136,19 @@ async def stream_chat(request: Request):
         tokenizer.model_max_length = max_generate_length
     STREAM_DELAY = 1  # second
     RETRY_TIMEOUT = 15000  # milisecond
- 
+
     async def event_generator(
             prompt, history, max_input_length, max_generate_length, top_p, temperature
     ):
         last_message = ["", ""]
         for message in model.stream_chat(
-            tokenizer,
-            prompt,
-            history=history,
-            max_input_length=max_input_length,
-            max_generate_length=max_generate_length,
-            top_p=top_p,
-            temperature=temperature,
+                tokenizer,
+                prompt,
+                history=history,
+                max_input_length=max_input_length,
+                max_generate_length=max_generate_length,
+                top_p=top_p,
+                temperature=temperature,
         ):
             # If client closes connection, stop sending events
             if await request.is_disconnected():
@@ -181,6 +181,7 @@ async def stream_chat(request: Request):
             "data": json.dumps(temp_dict, ensure_ascii=False)
         }
         torch_gc()
+
     return EventSourceResponse(
         event_generator(
             prompt,
@@ -269,8 +270,8 @@ async def create_chat_completion(request: ChatCompletionRequest):
     history = []
     if len(prev_messages) % 2 == 0:
         for i in range(0, len(prev_messages), 2):
-            if prev_messages[i].role == "user" and prev_messages[i+1].role == "assistant":
-                history.append([prev_messages[i].content, prev_messages[i+1].content])
+            if prev_messages[i].role == "user" and prev_messages[i + 1].role == "assistant":
+                history.append([prev_messages[i].content, prev_messages[i + 1].content])
 
     if request.stream:
         generate = predict(query, history, request.model)
@@ -324,25 +325,12 @@ async def predict(query: str, history: List[List[str]], model_id: str):
     yield '[DONE]'
 
 
-
 if __name__ == '__main__':
-    model_path = "tigerbot-7b-sft"
+    model_path = "TigerResearch/tigerbot-13b-chat"
     model_max_length = 1024
-    use_mutlti_gpu = False
     print(f"loading model: {model_path}...")
-    model = get_model(model_path)
+    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
 
-    # for multi GPU
-    if use_mutlti_gpu:
-        max_memory = get_balanced_memory(model)
-        device_map = infer_auto_device_map(model, max_memory=max_memory,
-                                           no_split_module_classes=["BloomBlock"])
-        print("Using the following device map for the model:", device_map)
-        model = dispatch_model(model, device_map=device_map, offload_buffers=True)
-    # for single GPU
-    else:
-        device = torch.device(CUDA_DEVICE)
-        model = model.to(device)
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
         cache_dir=None,
