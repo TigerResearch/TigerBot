@@ -120,9 +120,11 @@ pip install -r requirements.txt
 <summary>Tigerbot-13B</summary>
 
 | Tigerbot-13B                                                 | Bits | memory(GB) |
-| ------------------------------------------------------------ | ---- | ---------- |
-| [tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat) | 16   | 24.8       |
-| [tigerbot-13b-base](https://huggingface.co/TigerResearch/tigerbot-13b-base) | 16   | 24.8       |
+| ------------------------------------------------------------ | -- | ---------- |
+| [tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat) | 16 | 24.8       |
+| [tigerbot-13b-base](https://huggingface.co/TigerResearch/tigerbot-13b-base) | 16 | 24.8       |
+| [tigerbot-13b-chat-bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit) | 8   | 16       |
+
 
 <summary>Tigerbot-7B</summary>
 
