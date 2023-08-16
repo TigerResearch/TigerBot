@@ -1,6 +1,7 @@
 # 兼容 OpenAI 接口
 [Tigerbot API](https://www.tigerbot.com/api-reference/chat) 已经兼容 [OpenAI API](https://platform.openai.com/docs/introduction) 部分功能。您可以通过 [OpenAI Python Library](https://github.com/openai/openai-python) 使用我们的服务。目前已经兼容以下功能：
-* [Chat Completions](#chat-completion-功能)
+* [Chat Completions](#chat-completions-功能)
+* [Embeddings](#embeddings-功能)
 
 
 ## 安装
@@ -44,6 +45,7 @@ print(response)
 * 额外参数：
   * `internet`: `internet=True` 开启互联网搜索模式，默认关闭。
 * `finish_reason` 为 `sensitive` 是表示输入或者输出中有敏感词，此时 `content` 将返回空。
+* 当前只支持 `role` 为  `user` 和 `assistant` 的消息， `role` 为 `system` 的消息按照 `assistant` 进行处理。
 
 ### 示例
 
@@ -51,7 +53,7 @@ print(response)
 
 #### Chat Completions
 
-运行以下 Python 代码
+运行以下 Python 代码：
 ```python
 import openai
 
@@ -111,7 +113,7 @@ One, two, three, four, five, six, seven, eight, nine, ten.
 ```
 
 #### 流式 Chat completion
-运行以下 Python 代码
+运行以下 Python 代码：
 ```python
 import openai
 
@@ -305,3 +307,51 @@ for chunk in response:
 ```
 
 </details>
+
+## Embeddings 功能
+[Tigerbot API](https://www.tigerbot.com/api-reference/chat) 已经兼容 [OpenAI API](https://platform.openai.com/docs/introduction) 的 Embeddings 功能。
+### 兼容性
+我们正在努力与 OpenAI 的接口进行兼容，但当前仍有一些不同点需要注意：
+* 请求中的 `user`, `input_type` 会被忽略。
+### 示例
+
+以下示例是根据 [OpenAI Cookbook](https://github.com/openai/openai-cookbook) 中的示例修改而来。字段具体含义及用法可以参考 [OpenAI Python Library](https://github.com/openai/openai-python) 及 [OpenAI Cookbook](https://github.com/openai/openai-cookbook)。
+
+#### 获取 Embeddings
+运行以下 Python 代码：
+```python
+import openai
+
+openai.api_base = "http://api.tigerbot.com/openai"
+openai.api_key = '<YOUR_TIGERBOT_API_KEY>'
+
+embedding = openai.Embedding.create(
+    input=["Your text goes here"], model="tigerbot-text-embedding-768"
+)
+print(embedding)
+```
+
+运行完毕后，将打印以下内容：
+
+```shell
+{
+  "object": "embedding",
+  "model": "tigerbot-text-embedding-768",
+  "data": [
+    {
+      "index": 0,
+      "object": "embedding",
+      "embedding": [
+        0.5200387835502625,
+        0.9799394607543945,
+        0.8458309769630432,
+        ...
+      ]
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 11,
+    "total_tokens": 11
+  }
+}
+```
