@@ -123,7 +123,7 @@ pip install -r requirements.txt
 | ------------------------------------------------------------ | -- | ---------- |
 | [tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat) | 16 | 24.8       |
 | [tigerbot-13b-base](https://huggingface.co/TigerResearch/tigerbot-13b-base) | 16 | 24.8       |
-| [tigerbot-13b-chat-bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit) | 8   | 16       |
+| [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit) | 8   | 16       |
 
 
 <summary>Tigerbot-7B</summary>
@@ -324,7 +324,7 @@ CUDA_VISIBLE_DEVICES=0 python quant_infer.py --model_path ${MODEL_DIR} --wbit 8
 ```
 
 #### GPTQ量化方式
-如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)
+如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)
 
 我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
 
