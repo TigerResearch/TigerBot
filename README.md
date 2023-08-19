@@ -26,7 +26,7 @@
 	-测试：在 4张 A100，tigerbot-13B-chat，10个并发请求（“全文背诵长恨歌”）的条件下，TGI 的 QPS（Request per second）在 1.5 左右，95%的请求在15秒内返回，原来hf推理的RPS在 0.5 左右，95% 的请求 30 秒内返回。TGI 的吞吐量比原服务大 200% 左右，返回时间比原服务少 50% 左右。
   	
 	<p align="center" width="100%">
-		<img src="image/tgi-demo.git" alt="tigerbot tgi-infer sample" style="width: 65%; display: block; margin: auto;"></a>
+		<img src="image/tgi-demo.gif" alt="tigerbot tgi-infer demo" style="width: 65%; display: block; margin: auto;"></a>
 	</p>
 
 - [8/08/2023] TigerBot 2023.08 (V3) release: 虎博很高兴的发布TigerBot-13B大模型，在Llama-2的基础上以虎博积累的技术和数据继续训练，不但保持了Llama-2出色的英文能力，更是在中文能力上填补了Llama-2的不足，各项主流中文任务中超过Llama-2的49%，在开源同类模型中具有竞争力。:fire: [[paper](https://github.com/TigerResearch/TigerBot/wiki/Tigerbot%E2%80%9013B-is-All-You-Need)] 
