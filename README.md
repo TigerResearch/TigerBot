@@ -21,9 +21,7 @@
 
 ## 最新发布
 
-- [8/19/2023] TigerBot 推理（tigerbot.com 和 tigerbot-api）启用 [TGI](https://github.com/huggingface/text-generation-inference)，达到 3x QPS 和 2x 响应速度，响应速度提高一倍。
-	
-	- 测试：在4张A100，tigerbot-13B-chat，10个并发请求（“全文背诵长恨歌”）的条件下，TGI的QPS在1.5左右，95%的请求在15秒内返回，原来hf推理的QPS在0.5左右，95%的请求30秒内返回。TGI的吞吐量比原服务大200%左右，返回时间比原服务少50%左右。
+- [8/19/2023] TigerBot 推理（tigerbot.com 和 tigerbot-api）启用 [TGI](https://github.com/huggingface/text-generation-inference)，达到 3x QPS和 2x 响应速度。
 
 https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e8-45b482e76c51
 
