@@ -21,6 +21,11 @@
 
 ## 最新发布
 
+- [8/19/2023] TigerBot 推理（tigerbot.com 和 tigerbot-api）启用 [TGI](https://github.com/huggingface/text-generation-inference)，qps增加2倍，响应速度提高一倍。测试：在 4张 A100，tigerbot-13B-chat，10个并发请求（“全文背诵长恨歌”）的条件下，TGI 的 QPS（Request per second）在 1.5 左右，95%的请求在15秒内返回，原来hf推理的RPS在 0.5 左右，95% 的请求 30 秒内返回。TGI 的吞吐量比原服务大 200% 左右，返回时间比原服务少 50% 左右。
+  <video width="320" height="240" controls>
+  	<source src="image/tgi-demo.mov" type="video/mov">
+   </video>
+
 - [8/08/2023] TigerBot 2023.08 (V3) release: 虎博很高兴的发布TigerBot-13B大模型，在Llama-2的基础上以虎博积累的技术和数据继续训练，不但保持了Llama-2出色的英文能力，更是在中文能力上填补了Llama-2的不足，各项主流中文任务中超过Llama-2的49%，在开源同类模型中具有竞争力。:fire: [[paper](https://github.com/TigerResearch/TigerBot/wiki/Tigerbot%E2%80%9013B-is-All-You-Need)] 
 
   - TigerBot-13B-base: 基于Llama-2-13B继续预训练300B tokens，扩充了中文词表到60K vocabulary, 并采用holistic training在预训练中直接使模型具有九成的指令完成能力。在主流英文基准测试中超过Llama-2-13B-base的7%，在中文测试中综合能力超过Llama-2-13B-base的49%，在国内外主流开源基座模型中处于领先位置。[[测评](#测评)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)]
