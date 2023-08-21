@@ -140,9 +140,9 @@ pip install -r requirements.txt
 
 | Tigerbot-7B                                                  | Bits | memory(GB) |
 | ------------------------------------------------------------ | ---- | ---------- |
-| [tigerbot-7b-sft (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft) | 16   | 17.2       |
+| [tigerbot-7b-chat (chat model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft) | 16   | 17.2       |
 | [tigerbot-7b-base (pretrained model)](https://huggingface.co/TigerResearch/tigerbot-7b-base) | 16   | 17.2       |
-| [tigerbot-7b-sft-4bit-128g (quant model)](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
+| [tigerbot-7b-chat-4bit (quant model)](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit) | 4    | 8.5        |
 
 <summary>Tigerbot-180B-Research</summary>
 
@@ -375,7 +375,7 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## 测评
 
-使用经典的中英文benchmark自动评测，我们基于opencompass建立自动评测体系（感谢@opencompass），后续会开放评测数据和代码，以提倡reproducibility
+我们使用经典的中英文benchmark自动评测，共13项任务，涵盖代码，常识推理，阅读理解，数学，自然语言理解等。我们基于opencompass建立自动评测体系（感谢@opencompass），后续会开放评测数据和代码，以提倡reproducibility。
 
 base模型测评结果
 ![image](image/eval_base.jpg)
