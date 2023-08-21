@@ -25,7 +25,7 @@
 
 	- TigerBot-7B-base [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]: 基于Llama-2-7B增量预训练300B tokens，补充了Llama-2不足的中文、代码和推理等数据，并使用holistic training（全局训练）方法；在13项中英文主流benchmark中，优于Llama-2-7B 33%, 领先于国内外同等开源模型;
 	- TigerBot-7B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]: 基于TigerBot-7B-base用20M涵盖多任务的数据进行指令微调（sft）和拒绝采样对齐（rs-hil）；在13项中英文主流benchmark中，优于Llama-2-7B-chat 29%, 亦领先于国内外同等开源模型;
-	- TigerBot-13B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]: 基于TigerBot-13B-base用20M涵盖多任务的数据进行指令微调（13b-v1用了5M数据)，并在中英文能力上做了更好的权衡；在13项中英文主流benchmark中，优于Llama-2-13B-chat 15%;
+	- TigerBot-13B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]: 基于TigerBot-13B-base用20M涵盖多任务的数据进行指令微调（13b-v1用了5M数据)，并在中英文能力上做了更好的权衡；在13项中英文主流benchmark中，优于Llama-2-13B-chat 15%，领先于国内外同等开源模型;
 	- 以上tigerbot-api也同步更新 [[tigerbot-api](https://www.tigerbot.com/api-reference)]。
 
 - [8/19/2023] TigerBot推理（tigerbot.com和tigerbot-api）启用 [TGI](https://github.com/huggingface/text-generation-inference)，达到3x QPS和2x 响应速度。
