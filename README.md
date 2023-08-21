@@ -23,8 +23,8 @@
 
 - [8/21/2023] TigerBot 更新发布 7b 和 13b base/chat 模型: [[测评](#测评)]
 
-	- TigerBot-7B-base [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]: 基于 Llama-2-7B 增量预训练300B tokens，补充了 Llama-2 不足的中文、代码和推理等数据，并使用 holistic training (全局训练) 方法；在13项中英文主流benchmark中，优于 Llama-2-7B 33%, 领先于国内外同等开源模型;
-	- TigerBot-7B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]: 基于 TigerBot-7B-base 用 20M 涵盖多任务的数据进行指令微调 (sft) 和拒绝采样对齐 (rs-hil)；在13项中英文主流benchmark中，优于 Llama-2-7B-chat 29%, 亦领先于国内外同等开源模型;
+	- TigerBot-7B-base [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]: 基于 Llama-2-7B 增量预训练300B tokens，补充了 Llama-2 不足的中文、代码和推理等数据，并使用 holistic training (全局训练) 方法；在13项中英文主流benchmark中，优于 Llama-2-7B 33%，领先于国内外同等开源模型;
+	- TigerBot-7B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]: 基于 TigerBot-7B-base 用 20M 涵盖多任务的数据进行指令微调 (sft) 和拒绝采样对齐 (rs-hil)；在13项中英文主流benchmark中，优于 Llama-2-7B-chat 29%，亦领先于国内外同等开源模型;
 	- TigerBot-13B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]: 基于 TigerBot-13B-base 用 20M 涵盖多任务的数据进行指令微调 (13b-v1 用了 5M 数据)，并在中英文能力上做了更好的权衡；在13项中英文主流benchmark中，优于 Llama-2-13B-chat 15%，领先于哦那个累开源；
    	- 以上tigerbot-api也同步更新 [[tigerbot-api](https://www.tigerbot.com/api-reference)]。
 
