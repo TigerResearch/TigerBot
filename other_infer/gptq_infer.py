@@ -3,12 +3,15 @@ import os
 import fire
 import random
 import torch
+import logging
 from datasets import load_dataset
 from transformers import AutoTokenizer
-from transformers.utils import logging
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 
 class QuantAutoGPTQ:
     def __init__(self, model_path, output_dir=None, dataset=None, model_basename=None,
@@ -47,8 +50,7 @@ class QuantAutoGPTQ:
         self.seqlen = seqlen
         self.batch_size = batch_size
 
-        self.logger = logging.get_logger(__name__)
-        self.logger.propagate = True
+        self.logger = logging.getLogger(__name__)
         self.quant = quant
 
         self.logger.info("Loading tokenizer")
@@ -83,7 +85,7 @@ class QuantAutoGPTQ:
 
     def get_c4(self):
         traindata = load_dataset(
-            'allenai/c4', 'allenai--c4', data_files={'train': 'en/c4-train.00000-of-01024.json.gz'}, split='train', use_auth_token=False
+            'allenai/c4', 'allenai--c4', data_files={'train': 'en/c4-train.00000-of-01024.json.gz'}, split='train',  token=False
         )
         trainloader = []
         for _ in range(self.num_samples):
@@ -162,6 +164,7 @@ class QuantAutoGPTQ:
         self.logger.info("Done.")
 
     def run_quantization(self):
+        # TODO: This is messy, should be dynamic
         if 'wikitext2' in self.dataset:
             traindataset = self.get_wikitext2()
         elif 'ptb' in self.dataset:
