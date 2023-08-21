@@ -164,7 +164,6 @@ class QuantAutoGPTQ:
         self.logger.info("Done.")
 
     def run_quantization(self):
-        # TODO: This is messy, should be dynamic
         if 'wikitext2' in self.dataset:
             traindataset = self.get_wikitext2()
         elif 'ptb' in self.dataset:
