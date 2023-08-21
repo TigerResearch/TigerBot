@@ -371,6 +371,14 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 使用经典的中英文benchmark自动评测，我们基于opencompass建立自动评测体系（感谢@opencompass），后续会开放评测数据和代码，以提倡reproducibility
 
+base模型测评结果
+![image](image/eval_base.jpg)
+
+chat模型测评结果
+![image](image/eval_chat.jpg)
+
+<details> 
+<summary><b>tigerbot-13b V1版测评结果</b></summary>
 tigerbot-13b-base 模型测评结果
 
 ![image](image/eval_13b_base.jpg)
@@ -378,6 +386,8 @@ tigerbot-13b-base 模型测评结果
 tigerbot-13b-chat 模型测评结果
 
 ![image](image/eval_13b_chat.jpg)
+</details> 
+
 
 <details> 
 <summary><b>V2版SFT和base模型测评结果</b></summary>
