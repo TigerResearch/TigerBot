@@ -376,35 +376,39 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 
 ## 测评
 
-我们使用经典的中英文benchmark自动评测，共13项任务，涵盖代码，常识推理，阅读理解，数学，自然语言理解等。我们基于opencompass建立自动评测体系（感谢@opencompass），后续会开放评测数据和代码，以提倡reproducibility。
+我们使用经典的中英文benchmark自动评测，共13项任务，涵盖代码，常识推理，阅读理解，数学，自然语言理解等。我们基于opencompass建立自动评测体系（感谢@opencompass）
+```
+# 安装
+cd opencompass
+pip install -e .
+
+# 下载数据集到 data/ 处
+wget https://github.com/InternLM/opencompass/releases/download/0.1.1/OpenCompassData.zip
+unzip OpenCompassData.zip
+
+#运行测评任务：
+CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base --max-partition-size 30000
+```
 
 base模型测评结果
-![image](image/eval_base.jpg)
+
+![image](image/eval_base.png)
+
 
 chat模型测评结果
-![image](image/eval_chat.jpg)
+
+![image](image/eval_chat.png)
 
 <details> 
-<summary><b>tigerbot-13b V1版测评结果</b></summary>
-tigerbot-13b-base 模型测评结果
+<summary><b>模型测评细分项</b></summary>
+base模型测评结果
 
-![image](image/eval_13b_base.jpg)
-
-tigerbot-13b-chat 模型测评结果
-
-![image](image/eval_13b_chat.jpg)
-</details> 
+![image](image/eval_base_detail.png)
 
 
-<details> 
-<summary><b>V2版SFT和base模型测评结果</b></summary>
-tigerbot-7b-base v2 模型测评结果
+chat模型测评结果
 
-![image](image/evaluation_base_v2.jpg)
-
-tigerbot-7b-sft v2 模型测评结果
-
-![image](image/evaluation_sft_v2.jpg)
+![image](image/eval_chat_detail.png)
 
 </details>
 
