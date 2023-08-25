@@ -360,7 +360,7 @@ AUTOGPTQ目前不支持多卡量化，建议指定单卡就好
 CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_basename ${QUANTIZE_MODEL}  --bits 8 --group_size 128 --damp 0.01  --desc_act 0
 ```
 
-`bits`, `group_size`, `damp`和d`esc_act`与默认值一致的时候可以不指定，`QUANTIZE_MODEL`为量化模型，如g`tigerbot-13b-chat-8bit`, 需保证上述参数与模型一致
+`bits`, `group_size`, `damp`和d`esc_act`与默认值一致的时候可以不指定，`QUANTIZE_MODEL`为量化模型，如`tigerbot-13b-chat-8bit`, 需保证上述参数与模型一致
 
 
 ## 测评
