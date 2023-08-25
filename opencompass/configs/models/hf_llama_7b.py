@@ -6,7 +6,7 @@ models = [
         type=HuggingFaceCausalLM,
         abbr='llama-7b',
         path="meta-llama/Llama-2-7b-hf",
-        tokenizer_path='meta-llama/Llama-2-7b-hf',
+        tokenizer_path='meta-llama/Llama-2-7b',
         tokenizer_kwargs=dict(padding_side='left',
                               truncation_side='left',
                               use_fast=False,

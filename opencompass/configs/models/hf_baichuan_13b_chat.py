@@ -4,8 +4,8 @@ models = [
     dict(
         type=HuggingFaceCausalLM,
         abbr='baichuan-13b-chat',
-        path="/mnt/nfs/algo/intern/haoyunx7/models/llm/baichuan/Baichuan-13B-Chat",
-        tokenizer_path='/mnt/nfs/algo/intern/haoyunx7/models/llm/baichuan/Baichuan-13B-Chat',
+        path="baichuan-inc/Baichuan-13B-Chat",
+        tokenizer_path='baichuan-inc/Baichuan-13B-Chat',
         tokenizer_kwargs=dict(padding_side='left',
                               truncation_side='left',
                               trust_remote_code=True,
@@ -20,8 +20,8 @@ models = [
     dict(
         type=HuggingFaceCausalLM,
         abbr='baichuan-13b-base',
-        path="baichuan-inc/Baichuan-13B-Base",
-        tokenizer_path='baichuan-inc/Baichuan-13B-Base',
+        path="baichuan-inc/Baichuan-7B",
+        tokenizer_path='baichuan-inc/Baichuan-7B',
         tokenizer_kwargs=dict(padding_side='left',
                               truncation_side='left',
                               trust_remote_code=True,

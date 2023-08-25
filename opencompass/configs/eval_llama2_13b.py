@@ -25,4 +25,3 @@ datasets1 = [*humaneval_datasets, *piqa_datasets, *siqa_datasets, *hellaswag_dat
 datasets2 = [*CMRC_datasets, *ocnli_datasets, *C3_datasets, *ceval_datasets]
 
 datasets = datasets1 + datasets2
-datasets = [*CMRC_datasets]
