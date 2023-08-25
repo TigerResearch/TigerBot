@@ -357,13 +357,6 @@ CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_ba
 `bits`, `group_size`, `damp`和d`esc_act`与默认值一致的时候可以不指定，`QUANTIZE_MODEL`为量化模型，如g`tigerbot-13b-chat-8bit`, 需保证上述参数与模型一致
 
 
-[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张 RTX3090 上进行
-其中，`${MODEL_DIR}` 为你的模型配置文件路径，
-
-```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
-```
-
 ## 测评
 
 我们使用经典的中英文benchmark自动评测，共13项任务，涵盖代码，常识推理，阅读理解，数学，自然语言理解等。我们基于opencompass建立自动评测体系（感谢@opencompass）
