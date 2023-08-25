@@ -11,7 +11,13 @@
 </p>
 <p align="center">
    🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
+
 </p>
+<div align="center">
+
+[![evaluation](https://img.shields.io/badge/OpenCompass-Support-royalblue.svg)](https://github.com/internLM/OpenCompass/)
+
+</div>
 <h4 align="left">
     <p>
         <b>中文</b> |
