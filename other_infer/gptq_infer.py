@@ -39,6 +39,8 @@ class QuantAutoGPTQ:
             assert model_basename is not None, 'model_basename cannot be None when inferring the quantized model'
 
         def check_list(item):
+            if isinstance(item, tuple):
+                return list(item)
             return item if isinstance(item, list) else [item]
 
         self.bits = check_list(bits)
