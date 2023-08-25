@@ -390,6 +390,7 @@ unzip OpenCompassData.zip
 CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base --max-partition-size 30000
 ```
 
+总分为各类任务的平均分，每类任务包括英文或者中文任务。各类任务得分参考 [模型测评细分项](#模型测评细分项)
 
 base模型测评结果
 
