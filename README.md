@@ -334,50 +334,33 @@ python ./apps/web_api_demo.py
 ### 量化
 
 #### 动态量化模型加载
-此方式为在线量化
+此方式为在线量化与推理
 ```
-CUDA_VISIBLE_DEVICES=0 python quant_infer.py --model_path ${MODEL_DIR} --wbit 8
-```
-
-#### GPTQ量化方式
-如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)
-
-我们使用[GPTQ](https://github.com/IST-DASLab/gptq)算法和[GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa)实现量化：
-
-切换到 gptq 目录
-
-```
-cd gptq
+CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
 ```
 
-#### 模型量化
+#### AutoGPTQ量化
+如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit), 我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
+
+##### 模型量化
 
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
+CUDA_VISIBLE_DEVICES=0 python other_infer/gptq_infer.py --model_path ${MODEL_PATH} --output_dir ${QUANTIZE_DIR}  --dataset c4 --bits 4, 8 --group_size 128 --damp 0.01  --desc_act 0
+```
+`QUANTIZE_DIR`为量化保存的文件夹，会默认为每一组参数创建一个子文件夹保存, `dataset`支持c4, wikitext2以及ptb
+
+默认参数为 `--bits 4 --group_size 128 --damp 0.01  --desc_act 0`
+
+AUTOGPTQ目前不支持多卡量化，建议指定单卡就好
+
+##### 量化模型推理
+将量化完成的safetensors模型copy到MODEL_PATH下，infer命令如下
+```
+CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_basename ${QUANTIZE_MODEL}  --bits 8 --group_size 128 --damp 0.01  --desc_act 0
 ```
 
-#### 量化模型单卡推理
+`bits`, `group_size`, `damp`和d`esc_act`与默认值一致的时候可以不指定，`QUANTIZE_MODEL`为量化模型，如g`tigerbot-13b-chat-8bit`, 需保证上述参数与模型一致
 
-[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) 推理可在一张 RTX3090 上进行
-其中，`${MODEL_DIR}` 为你的模型配置文件路径，
-
-```
-CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
-```
-
-#### 量化模型多卡推理
-
-[`tigerbot-180b-research-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) 推理可在两张 A100(80G)上进行
-
-```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-4bit-128g.pt
-```
-
-若量化模型为多个分片存储，推理命令如下
-
-```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load "${MODEL_DIR}/tigerbot-4bit-128g-*.pt"
-```
 
 ## 测评
 
