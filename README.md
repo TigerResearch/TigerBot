@@ -319,24 +319,13 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DI
 #### AutoGPTQ量化
 如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit), 我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
 
-##### 模型量化
-
-```
-CUDA_VISIBLE_DEVICES=0 python other_infer/gptq_infer.py --model_path ${MODEL_PATH} --output_dir ${QUANTIZE_DIR}  --dataset c4 --bits 4, 8 --group_size 128 --damp 0.01  --desc_act 0
-```
-`QUANTIZE_DIR`为量化保存的文件夹，会默认为每一组参数创建一个子文件夹保存, `dataset`支持c4, wikitext2以及ptb
-
-默认参数为 `--bits 4 --group_size 128 --damp 0.01  --desc_act 0`
-
-AUTOGPTQ目前不支持多卡量化，建议指定单卡就好
-
 ##### 量化模型推理
-将量化完成的safetensors模型copy到MODEL_PATH下，infer命令如下
 ```
-CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_basename ${QUANTIZE_MODEL}  --bits 8 --group_size 128 --damp 0.01  --desc_act 0
+CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_basename ${QUANTIZE_MODEL}
 ```
 
-`bits`, `group_size`, `damp`和d`esc_act`与默认值一致的时候可以不指定，`QUANTIZE_MODEL`为量化模型，如`tigerbot-13b-chat-8bit`, 需保证上述参数与模型一致
+`MODEL_PATH`可以为 `TigerResearch/tigerbot-13b-chat-8bit`或是对应的chat model目录， `QUANTIZE_MODEL`为量化后的模型文件，去掉`.safetensors`
+后缀，如`tigerbot_13b_chat_8bit_128g`
 
 
 ## 测评
