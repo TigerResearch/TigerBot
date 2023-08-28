@@ -29,7 +29,7 @@
 
 - [8/25/2023] TigerBot更新13b-base模型: [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[测评](#测评)]
 
-	- TigerBot-13B-base: 增加了一倍训练数据，至600B tokens，定向增加了高质量中英文数学推理类和科学文件类数据，优化了中文网络数据的清洗（在格式、口语、知识性等方面）。在13项主流基准评测中，英文综合能力优于Llama-2-13b 5%，中文超30%。[[测评](#测评)]
+	- TigerBot-13B-base: 增加了一倍训练数据，至600B tokens，定向增加了高质量中英文数学推理类和科学文献类数据，优化了中文网络数据的清洗（在格式、口语、知识性等方面）。在13项主流基准评测中，英文综合能力优于Llama-2-13b 5%，中文超30%。[[测评](#测评)]
 	![image](image/eval_base.jpg)
 	- 开放了基于[opencompass](https://github.com/InternLM/opencompass)的自动评测体系，以提倡reproducibility。[[测评](#测评)]
 
