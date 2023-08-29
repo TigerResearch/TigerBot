@@ -15,7 +15,13 @@ def main(
         model_path: str,
         max_input_length: int = 512,
         max_generate_length: int = 1024,
+        use_flash_attn: bool = False
 ):
+    if use_flash_attn:
+        from flash_attention import replace_attn_with_flash_attn
+        replace_attn_with_flash_attn()
+        print("using flash attention...")
+            
     print(f"loading model: {model_path}...")
 
     model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
