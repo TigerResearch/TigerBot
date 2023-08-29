@@ -159,8 +159,7 @@ class ExllamaHF(PreTrainedModel):
             config.matmul_no_half2 = True
             config.silu_no_half2 = True
 
-        # This slowes down a bit but align better with autogptq 
-generation.
+        # This slowes down a bit but align better with autogptq generation.
         # TODO: Should give user choice to tune the exllama config
         # config.fused_attn = False
         # config.fused_mlp_thd = 0
@@ -180,15 +179,12 @@ def get_model(model):
     torch.nn.init.normal_ = skip
 
     # model = AutoGPTQForCausalLM.from_quantized(self.model_path,
-    #                                            
-model_basename=self.model_basename,
+    #                                            model_basename=self.model_basename,
     #                                            use_safetensors=True,
     #                                            trust_remote_code=True,
     #                                            device_map='auto',
-    #                                            
-use_triton=self.use_triton,
-    #                                            
-quantize_config=quantize_config)
+    #                                            use_triton=self.use_triton,
+    #                                            quantize_config=quantize_config)
 
     model = ExllamaHF.from_pretrained(model)
 
@@ -197,8 +193,7 @@ quantize_config=quantize_config)
     # device_map = infer_auto_device_map(model, max_memory=max_memory,
     #                                 no_split_module_classes=[])
     # print("Using the following device map for the model:", device_map)
-    # model = dispatch_model(model, device_map=device_map, 
-offload_buffers=True)
+    # model = dispatch_model(model, device_map=device_map, offload_buffers=True)
     return model
 
 
@@ -214,8 +209,7 @@ def main(
     # device_map = infer_auto_device_map(model, max_memory=max_memory,
     #                                    no_split_module_classes=[])
     # print("Using the following device map for the model:", device_map)
-    # model = dispatch_model(model, device_map=device_map, 
-offload_buffers=True)
+    # model = dispatch_model(model, device_map=device_map, offload_buffers=True)
 
     device = torch.cuda.current_device()
 
@@ -290,4 +284,3 @@ offload_buffers=True)
 
 if __name__ == "__main__":
     fire.Fire(main)
-
