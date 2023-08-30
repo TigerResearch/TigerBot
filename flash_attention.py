@@ -24,10 +24,8 @@ def apply_rotary_pos_emb(q, k, cos_sin, position_ids):
         torch.gather(x.transpose(1, 2).repeat(bsz, 1, 1, 1), 1, gather_indices)
         for x in cos_sin
     )
-    q_embed, k_embed = ((x * cos) + (rotate_half(x) * sin) for x in (q, k))
-    q_embed = q_embed.to(q.dtype)
-    k_embed = k_embed.to(k.dtype)
-    return q_embed, k_embed
+    q, k = ((x * cos) + (rotate_half(x) * sin) for x in (q, k))
+    return q, k
 
 
 def forward(
