@@ -1,5 +1,5 @@
 import torch
-from transformers.models.llama.modeling_llama import LlamaRotaryEmbedding
+from transformers.models.llama.modeling_llama import LlamaRotaryEmbedding, rotate_half
 import transformers
 
 
@@ -33,8 +33,8 @@ class LlamaRotaryEmbeddingFixed(torch.nn.Module):
             self._set_cos_sin_cache(seq_len=seq_len, device=x.device, dtype=x.dtype)
 
         return (
-            self.cos_cached[:, :, :seq_len, ...].to(dtype=x.dtype),
-            self.sin_cached[:, :, :seq_len, ...].to(dtype=x.dtype),
+            self.cos_cached[:, :, :seq_len, ...],
+            self.sin_cached[:, :, :seq_len, ...],
         )
 
 def _set_cos_sin_cache_Linear_fixed(self, seq_len, device, dtype):
@@ -67,8 +67,20 @@ def _set_cos_sin_cache_DynamicNTK_fixed(self, seq_len, device, dtype):
     self.register_buffer("cos_cached", emb.cos()[None, None, :, :], persistent=False)
     self.register_buffer("sin_cached", emb.sin()[None, None, :, :], persistent=False)
 
+def apply_rotary_pos_emb(q, k, cos, sin, position_ids):
+    # The first two dimensions of cos and sin are always 1, so we can `squeeze` them.
+    cos = cos.squeeze(1).squeeze(0)  # [seq_len, dim]
+    sin = sin.squeeze(1).squeeze(0)  # [seq_len, dim]
+    cos = cos[position_ids].unsqueeze(1)  # [bs, 1, seq_len, dim]
+    sin = sin[position_ids].unsqueeze(1)  # [bs, 1, seq_len, dim]
+    q_embed = (q * cos) + (rotate_half(q) * sin)
+    k_embed = (k * cos) + (rotate_half(k) * sin)
+    q_embed = q_embed.to(q.dtype)
+    k_embed = k_embed.to(k.dtype)
+    return q_embed, k_embed
 
 def replace_embedding():
     transformers.models.llama.modeling_llama.LlamaRotaryEmbedding = LlamaRotaryEmbeddingFixed
     transformers.models.llama.modeling_llama.LlamaLinearScalingRotaryEmbedding._set_cos_sin_cache = _set_cos_sin_cache_Linear_fixed
     transformers.models.llama.modeling_llama.LlamaDynamicNTKScalingRotaryEmbedding._set_cos_sin_cache = _set_cos_sin_cache_DynamicNTK_fixed
+    transformers.models.llama.modeling_llama.apply_rotary_pos_emb = apply_rotary_pos_emb
