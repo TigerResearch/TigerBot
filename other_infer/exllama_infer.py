@@ -13,6 +13,7 @@ from transformers import (
     PreTrainedModel,
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
+import time
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -233,7 +234,11 @@ def main(
             max_length=max_input_length,
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
+        tic = time.perf_counter()
         output = model.generate(**inputs, **generation_config.to_dict())
+        toc = time.perf_counter()
+        res_time = toc - tic
+        num_tok = output.shape[1]
         output_str = tokenizer.decode(
             output[0],
             skip_special_tokens=False,
@@ -246,6 +251,7 @@ def main(
 
         print("=" * 100)
         print(answer)
+        print(f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]")
         print("=" * 100)
 
 

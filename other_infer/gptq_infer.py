@@ -7,6 +7,7 @@ import fire
 import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, GenerationConfig
+import time
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
@@ -79,7 +80,11 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
         inputs = tokenizer(
             input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
+        tic = time.perf_counter()
         output = model.generate(**inputs, **generation_config.to_dict())
+        toc = time.perf_counter()
+        res_time = toc - tic
+        num_tok = output.shape[1]
         output_str = tokenizer.decode(
             output[0], skip_special_tokens=False, spaces_between_special_tokens=False)
         answer = output_str.rsplit(tok_res, 1)[1].strip()
@@ -89,9 +94,9 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
 
         print("=" * 100)
         print(answer)
+        print(f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]")
         print("=" * 100)
 
 
 if __name__ == "__main__":
     fire.Fire(main)
-    
