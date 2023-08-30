@@ -16,17 +16,17 @@ def main(
         max_input_length: int = 512,
         max_generate_length: int = 1024,
         use_flash_attn: bool = False,
-        fix_embedding: bool = False
+        fp32_rotary_position_embeddings: bool = False
 ):
     if use_flash_attn:
         from flash_attention import replace_attn_with_flash_attn
         replace_attn_with_flash_attn()
         print("using flash attention...")
             
-    if fix_embedding:
+    if fp32_rotary_position_embeddings:
         from embedding_fix import replace_embedding
         replace_embedding()
-        print("using fixed embedding...")
+        print("using fp32 rotary position embeddings...")
             
     print(f"loading model: {model_path}...")
 
