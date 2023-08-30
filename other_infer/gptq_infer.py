@@ -18,7 +18,7 @@ tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
 
 
-def get_model(model_name_or_path, model_basename):
+def get_model(model_name_or_path):
     from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
     def skip(*args, **kwargs):
@@ -29,7 +29,6 @@ def get_model(model_name_or_path, model_basename):
     torch.nn.init.normal_ = skip
     quantize_config = BaseQuantizeConfig.from_pretrained(model_name_or_path)
     model = AutoGPTQForCausalLM.from_quantized(model_name_or_path,
-                                               model_basename=model_basename,
                                                use_safetensors=True,
                                                device_map='auto',
                                                use_triton=False,
@@ -38,10 +37,9 @@ def get_model(model_name_or_path, model_basename):
 
 
 def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
-         model_basename: str = "tigerbot_13b_chat_8bit_128g",
          max_input_length: int = 512,
          max_generate_length: int = 1024):
-    model = get_model(model_name_or_path=model_path, model_basename=model_basename)
+    model = get_model(model_name_or_path=model_path)
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
         model_max_length=max_generate_length,
@@ -96,3 +94,4 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
 
 if __name__ == "__main__":
     fire.Fire(main)
+    
