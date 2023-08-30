@@ -27,12 +27,13 @@ def get_model(model_name_or_path, model_basename):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-
+    quantize_config = BaseQuantizeConfig.from_pretrained(model_name_or_path)
     model = AutoGPTQForCausalLM.from_quantized(model_name_or_path,
                                                model_basename=model_basename,
                                                use_safetensors=True,
                                                device_map='auto',
-                                               use_triton=False)
+                                               use_triton=False,
+                                               quantize_config=quantize_config)
     return model
 
 
