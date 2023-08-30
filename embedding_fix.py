@@ -3,7 +3,7 @@ from transformers.models.llama.modeling_llama import LlamaRotaryEmbedding
 import transformers
 
 
-class LlamaRotaryEmbedding_fixed(torch.nn.Module):
+class LlamaRotaryEmbeddingFixed(torch.nn.Module):
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None):
         super().__init__()
 
@@ -69,6 +69,6 @@ def _set_cos_sin_cache_DynamicNTK_fixed(self, seq_len, device, dtype):
 
 
 def replace_embedding():
-    transformers.models.llama.modeling_llama.LlamaRotaryEmbedding = LlamaRotaryEmbedding_fixed
+    transformers.models.llama.modeling_llama.LlamaRotaryEmbedding = LlamaRotaryEmbeddingFixed
     transformers.models.llama.modeling_llama.LlamaLinearScalingRotaryEmbedding._set_cos_sin_cache = _set_cos_sin_cache_Linear_fixed
     transformers.models.llama.modeling_llama.LlamaDynamicNTKScalingRotaryEmbedding._set_cos_sin_cache = _set_cos_sin_cache_DynamicNTK_fixed
