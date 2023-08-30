@@ -70,7 +70,7 @@ class ExllamaHF(PreTrainedModel):
         # Make the forward call
         if labels is None:
             if past_seq is None or not torch.equal(
-                past_seq, seq_tensor[:-1]
+                    past_seq, seq_tensor[:-1]
             ):
                 ex_cache.current_seq_len = 0
                 self.ex_model.forward(
@@ -120,15 +120,15 @@ class ExllamaHF(PreTrainedModel):
 
     @classmethod
     def from_pretrained(
-        cls,
-        pretrained_model_name_or_path: Optional[
-            Union[str, os.PathLike]
-        ],
-        *model_args,
-        **kwargs,
+            cls,
+            pretrained_model_name_or_path: Optional[
+                Union[str, os.PathLike]
+            ],
+            *model_args,
+            **kwargs,
     ):
         assert (
-            len(model_args) == 0 and len(kwargs) == 0
+                len(model_args) == 0 and len(kwargs) == 0
         ), "extra args is currently not supported"
         if isinstance(pretrained_model_name_or_path, str):
             pretrained_model_name_or_path = Path(
@@ -146,7 +146,7 @@ class ExllamaHF(PreTrainedModel):
                 weight_path = found[-1]
                 break
         assert (
-            weight_path is not None
+                weight_path is not None
         ), f'could not find weight in "{pretrained_model_name_or_path}"'
 
         config.model_path = str(weight_path)
@@ -168,49 +168,24 @@ class ExllamaHF(PreTrainedModel):
 
 
 def get_model(model):
-    # from accelerate import infer_auto_device_map, dispatch_model
-    # from accelerate.utils import get_balanced_memory
-
     def skip(*args, **kwargs):
         pass
 
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-
-    # model = AutoGPTQForCausalLM.from_quantized(self.model_path,
-    #                                            model_basename=self.model_basename,
-    #                                            use_safetensors=True,
-    #                                            trust_remote_code=True,
-    #                                            device_map='auto',
-    #                                            use_triton=self.use_triton,
-    #                                            quantize_config=quantize_config)
-
     model = ExllamaHF.from_pretrained(model)
-
-    # DONOT SUPPORT ACCELERATE !!!
-    # max_memory = get_balanced_memory(model)
-    # device_map = infer_auto_device_map(model, max_memory=max_memory,
-    #                                 no_split_module_classes=[])
-    # print("Using the following device map for the model:", device_map)
-    # model = dispatch_model(model, device_map=device_map, offload_buffers=True)
     return model
 
 
 def main(
-    model_path: str,
-    max_input_length: int = 512,
-    max_generate_length: int = 1024,
+        model_path: str,
+        max_input_length: int = 512,
+        max_generate_length: int = 1024,
 ):
     print(f"loading model: {model_path}...")
 
     model = get_model(model_path)
-    # max_memory = get_balanced_memory(model)
-    # device_map = infer_auto_device_map(model, max_memory=max_memory,
-    #                                    no_split_module_classes=[])
-    # print("Using the following device map for the model:", device_map)
-    # model = dispatch_model(model, device_map=device_map, offload_buffers=True)
-
     device = torch.cuda.current_device()
 
     tokenizer = LlamaTokenizer.from_pretrained(
@@ -223,20 +198,12 @@ def main(
         truncation=True,
     )
     if (
-        tokenizer.model_max_length is None
-        or tokenizer.model_max_length > max_generate_length
+            tokenizer.model_max_length is None
+            or tokenizer.model_max_length > max_generate_length
     ):
         tokenizer.model_max_length = max_generate_length
 
-    generation_kwargs = {
-        "top_p": 0.95,
-        "temperature": 0.8,
-        "max_length": max_generate_length,
-        "eos_token_id": tokenizer.eos_token_id,
-        "pad_token_id": tokenizer.pad_token_id,
-        "early_stopping": True,
-        "no_repeat_ngram_size": 4,
-    }
+    generation_config = GenerationConfig.from_pretrained(model_path)
 
     sess_text = ""
     while True:
@@ -266,7 +233,7 @@ def main(
             max_length=max_input_length,
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        output = model.generate(**inputs, **generation_kwargs)
+        output = model.generate(**inputs, **generation_config.to_dict())
         output_str = tokenizer.decode(
             output[0],
             skip_special_tokens=False,

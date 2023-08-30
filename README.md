@@ -321,11 +321,10 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DI
 
 ##### 量化模型推理
 ```
-CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH} -model_basename ${QUANTIZE_MODEL}
+CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
-`MODEL_PATH`可以为 `TigerResearch/tigerbot-13b-chat-8bit`或是对应的chat model目录， `QUANTIZE_MODEL`为量化后的模型文件，去掉`.safetensors`
-后缀，如`tigerbot_13b_chat_8bit_128g`
+`MODEL_PATH`为量化模型路径 `TigerResearch/tigerbot-13b-chat-8bit`
 
 
 ## 测评
