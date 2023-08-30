@@ -24,7 +24,7 @@ def main(
         print("using flash attention...")
             
     if fp32_rotary_position_embeddings:
-        from embedding_fix import replace_embedding
+        from rotary_embedding_fix import replace_embedding
         replace_embedding()
         print("using fp32 rotary position embeddings...")
             
