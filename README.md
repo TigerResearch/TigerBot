@@ -321,14 +321,14 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DI
 ```
 
 #### AutoGPTQ量化
-如果你不想使用在线量化，可使用我们用gptq量化好的模型 [tigerbot-13b-chat-8bit](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit), 我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
+动态量化准确率会低于使用gptq等量化好的模型，我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
 
 ##### 量化模型推理
 ```
 CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
-`MODEL_PATH`为量化模型路径 `TigerResearch/tigerbot-13b-chat-8bit`
+`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-8bit`
 
 #### exllama量化推理
 使用[exllama](https://github.com/turboderp/exllama)加载[TigerResearch/tigerbot-13b-chat-4bit]进行推理，推理速度加快
@@ -339,7 +339,7 @@ pip install exllama_lib@git+https://github.com/taprosoft/exllama.git
 #  启动推理
 CUDA_VISIBLE_DEVICES=0 python exllama_infer.py --model_path ${MODEL_PATH}
 ```
-
+`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-4bit`
 
 
 ## 测评
