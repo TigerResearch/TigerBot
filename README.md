@@ -322,9 +322,11 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DI
 
 #### AutoGPTQ量化
 动态量化准确率会低于使用gptq等量化好的模型，我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
-
-##### 量化模型推理
 ```
+# 安装auto-gptq
+pip install auto-gptq
+
+# 启动推理
 CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
