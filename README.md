@@ -327,7 +327,7 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DI
 pip install auto-gptq
 
 # 启动推理
-CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
+CUDA_VISIBLE_DEVICES=0 python other_infer/gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
 `MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-8bit`
@@ -339,7 +339,7 @@ CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
 pip install exllama_lib@git+https://github.com/taprosoft/exllama.git
 
 #  启动推理
-CUDA_VISIBLE_DEVICES=0 python exllama_infer.py --model_path ${MODEL_PATH}
+CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_PATH}
 ```
 `MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-4bit`
 
