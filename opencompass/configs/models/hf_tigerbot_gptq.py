@@ -1,4 +1,4 @@
-from opencompass.models import TigerbotAutoGPTQ
+from opencompass.models import GPTQCausalLM
 
 _meta_template = dict(
     round=[
@@ -9,10 +9,10 @@ _meta_template = dict(
 
 models = [
     dict(
-        type=TigerbotAutoGPTQ,
-        abbr='tigerbot',
-        path="/mnt/nfs/algo/intern/yuwang/Tigerbot_AutoGPTQ/tigerbot_13b/tigerbot_13b_chat_4bit_c4_128g_no_act",
-        tokenizer_path='/mnt/nfs/algo/intern/yuwang/Tigerbot_AutoGPTQ/tigerbot_13b/tigerbot_13b_chat_4bit_c4_128g_no_act',
+        type=GPTQCausalLM,
+        abbr='tigerbot-13b-2h-sft-20g-mix0.0-group',
+        path="/mnt/nfs/yechen/models/tigerbot-13b-2h-sft-20g-mix0.0-group",
+        tokenizer_path='/mnt/nfs/yechen/models/tigerbot-13b-2h-sft-20g-mix0.0-group',
         tokenizer_kwargs=dict(
             cache_dir=None,
             padding_side='left',
@@ -22,11 +22,10 @@ models = [
             truncation=True,
             add_bos_token=False
         ),
-        max_out_len=100,
+        max_out_len=200,
         max_seq_len=2048,
         batch_size=4,
-        meta_template=_meta_template,
-        model_kwargs=dict(trust_remote_code=True, use_safetensors=True, device_map='auto', use_triton=False),
+        model_kwargs=dict(trust_remote_code=True, device_map='auto'),
         batch_padding=True,
         run_cfg=dict(num_gpus=1, num_procs=1),
     )

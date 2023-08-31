@@ -17,7 +17,7 @@ with read_base():
 datasets = [*piqa_datasets, *siqa_datasets, *BoolQ_datasets, *gsm8k_datasets, *mmlu_datasets, *CMRC_datasets,
             *ocnli_datasets, *C3_datasets, *ceval_datasets]
 
-from opencompass.models import TigerbotExllama
+from opencompass.models import ExllamaCausalLM
 
 _meta_template = dict(
     round=[
@@ -28,7 +28,7 @@ _meta_template = dict(
 
 models = [
     dict(
-        type= TigerbotExllama,
+        type= ExllamaCausalLM,
         abbr='tigerbot',
         path="/mnt/nfs/algo/intern/yuwang/Tigerbot_AutoGPTQ/tigerbot_13b/tigerbot_13b_chat_4bit_c4_128g_no_act",
         tokenizer_path='/mnt/nfs/algo/intern/yuwang/Tigerbot_AutoGPTQ/tigerbot_13b/tigerbot_13b_chat_4bit_c4_128g_no_act',
@@ -44,7 +44,6 @@ models = [
         max_out_len=100,
         max_seq_len=2048,
         batch_size=4,
-        meta_template=_meta_template,
         batch_padding=True,
         run_cfg=dict(num_gpus=1, num_procs=1),
     )
