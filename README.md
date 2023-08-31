@@ -146,12 +146,16 @@ pip install -r requirements.txt
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
 | tigerbot-13b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
+| tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)] | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
+| tigerbot-13b-chat-4bit | v2 [[huggingface](TigerResearch/tigerbot-13b-chat-4bit)] | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
 | tigerbot-7b-base  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)] | llama-2      | 13.9           | From llama-2-7b weights   |
 |                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)] | bloom        | 16.2           | From bloom weights        |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)] | bloom        | 16.2           | From bloom weights        |
 | tigerbot-7b-chat  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)] | llama-2      | 13.9           | From tigerbot-7b-base v3  |
 |                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)] | bloom        | 16.2           | From tigerbot-7b-base v2  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)] | bloom        | 16.2           | From tigerbot-7b-base v1  |
+| tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
+| tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
 | tigerbot-180b-sft | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)] | bloom        | 347.6          | From bloom weights        |
 
 ## 训练和推理
@@ -325,6 +329,17 @@ CUDA_VISIBLE_DEVICES=0 python gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
 `MODEL_PATH`为量化模型路径 `TigerResearch/tigerbot-13b-chat-8bit`
+
+#### exllama量化推理
+使用[exllama](https://github.com/turboderp/exllama)加载[TigerResearch/tigerbot-13b-chat-4bit]进行推理，推理速度加快
+```
+# 安装exllama_lib
+pip install exllama_lib@git+https://github.com/taprosoft/exllama.git
+
+#  启动推理
+CUDA_VISIBLE_DEVICES=0 python exllama_infer.py --model_path ${MODEL_PATH}
+```
+
 
 
 ## 测评
