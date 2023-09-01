@@ -13,13 +13,13 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
 from exllama_lib.model import ExLlama, ExLlamaCache, ExLlamaConfig
-from torch.nn import CrossEntropyLoss
 from transformers import (
     GenerationConfig,
     PretrainedConfig,
     PreTrainedModel,
 )
-from transformers import AutoTokenizer, LlamaTokenizer, AutoModelForCausalLM, LlamaForCausalLM, AutoConfig
+from transformers import AutoTokenizer, LlamaTokenizer, 
+AutoModelForCausalLM, LlamaForCausalLM, AutoConfig
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
 PromptType = Union[PromptList, str]
@@ -42,6 +42,9 @@ class ExllamaHF(PreTrainedModel):
         self.ex_cache = ExLlamaCache(self.ex_model)
         self.past_seq = None
 
+        self.ex_cache_negative = ExLlamaCache(self.ex_model)
+        self.past_seq_negative = None
+
     def _validate_model_class(self):
         pass
 
@@ -59,17 +62,16 @@ class ExllamaHF(PreTrainedModel):
         use_cache = kwargs.get("use_cache", True)
         labels = kwargs.get("labels", None)
         past_key_values = kwargs.get("past_key_values", None)
+        ignore_token =  kwargs.get("ignore_token", None)
+        mask_length = kwargs.get("mask_length", None)
 
         if len(args) > 0:
             input_ids = args[0]
-            is_negative = True
-            past_seq = self.past_seq_negative
-            ex_cache = self.ex_cache_negative
         else:
             input_ids = kwargs["input_ids"]
-            is_negative = False
-            past_seq = self.past_seq
-            ex_cache = self.ex_cache
+        is_negative = False
+        past_seq = self.past_seq
+        ex_cache = self.ex_cache
 
         seq = input_ids[0].tolist()
         if is_negative and past_key_values is not None:
@@ -102,7 +104,7 @@ class ExllamaHF(PreTrainedModel):
                 ex_cache,
                 last_id_only=False,
                 lora=self.lora,
-            )
+            ).to(input_ids.device)
 
         if is_negative:
             self.past_seq_negative = seq_tensor
@@ -111,16 +113,31 @@ class ExllamaHF(PreTrainedModel):
 
         loss = None
         if labels is not None:
-            # Shift so that tokens < n predict n
             shift_logits = logits[..., :-1, :].contiguous()
             shift_labels = labels[..., 1:].contiguous()
-            # Flatten the tokens
-            loss_fct = CrossEntropyLoss()
-            shift_logits = shift_logits.view(-1, logits.shape[-1])
-            shift_labels = shift_labels.view(-1)
-            # Enable model parallelism
-            shift_labels = shift_labels.to(shift_logits.device)
-            loss = loss_fct(shift_logits, shift_labels)
+
+            loss_fct = torch.nn.CrossEntropyLoss(
+                reduction='none', ignore_index=ignore_token)
+            
+            loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)),
+                            
+shift_labels.view(-1)).view(shift_labels.size())
+
+            if mask_length is not None:
+                mask = torch.zeros_like(shift_labels)  # [batch,seqlen]
+                for i in range(len(mask)):
+                    for j in range(mask_length[i] - 1, len(mask[i])):
+                        mask[i][j] = 1
+                loss = loss * mask
+
+            lens = mask_length
+
+            if ignore_token:
+                lens = (labels != ignore_token).sum(-1).cpu().numpy()
+                if mask_length is not None:
+                    lens -= np.array(mask_length)
+
+            loss = loss.sum(-1).cpu().detach().numpy() / lens
 
         return CausalLMOutputWithPast(
             logits=logits,
@@ -169,12 +186,14 @@ class ExllamaHF(PreTrainedModel):
             config.matmul_no_half2 = True
             config.silu_no_half2 = True
 
-        # This slowes down a bit but align better with autogptq generation.
+        # This slowes down a bit but align better with autogptq 
+generation.
         # TODO: Should give user choice to tune the exllama config
         # config.fused_attn = False
         # config.fused_mlp_thd = 0
 
         return ExllamaHF(config)
+
 
 @MODELS.register_module()
 class HuggingFace(BaseModel):
@@ -182,33 +201,44 @@ class HuggingFace(BaseModel):
 
     Args:
         path (str): The name or path to HuggingFace's model.
-        hf_cache_dir: Set the cache dir to HF model cache dir. If None, it will
+        hf_cache_dir: Set the cache dir to HF model cache dir. If None, it 
+will
             use the env variable HF_MODEL_HUB. Defaults to None.
-        max_seq_len (int): The maximum length of the input sequence. Defaults
+        max_seq_len (int): The maximum length of the input sequence. 
+Defaults
             to 2048.
         tokenizer_path (str): The path to the tokenizer. Defaults to None.
         tokenizer_kwargs (dict): Keyword arguments for the tokenizer.
             Defaults to {}.
-        peft_path (str, optional): The name or path to the HuggingFace's PEFT
-            model. If None, the original model will not be converted to PEFT.
+        peft_path (str, optional): The name or path to the HuggingFace's 
+PEFT
+            model. If None, the original model will not be converted to 
+PEFT.
             Defaults to None.
-        tokenizer_only (bool): If True, only the tokenizer will be initialized.
+        tokenizer_only (bool): If True, only the tokenizer will be 
+initialized.
             Defaults to False.
-        model_kwargs (dict): Keyword arguments for the model, used in loader.
+        model_kwargs (dict): Keyword arguments for the model, used in 
+loader.
             Defaults to dict(device_map='auto').
         meta_template (Dict, optional): The model's meta prompt
             template if needed, in case the requirement of injecting or
             wrapping of any meta instructions.
-        extract_pred_after_decode (bool): Whether to extract the prediction
+        extract_pred_after_decode (bool): Whether to extract the 
+prediction
             string from the decoded output string, instead of extract the
             prediction tokens before decoding. Defaults to False.
-        batch_padding (bool): If False, inference with be performed in for-loop
+        batch_padding (bool): If False, inference with be performed in 
+for-loop
             without batch padding.
 
     Note:
-        About ``extract_pred_after_decode``: Commonly, we should extract the
-        the prediction tokens before decoding. But for some tokenizers using
-        ``sentencepiece``, like LLaMA,  this behavior may change the number of
+        About ``extract_pred_after_decode``: Commonly, we should extract 
+the
+        the prediction tokens before decoding. But for some tokenizers 
+using
+        ``sentencepiece``, like LLaMA,  this behavior may change the 
+number of
         whitespaces, which is harmful for Python programming tasks.
     """
 
@@ -249,7 +279,8 @@ class HuggingFace(BaseModel):
         self.logger.warning(f"tokenizer path: {path}")
         if "llama" in self.config.model_type.lower():
             self.tokenizer = LlamaTokenizer.from_pretrained(
-                tokenizer_path if tokenizer_path else path, **tokenizer_kwargs)
+                tokenizer_path if tokenizer_path else path, 
+**tokenizer_kwargs)
             if self.tokenizer.pad_token_id is None:
                 special_tokens_dict = dict(pad_token="<pad>")
                 self.tokenizer.add_special_tokens(special_tokens_dict)
@@ -257,18 +288,23 @@ class HuggingFace(BaseModel):
             # tok_res = "\n\n### Response:\n"
             # DEFAULT_PAD_TOKEN = "<pad>"
             # special_tokens_dict = {}
-            # special_tokens_dict['additional_special_tokens'] = [tok_ins, tok_res]
-            # num_added_toks = self.tokenizer.add_special_tokens(special_tokens_dict)
+            # special_tokens_dict['additional_special_tokens'] = [tok_ins, 
+tok_res]
+            # num_added_toks = 
+self.tokenizer.add_special_tokens(special_tokens_dict)
             if self.tokenizer.pad_token_id is None:
                 special_tokens_dict = dict(pad_token=DEFAULT_PAD_TOKEN)
-                num_added_toks = self.tokenizer.add_special_tokens(special_tokens_dict)
+                num_added_toks = 
+self.tokenizer.add_special_tokens(special_tokens_dict)
             # self.logger.warning(f"tok_ins: {self.tokenizer(tok_ins)}")
             # self.logger.warning(f"tok_res: {self.tokenizer(tok_res)}")
         else:
             self.tokenizer = AutoTokenizer.from_pretrained(
-                tokenizer_path if tokenizer_path else path, **tokenizer_kwargs)
+                tokenizer_path if tokenizer_path else path, 
+**tokenizer_kwargs)
         if self.tokenizer.pad_token_id is None:
-            self.logger.warning('pad_token_id is not set for the tokenizer. '
+            self.logger.warning('pad_token_id is not set for the 
+tokenizer. '
                                 'Using eos_token_id as pad_token_id.')
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
@@ -278,7 +314,9 @@ class HuggingFace(BaseModel):
                  'decapoda-research/llama' in tokenizer_path):
             self.logger.warning('We set new pad_token_id for LLaMA model')
             # keep consistent with official LLaMA repo
-            # https://github.com/google/sentencepiece/blob/master/python/sentencepiece_python_module_example.ipynb  # noqa
+            # 
+https://github.com/google/sentencepiece/blob/master/python/sentencepiece_python_module_example.ipynb  
+# noqa
             self.tokenizer.bos_token = '<s>'
             self.tokenizer.eos_token = '</s>'
             self.tokenizer.pad_token_id = 0
@@ -315,7 +353,8 @@ class HuggingFace(BaseModel):
             List[str]: A list of generated strings.
         """
         if self.batch_padding and len(inputs) > 1:
-            return self._batch_generate(inputs=inputs, max_out_len=max_out_len)
+            return self._batch_generate(inputs=inputs, 
+max_out_len=max_out_len)
         else:
             return sum((self._single_generate(inputs=[input_],
                                               max_out_len=max_out_len)
@@ -339,15 +378,19 @@ class HuggingFace(BaseModel):
         tokens = self.tokenizer.batch_encode_plus(inputs,
                                                   padding=True,
                                                   truncation=True,
-                                                  max_length=self.max_seq_len -
+                                                  
+max_length=self.max_seq_len -
                                                              max_out_len)
         tokens = {
             k: torch.tensor(np.array(tokens[k]), device=self.model.device)
             for k in tokens if k in ['input_ids', 'attention_mask']
         }
         # step-2: conduct model forward to generate output
-        outputs = self.model.generate(**tokens, max_new_tokens=max_out_len,
-                                      eos_token_id=self.tokenizer.eos_token_id, pad_token_id=self.tokenizer.pad_token_id)
+        outputs = self.model.generate(**tokens, 
+max_new_tokens=max_out_len,
+                                      
+eos_token_id=self.tokenizer.eos_token_id, 
+pad_token_id=self.tokenizer.pad_token_id)
         # self.model.generate(**tokens, max_new_tokens=max_out_len)
         if not self.extract_pred_after_decode:
             outputs = outputs[:, tokens['input_ids'].shape[1]:]
@@ -381,8 +424,10 @@ class HuggingFace(BaseModel):
         input_ids = torch.tensor(input_ids, device=self.model.device)
         outputs = self.model.generate(input_ids=input_ids,
                                       max_new_tokens=max_out_len,
-                                      eos_token_id=self.tokenizer.eos_token_id, 
-                                      pad_token_id=self.tokenizer.pad_token_id)
+                                      
+eos_token_id=self.tokenizer.eos_token_id, 
+                                      
+pad_token_id=self.tokenizer.pad_token_id)
 
         if not self.extract_pred_after_decode:
             outputs = outputs[:, input_ids.shape[1]:]
@@ -406,7 +451,8 @@ class HuggingFace(BaseModel):
                                     max_length=self.max_seq_len)
 
             tokens = {
-                k: torch.tensor(np.array(tokens[k]), device=self.model.device)
+                k: torch.tensor(np.array(tokens[k]), 
+device=self.model.device)
                 for k in tokens if k in ['input_ids', 'attention_mask']
             }
             outputs = self.model(**tokens)
@@ -431,9 +477,11 @@ class HuggingFace(BaseModel):
         Args:
             inputs (List[str]): A list of strings.
             mask_length (Optional[List[int]]): A list of mask lengths. If
-                provided, the perplexity scores will be calculated with the
+                provided, the perplexity scores will be calculated with 
+the
                 first mask_length[i] tokens masked out. It's okay to skip
-                its implementation if advanced features in PPLInfernecer is
+                its implementation if advanced features in PPLInfernecer 
+is
                 not needed.
 
         Returns:
@@ -456,9 +504,11 @@ class HuggingFace(BaseModel):
         Args:
             inputs (List[str]): A list of strings.
             mask_length (Optional[List[int]]): A list of mask lengths. If
-                provided, the perplexity scores will be calculated with the
+                provided, the perplexity scores will be calculated with 
+the
                 first mask_length[i] tokens masked out. It's okay to skip
-                its implementation if advanced features in PPLInfernecer is
+                its implementation if advanced features in PPLInfernecer 
+is
                 not needed.
 
         Returns:
@@ -507,24 +557,31 @@ class HuggingFaceCausalLM(HuggingFace):
 
     Args:
         path (str): The name or path to HuggingFace's model.
-        hf_cache_dir: Set the cache dir to HF model cache dir. If None, it will
+        hf_cache_dir: Set the cache dir to HF model cache dir. If None, it 
+will
             use the env variable HF_MODEL_HUB. Defaults to None.
-        max_seq_len (int): The maximum length of the input sequence. Defaults
+        max_seq_len (int): The maximum length of the input sequence. 
+Defaults
             to 2048.
         tokenizer_path (str): The path to the tokenizer. Defaults to None.
         tokenizer_kwargs (dict): Keyword arguments for the tokenizer.
             Defaults to {}.
-        peft_path (str, optional): The name or path to the HuggingFace's PEFT
-            model. If None, the original model will not be converted to PEFT.
+        peft_path (str, optional): The name or path to the HuggingFace's 
+PEFT
+            model. If None, the original model will not be converted to 
+PEFT.
             Defaults to None.
-        tokenizer_only (bool): If True, only the tokenizer will be initialized.
+        tokenizer_only (bool): If True, only the tokenizer will be 
+initialized.
             Defaults to False.
-        model_kwargs (dict): Keyword arguments for the model, used in loader.
+        model_kwargs (dict): Keyword arguments for the model, used in 
+loader.
             Defaults to dict(device_map='auto').
         meta_template (Dict, optional): The model's meta prompt
             template if needed, in case the requirement of injecting or
             wrapping of any meta instructions.
-        batch_padding (bool): If False, inference with be performed in for-loop
+        batch_padding (bool): If False, inference with be performed in 
+for-loop
             without batch padding.
     """
 
@@ -535,9 +592,11 @@ class HuggingFaceCausalLM(HuggingFace):
 
         model_kwargs.setdefault('torch_dtype', torch.float16)
         if "llama" in self.config.model_type.lower():
-            self.model = LlamaForCausalLM.from_pretrained(path, **model_kwargs)
+            self.model = LlamaForCausalLM.from_pretrained(path, 
+**model_kwargs)
         else:
-            self.model = AutoModelForCausalLM.from_pretrained(path, **model_kwargs)
+            self.model = AutoModelForCausalLM.from_pretrained(path, 
+**model_kwargs)
         embedding_size = self.model.get_input_embeddings().weight.shape[0]
         if len(self.tokenizer) > embedding_size:
             self.model.resize_token_embeddings(len(self.tokenizer))
@@ -559,7 +618,8 @@ class GPTQCausalLM(HuggingFace):
         from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
  
         quantize_config = BaseQuantizeConfig.from_pretrained(path)
-        self.model = AutoGPTQForCausalLM.from_quantized(path, quantize_config=quantize_config, **model_kwargs)
+        self.model = AutoGPTQForCausalLM.from_quantized(path, 
+quantize_config=quantize_config, **model_kwargs)
 
         self.model.eval()
 
@@ -574,4 +634,83 @@ class ExllamaCausalLM(HuggingFace):
         
         self.model = ExllamaHF.from_pretrained(path)
         self.model.eval()
+
+
+    def get_logits(self, inputs: List[str], mask_length=None):
+
+        if self.batch_padding and len(inputs) > 1:
+            # batch inference
+            tokens = self.tokenizer(inputs,
+                                    padding=True,
+                                    truncation=True,
+                                    max_length=self.max_seq_len)
+
+            tokens = {
+                k: torch.tensor(np.array(tokens[k]), 
+device=self.model.device)
+                for k in tokens if k in ['input_ids', 'attention_mask']
+            }
+            outputs = self.model(**tokens)
+        else:
+            input_ids = self.tokenizer(
+                inputs,
+                padding=False,
+                truncation=True,
+                max_length=self.max_seq_len)['input_ids']
+            input_ids = torch.tensor(input_ids, device=self.model.device)
+            tokens = {'input_ids': input_ids}
+
+            outputs = self.model(input_ids, labels=input_ids, 
+mask_length=mask_length, ignore_token=self.tokenizer.pad_token_id)
+        
+        return outputs.logits, {'tokens': tokens, 'loss': outputs.loss}
+    
+
+    def _get_ppl(self,
+                inputs: List[str],
+                mask_length: Optional[List[int]] = None) -> List[float]:
+        """Get perplexity scores given a list of inputs.
+
+        Args:
+            inputs (List[str]): A list of strings.
+            mask_length (Optional[List[int]]): A list of mask lengths. If
+                provided, the perplexity scores will be calculated with 
+the
+                first mask_length[i] tokens masked out. It's okay to skip
+                its implementation if advanced features in PPLInfernecer 
+is
+                not needed.
+
+        Returns:
+            List[float]: A list of perplexity scores.
+        """
+
+        outputs, inputs = self.get_logits(inputs, mask_length)
+
+        if 'loss' in inputs and inputs['loss']:
+            return inputs['loss']
+        
+        shift_logits = outputs[..., :-1, :].contiguous()
+
+        shift_labels = inputs['tokens']['input_ids'][..., 1:].contiguous()
+
+        loss_fct = torch.nn.CrossEntropyLoss(
+            reduction='none', ignore_index=self.tokenizer.pad_token_id)
+        
+        loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)),
+                        shift_labels.view(-1)).view(shift_labels.size())
+
+        if mask_length is not None:
+            mask = torch.zeros_like(shift_labels)  # [batch,seqlen]
+            for i in range(len(mask)):
+                for j in range(mask_length[i] - 1, len(mask[i])):
+                    mask[i][j] = 1
+            loss = loss * mask
+
+        lens = (inputs['tokens']['input_ids'] !=
+                self.tokenizer.pad_token_id).sum(-1).cpu().numpy()
+        if mask_length is not None:
+            lens -= np.array(mask_length)
+        ce_loss = loss.sum(-1).cpu().detach().numpy() / lens
+        return ce_loss
     
