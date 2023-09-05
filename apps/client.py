@@ -10,8 +10,7 @@ def predict(prompt, history=None):
     url = 'http://127.0.0.1:8000/stream_chat'
     data = {"prompt": prompt, "history": history}
     headers = {'Content-Type': 'application/json'}
-    event_source = sseclient.SSEClient(url, json=data, headers=headers, 
-session=session)
+    event_source = sseclient.SSEClient(url, json=data, headers=headers, session=session)
     history = []
     print("=" * 100)
     for event in event_source:
@@ -48,4 +47,3 @@ if __name__ == "__main__":
             continue
         query_text = raw_text.strip()
         history = predict(query_text, history)
-

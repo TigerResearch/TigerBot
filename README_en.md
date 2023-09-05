@@ -22,7 +22,9 @@
 </h4>
 
 ## News
-
+<p align="center" width="100%">
+	<img src="image/api/search/demo.png" alt="tigerbot search-api sample" style="width: 65%; display: block; margin: auto;"></a>
+</p>
 - [7/08/2023] TigerBot 2023.07 (V2) release :fire:
    - We introduce tigerbot-7b-base (v2) trained on 1.5TB high quality data. The training was conducted on 1,000 gpus, took about 4 weeks and cost 3,000,000 Yuan (RMB). The evaluations based on public nlp Chinese and English datasets show that it outperforms bloom and llama with the same model size by 15-30%.
    - We introduce tigerbot-7b-sft (v2) which was built by finetuning tigerbot-7b-base (v2) with 20G high quality instruction data. It outperforms tigerbot-7b-sft-v1 by 9.3% on nine public datasets evaluation.
