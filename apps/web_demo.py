@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 max_generate_length: int = 1024
-model_path = "TigerBot"
+model_path = "TigerResearch/tigerbot-13b-chat"
 print(f"loading model: {model_path}...")
 device = torch.cuda.current_device()
 generation_config = GenerationConfig.from_pretrained(model_path)

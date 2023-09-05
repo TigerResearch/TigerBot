@@ -348,7 +348,7 @@ async def predict(query: str, history: List[List[str]], model_id: str):
 
 
 if __name__ == '__main__':
-    model_path = "/mnt/nfs/yechen/models/tigerbot-7b-2h-sft-20g-mix0.0-group-mg-hf-9600"
+    model_path = "TigerResearch/tigerbot-13b-chat"
     model_max_length = 1024
     print(f"loading model: {model_path}...")
     model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
