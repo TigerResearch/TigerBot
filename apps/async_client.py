@@ -6,7 +6,8 @@ from aiohttp import ClientSession
 from aiohttp_sse_client import client as sseclient
 
 
-async def handle_event(event: aiohttp_sse_client.client.MessageEvent, event_source):
+async def handle_event(event: aiohttp_sse_client.client.MessageEvent, 
+event_source):
     # 处理 SSE 事件的回调函数
     # print(f'Event type: {event.type}')
     # print(f'Event id: {event.last_event_id}')
@@ -23,7 +24,8 @@ async def handle_event(event: aiohttp_sse_client.client.MessageEvent, event_sour
     return data["response"], data["history"], event.type
 
 
-async def listen_sse(prompt, history=None, max_length=2048, top_p=0.7, temperature=0.96):
+async def listen_sse(prompt, history=None, max_length=2048, top_p=0.7, 
+temperature=0.96):
     if history is None:
         history = []
     async with ClientSession() as session:
@@ -37,22 +39,39 @@ async def listen_sse(prompt, history=None, max_length=2048, top_p=0.7, temperatu
         }
         headers = {'Content-Type': 'application/json'}
         response, history = None, None
-        async with sseclient.EventSource(url, json=data, headers=headers, session=session) as event_source:
+        print("=" * 100)
+        async with sseclient.EventSource(url, json=data, headers=headers, 
+session=session) as event_source:
             try:
                 async for event in event_source:
                     # 将事件传递给回调函数进行处理
-                    response, history, e_type = await handle_event(event, event_source)
-                    print("\rChatBot:" + response, end="")
+                    response, history, e_type = await handle_event(event, 
+event_source)
+                    print(response, end="", flush=True)
                     if e_type == "finish":
                         break
             except Exception as err:
                 print("event close", err)
-        print("")
+        print()
+        print("=" * 100)
         return response, history
 
 
 if __name__ == "__main__":
-    history1 = []
+    history = []
     while True:
-        query = input("Human:")
-        _, history1 = asyncio.run(listen_sse(query, history1))
+        raw_text = input(
+            "prompt(\"exit\" to end, \"clear\" to clear session) >>> ")
+        if not raw_text:
+            print('prompt should not be empty!')
+            continue
+        if raw_text.strip() == "exit":
+            print('session ended.')
+            break
+        if raw_text.strip() == "clear":
+            print('session cleared.')
+            history = []
+            continue
+        query_text = raw_text.strip()
+        _, history1 = asyncio.run(listen_sse(query_text, history))
+
