@@ -27,7 +27,7 @@
 
 ## 最新发布
 
-- [9/06/2023] Tigerbot-70b 发布，继续开源和免费商用: [[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
+- [9/06/2023] Tigerbot-70b发布，继续开源和免费商用: [[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
 
 	- Tigerbot-70b-base: 在Llama-2-70b的基础上继续预训练，模型综合能力在mmlu等10项主流基准测试中，优于Llama-2-70b，达到业内SOTA；
 		- 用高质量的300GB token多语言数据,
