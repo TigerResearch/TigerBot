@@ -27,7 +27,19 @@
 
 ## 最新发布
 
+- [9/06/2023] TigerBot-70B 发布，继续开源和免费商用: [[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
 
+	- Tigerbot-70b-base: 在Llama-2-70b的基础上继续预训练，模型综合能力在mmlu等10项主流基准测试中，优于Llama-2-70b，达到业内SOTA；
+		- 用高质量的300GB token多语言数据,
+  		- 算法上使用了GQA, flash-attn, RoPE，holistic-training等技术,
+  		- 训练采用了tensor/pipeline-partition技术，计算效率达到Llama-2 paper中报告的SOTA;
+	- Tigerbot-70b-chat: 在Tigerbot-70b-base基础上，用20M指令完成数据进行sft，和10K人类标注的gold set进行rejection-sampling对齐；
+	- 同步开放Tigerbot-70b-chat-api，继续对教育和科研开发者免费。
+    <p align="center" width="100%">
+  		<img src="image/next-tok-acc.jpg" alt="tigerbot 70b eval" style="width: 60%; display: block; margin: auto;"></a>
+   		<img src="image/loss-curve.jpg" alt="tigerbot loss curve" style="width: 30%; display: block; margin: auto;"></a>
+	</p>
+	
 - [8/25/2023] TigerBot更新13b-base模型: [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[测评](#测评)]
 
 	- TigerBot-13B-base: 增加了一倍训练数据，至600B tokens，定向增加了高质量中英文数学推理类和科学文献类数据，优化了中文网络数据的清洗（在格式、口语、知识性等方面）。在13项主流基准评测中，英文综合能力优于Llama-2-13b 5%，中文超30%。[[测评](#测评)]
