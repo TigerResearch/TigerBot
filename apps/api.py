@@ -1,24 +1,32 @@
-from fastapi import FastAPI, Request
-import uvicorn
-import json
-import datetime
 import asyncio
+import datetime
+import json
 import os
 import sys
 import time
-import torch
-from threading import Thread
-from sse_starlette.sse import EventSourceResponse
-from accelerate import infer_auto_device_map, dispatch_model
-from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer, AutoModelForCausalLM, TextIteratorStreamer
-from pydantic import BaseModel, Field
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from typing import Any, Dict, List, Literal, Optional, Union
+from functools import partial
+from threading import Thread
+from typing import List, Literal, Optional, Union
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import torch
+import uvicorn
+from accelerate import dispatch_model, infer_auto_device_map
+from accelerate.utils import get_balanced_memory
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+from sse_starlette.sse import EventSourceResponse
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    GenerationConfig,
+    TextIteratorStreamer,
+)
+
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -32,6 +40,13 @@ def torch_gc():
         with torch.cuda.device(CUDA_DEVICE):
             torch.cuda.empty_cache()
             torch.cuda.ipc_collect()
+
+
+async def to_async(func, **kwargs):
+    loop = asyncio.get_event_loop()
+    partial_func = partial(func, **kwargs)
+    data = await loop.run_in_executor(None, partial_func)
+    return data
 
 
 @asynccontextmanager
@@ -54,14 +69,12 @@ app.add_middleware(
 
 def get_prompt(query, history=None):
     if not history:
-        prompt = "\n\n### Instruction:\n{}\n\n### Response:\n".format(query)
+        prompt = f"\n\n### Instruction:\n{query}\n\n### Response:\n"
     else:
         prompt = ""
-        for i, (old_query, response) in enumerate(history):
-            prompt += "\n\n### Instruction:\n{}\n\n### Response:\n{}".format(
-                old_query, response)
-        prompt += "\n\n### Instruction:\n{}\n\n### Response:\n".format(
-            query)
+        for old_query, response in history:
+            prompt += f"\n\n### Instruction:\n{old_query}\n\n### Response:\n{response}"
+        prompt += f"\n\n### Instruction:\n{query}\n\n### Response:\n"
     return prompt
 
 
@@ -72,37 +85,41 @@ async def root():
 
 @app.post("/chat/")
 async def create_item(request: Request):
-    global model, tokenizer
+    global model, tokenizer, generation_kwargs
     json_post_raw = await request.json()
     json_post = json.dumps(json_post_raw)
     json_post_list = json.loads(json_post)
-    prompt = json_post_list.get('prompt')
-    history = json_post_list.get('history')
-    max_input_length = json_post_list.get('max_input_length', 512)
-    max_generate_length = json_post_list.get('max_generate_length', 1024)
-    top_p = json_post_list.get('top_p', 0.95)
-    temperature = json_post_list.get('temperature', 0.8)
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
-        tokenizer.model_max_length = max_generate_length
-    generation_kwargs = {
-        "top_p": top_p,
-        "temperature": temperature,
-        "max_length": max_generate_length,
-        "eos_token_id": tokenizer.eos_token_id,
-        "pad_token_id": tokenizer.pad_token_id,
-        "early_stopping": True,
-        "no_repeat_ngram_size": 4,
-    }
+    prompt = json_post_list.get("prompt")
+    history = json_post_list.get("history")
+    max_input_length = json_post_list.get("max_input_length", 512)
+    generation_kwargs["max_length"] = json_post_list.get(
+        "max_generate_length", generation_kwargs.get("max_length", 1024)
+    )
+    generation_kwargs["top_p"] = json_post_list.get(
+        "top_p", generation_kwargs.get("top_p", 0.95)
+    )
+    generation_kwargs["temperature"] = json_post_list.get(
+        "temperature", generation_kwargs.get("temperature", 0.8)
+    )
+    if (
+        tokenizer.model_max_length is None
+        or tokenizer.model_max_length > generation_kwargs["max_length"]
+    ):
+        tokenizer.model_max_length = generation_kwargs["max_length"]
     device = torch.cuda.current_device()
     prompt = prompt.lstrip("\n")
     query = get_prompt(prompt, history)
     query = query.strip()
-    inputs = tokenizer(query, return_tensors='pt', truncation=True,
-                       max_length=max_input_length)
+    inputs = tokenizer(
+        query,
+        return_tensors="pt",
+        truncation=True,
+        max_length=max_input_length,
+    )
     inputs = {k: v.to(device) for k, v in inputs.items()}
     output = model.generate(**inputs, **generation_kwargs)
-    response = ''
-    for tok_id in output[0][inputs['input_ids'].shape[1]:]:
+    response = ""
+    for tok_id in output[0][inputs["input_ids"].shape[1] :]:
         if tok_id != tokenizer.eos_token_id:
             response += tokenizer.decode(tok_id)
     response = response.lstrip("\n").rstrip("\n### Response:")
@@ -113,10 +130,10 @@ async def create_item(request: Request):
         "response": response,
         "history": history,
         "status": 200,
-        "time": time
+        "time": time,
     }
-    # log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' +
-    repr(response) + '"'  # print(log)
+    # log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(response) + '"'
+    # print(log)
     torch_gc()
     return answer
 
@@ -127,39 +144,46 @@ async def stream_chat(request: Request):
     json_post_raw = await request.json()
     json_post = json.dumps(json_post_raw)
     json_post_list = json.loads(json_post)
-    prompt = json_post_list.get('prompt')
-    history = json_post_list.get('history')
-    max_input_length = json_post_list.get('max_input_length', 512)
-    max_generate_length = json_post_list.get('max_generate_length', 1024)
-    top_p = json_post_list.get('top_p', 0.95)
-    temperature = json_post_list.get('temperature', 0.8)
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
-        tokenizer.model_max_length = max_generate_length
+    prompt = json_post_list.get("prompt")
+    history = json_post_list.get("history")
+    max_input_length = json_post_list.get("max_input_length", 512)
+    generation_kwargs["max_length"] = json_post_list.get(
+        "max_generate_length", generation_kwargs.get("max_length", 1024)
+    )
+    generation_kwargs["top_p"] = json_post_list.get(
+        "top_p", generation_kwargs.get("top_p", 0.95)
+    )
+    generation_kwargs["temperature"] = json_post_list.get(
+        "temperature", generation_kwargs.get("temperature", 0.8)
+    )
+    if (
+        tokenizer.model_max_length is None
+        or tokenizer.model_max_length > generation_kwargs["max_length"]
+    ):
+        tokenizer.model_max_length = generation_kwargs["max_length"]
+
     STREAM_DELAY = 1  # second
     RETRY_TIMEOUT = 15000  # milisecond
 
-    async def event_generator(prompt, history, max_input_length, max_generate_length, top_p, temperature):
-        last_message = ["", ""]
-        streamer = TextIteratorStreamer(tokenizer,
-                                        skip_prompt=True,
-                                        skip_special_tokens=True,
-                                        spaces_between_special_tokens=False)
+    async def event_generator(prompt, history, generation_kwargs):
+        streamer = TextIteratorStreamer(
+            tokenizer,
+            skip_prompt=True,
+            skip_special_tokens=True,
+            spaces_between_special_tokens=False,
+        )
 
         query = get_prompt(prompt, history)
-        inputs = tokenizer(query, return_tensors="pt", truncation=True, max_length=max_input_length)
-        inputs = {k: v.to(DEVICE) for k, v in inputs.items()}
+        inputs = tokenizer(
+            query,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_input_length,
+        )
 
-        generation_kwargs = {
-            **inputs,
-            "top_p": top_p,
-            "streamer": streamer,
-            "temperature": temperature,
-            "max_new_tokens": max_generate_length,
-            "eos_token_id": tokenizer.eos_token_id,
-            "pad_token_id": tokenizer.pad_token_id,
-            "early_stopping": True,
-            "no_repeat_ngram_size": 4,
-        }
+        for k, v in inputs.items():
+            generation_kwargs[k] = v.to(DEVICE)
+        generation_kwargs["streamer"] = streamer
         thread = Thread(target=model.generate, kwargs=generation_kwargs)
         thread.start()
 
@@ -173,13 +197,13 @@ async def stream_chat(request: Request):
                 temp_dict = {
                     "response": new_text,
                     "history": history + [(prompt, last_msg)],
-                    "finish": False
+                    "finish": False,
                 }
                 yield {
                     "event": "new_message",
                     "id": "message_id",
                     "retry": RETRY_TIMEOUT,
-                    "data": json.dumps(temp_dict, ensure_ascii=False)
+                    "data": json.dumps(temp_dict, ensure_ascii=False),
                 }
                 last_msg += new_text
             except StopIteration:
@@ -187,25 +211,18 @@ async def stream_chat(request: Request):
         temp_dict = {
             "response": new_text,
             "history": history + [(prompt, last_msg)],
-            "finish": True
+            "finish": True,
         }
         yield {
             "event": "finish",
             "id": "finish_id",
             "retry": RETRY_TIMEOUT,
-            "data": json.dumps(temp_dict, ensure_ascii=False)
+            "data": json.dumps(temp_dict, ensure_ascii=False),
         }
         torch_gc()
 
     return EventSourceResponse(
-        event_generator(
-            prompt,
-            history,
-            max_input_length,
-            max_generate_length,
-            top_p,
-            temperature
-        )
+        event_generator(prompt, history, generation_kwargs)
     )
 
 
@@ -259,10 +276,15 @@ class ChatCompletionResponseStreamChoice(BaseModel):
 class ChatCompletionResponse(BaseModel):
     model: str
     object: Literal["chat.completion", "chat.completion.chunk"]
-    choices: List[Union[ChatCompletionResponseChoice,
-                        ChatCompletionResponseStreamChoice]]
-    created: Optional[int] = Field(default_factory=lambda:
-    int(time.time()))
+    choices: List[
+        Union[
+            ChatCompletionResponseChoice,
+            ChatCompletionResponseStreamChoice,
+        ]
+    ]
+    created: Optional[int] = Field(
+        default_factory=lambda: int(time.time())
+    )
 
 
 @app.get("/v1/models", response_model=ModelList)
@@ -274,7 +296,7 @@ async def list_models():
 
 @app.post("/v1/chat/completions", response_model=ChatCompletionResponse)
 async def create_chat_completion(request: ChatCompletionRequest):
-    global model, tokenizer
+    global model, tokenizer, generation_kwargs
 
     if request.messages[-1].role != "user":
         raise HTTPException(status_code=400, detail="Invalid request")
@@ -287,25 +309,48 @@ async def create_chat_completion(request: ChatCompletionRequest):
     history = []
     if len(prev_messages) % 2 == 0:
         for i in range(0, len(prev_messages), 2):
-            if prev_messages[i].role == "user" and prev_messages[i +
-                                                                 1].role == "assistant":
-                history.append([prev_messages[i].content, prev_messages[i
-                                                                        + 1].content])
+            if (
+                prev_messages[i].role == "user"
+                and prev_messages[i + 1].role == "assistant"
+            ):
+                history.append(
+                    [
+                        prev_messages[i].content,
+                        prev_messages[i + 1].content,
+                    ]
+                )
 
     if request.stream:
         generate = predict(query, history, request.model)
-        return EventSourceResponse(generate,
-                                   media_type="text/event-stream")
+        return EventSourceResponse(
+            generate, media_type="text/event-stream"
+        )
 
-    response, _ = model.chat(tokenizer, query, history=history)
+    query_text = query.lstrip("\n").strip()
+    input_text = get_prompt(query_text, history)
+    inputs = tokenizer(input_text, return_tensors="pt")
+
+    for k, v in inputs.items():
+        generation_kwargs[k] = v.to(DEVICE)
+    output = await to_async(model.generate, **generation_kwargs)
+    # output = model.generate(**inputs, **generation_kwargs)
+    response = ""
+    for tok_id in output[0][inputs["input_ids"].shape[1] :]:
+        if tok_id != tokenizer.eos_token_id:
+            response += tokenizer.decode(tok_id)
+    response = response.lstrip("\n").rstrip("\n### Response:")
+    # response, _ = model.chat(tokenizer, query, history=history)
     choice_data = ChatCompletionResponseChoice(
         index=0,
         message=ChatMessage(role="assistant", content=response),
-        finish_reason="stop"
+        finish_reason="stop",
     )
 
-    return ChatCompletionResponse(model=request.model,
-                                  choices=[choice_data], object="chat.completion")
+    return ChatCompletionResponse(
+        model=request.model,
+        choices=[choice_data],
+        object="chat.completion",
+    )
 
 
 async def predict(query: str, history: List[List[str]], model_id: str):
@@ -314,53 +359,89 @@ async def predict(query: str, history: List[List[str]], model_id: str):
     choice_data = ChatCompletionResponseStreamChoice(
         index=0,
         delta=DeltaMessage(role="assistant"),
-        finish_reason=None
+        finish_reason=None,
     )
-    chunk = ChatCompletionResponse(model=model_id, choices=[choice_data],
-                                   object="chat.completion.chunk")
-    yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
+    chunk = ChatCompletionResponse(
+        model=model_id,
+        choices=[choice_data],
+        object="chat.completion.chunk",
+    )
+    yield "{}".format(
+        chunk.json(exclude_unset=True, ensure_ascii=False)
+    )
 
-    current_length = 0
+    streamer = TextIteratorStreamer(
+        tokenizer,
+        skip_prompt=True,
+        skip_special_tokens=True,
+        spaces_between_special_tokens=False,
+    )
 
-    for new_response, _ in model.stream_chat(tokenizer, query, history):
-        if len(new_response) == current_length:
+    query = get_prompt(query, history)
+    inputs = tokenizer(query, return_tensors="pt")
+    for k, v in inputs.items():
+        generation_kwargs[k] = v.to(DEVICE)
+    generation_kwargs["streamer"] = streamer
+    thread = Thread(target=model.generate, kwargs=generation_kwargs)
+    thread.start()
+
+    for new_text in streamer:
+        if len(new_text) == 0:
             continue
-
-        new_text = new_response[current_length:]
-        current_length = len(new_response)
-
         choice_data = ChatCompletionResponseStreamChoice(
             index=0,
             delta=DeltaMessage(content=new_text),
-            finish_reason=None
+            finish_reason=None,
         )
-        chunk = ChatCompletionResponse(model=model_id, choices=[choice_data], object="chat.completion.chunk")
-        yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
+        chunk = ChatCompletionResponse(
+            model=model_id,
+            choices=[choice_data],
+            object="chat.completion.chunk",
+        )
+        yield "{}".format(
+            chunk.json(exclude_unset=True, ensure_ascii=False)
+        )
 
     choice_data = ChatCompletionResponseStreamChoice(
-        index=0,
-        delta=DeltaMessage(),
-        finish_reason="stop"
+        index=0, delta=DeltaMessage(), finish_reason="stop"
     )
-    chunk = ChatCompletionResponse(model=model_id, choices=[choice_data], object="chat.completion.chunk")
-    yield "{}".format(chunk.json(exclude_unset=True, ensure_ascii=False))
-    yield '[DONE]'
+    chunk = ChatCompletionResponse(
+        model=model_id,
+        choices=[choice_data],
+        object="chat.completion.chunk",
+    )
+    yield "{}".format(
+        chunk.json(exclude_unset=True, ensure_ascii=False)
+    )
+    yield "[DONE]"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     model_path = "TigerResearch/tigerbot-13b-chat"
     model_max_length = 1024
     print(f"loading model: {model_path}...")
-    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
-
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path, torch_dtype=torch.float16
+    )
+    max_memory = get_balanced_memory(model)
+    device_map = infer_auto_device_map(model, max_memory=max_memory,
+                                       no_split_module_classes=[""])
+    print("Using the following device map for the model:", device_map)
+    model = dispatch_model(model, device_map=device_map, offload_buffers=True)
+    generation_config = GenerationConfig.from_pretrained(model_path)
+    generation_kwargs = generation_config.to_dict()
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
         cache_dir=None,
         model_max_length=model_max_length,
         padding_side="left",
-        truncation_side='left',
+        truncation_side="left",
         padding=True,
-        truncation=True
+        truncation=True,
     )
+    generation_kwargs["eos_token_id"] = tokenizer.eos_token_id
+    generation_kwargs["pad_token_id"] = tokenizer.pad_token_id
     model.eval()
-    uvicorn.run(app, host='0.0.0.0', port=8000, workers=1)
+    
+    uvicorn.run(app, host="0.0.0.0", port=8000, workers=1)
+
