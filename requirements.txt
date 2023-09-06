@@ -1,6 +1,6 @@
 safetensors==0.3.1
 datasets==2.10.1
-accelerate>=0.17.1
+accelerate>=0.20.3
 protobuf==3.20.2
 transformers>=4.31.0
 scikit-learn==1.0.2
