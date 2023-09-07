@@ -30,7 +30,7 @@
 - [9/06/2023] Tigerbot-70b发布，继续开源和免费商用: [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E2%80%9070B%E5%8F%91%E5%B8%83%EF%BC%81)][[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
 
 	- Tigerbot-70b-base: 在Llama-2-70b的基础上继续预训练，模型综合能力在mmlu等10项主流基准测试中，优于Llama-2-70b，达到业内SOTA；
-		- 用高质量的300GB token多语言数据,
+		- 用高质量的300 billion token的多语言数据,
   		- 算法上使用了GQA, flash-attn, RoPE，holistic-training等技术,
   		- 训练采用了tensor/pipeline-partition技术，计算效率达到Llama-2 paper中报告的SOTA;
 	- Tigerbot-70b-chat: 在Tigerbot-70b-base基础上，用20M指令完成数据进行sft，和10K人类标注的gold set进行rejection-sampling对齐；
