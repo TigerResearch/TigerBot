@@ -157,6 +157,7 @@ pip install -r requirements.txt
 | ----------------- | ------------------------------------------------------------ | ------------ | -------------- | ------------------------- |
 | tigerbot-70b-base | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)] | llama-2      | 129           | From llama-2-70b weights  |
 | tigerbot-70b-chat | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+| tigerbot-70b-chat-4bit | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v1|
 | tigerbot-13b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)] | llama-2      | 26.6           | From llama-2-13b weights  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
 | tigerbot-13b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
