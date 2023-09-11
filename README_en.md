@@ -25,11 +25,59 @@
 <p align="center" width="100%">
 	<img src="image/api/search/demo.png" alt="tigerbot search-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
-- [7/08/2023] TigerBot 2023.07 (V2) release :fire:
-   - We introduce tigerbot-7b-base (v2) trained on 1.5TB high quality data. The training was conducted on 1,000 gpus, took about 4 weeks and cost 3,000,000 Yuan (RMB). The evaluations based on public nlp Chinese and English datasets show that it outperforms bloom and llama with the same model size by 15-30%.
-   - We introduce tigerbot-7b-sft (v2) which was built by finetuning tigerbot-7b-base (v2) with 20G high quality instruction data. It outperforms tigerbot-7b-sft-v1 by 9.3% on nine public datasets evaluation.
-   
-   - How to Use：
+
+- [9/06/2023] Tigerbot-70b released with open source and free commercial usage: [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E2%80%9070B%E5%8F%91%E5%B8%83%EF%BC%81)][[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
+
+  - Tigerbot-70b-base: Building on the Llama-2-70b foundation, the model's overall capabilities have surpassed Llama-2-70b in 10 mainstream benchmark tests, reaching the current industry SOTA. 
+    - Trained with high-quality 300 billion token multilingual data.
+      - Algorithmically enhanced with GQA, flash-attn, RoPE, and holistic-training techniques.
+      - The training process employed tensor/pipeline-partition technology, achieving the current SOTA reported in the Llama-2 paper.
+  - Tigerbot-70b-chat: Building on the Tigerbot-70b-base foundation, 20M dialogue directives were used to complete SFT and 10K human-annotated gold sets were used for rejection sampling alignment.
+  - The Tigerbot-70b-chat API has been opened for free use to educational and research developers.
+  <p align="center" width="100%">
+    <img src="image/next-tok-acc.jpg" alt="tigerbot 70b eval" style="width: 60%; display: block; margin: auto;"></a>
+    <img src="image/loss-curve.jpg" alt="tigerbot loss curve" style="width: 30%; display: block; margin: auto;"></a>
+	</p>
+
+
+- [8/25/2023] TigerBot updates the 13b-base model: [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[Evaluation](#Evaluation)]
+
+  - TigerBot-13B-base: The training data has been doubled to 600B tokens, with targeted additions of high-quality English and Chinese math reasoning and scientific literature datasets. Additionally, the cleaning of Chinese web datasets has been optimized in terms of format, language, and knowledgeability. In 13 mainstream benchmark evaluations, the English comprehensive ability is 5% superior to Llama-2-13b, while the Chinese ability is over 30% superior. [[Evaluation](#Evaluation)]![image](image/eval_base.jpg)
+  - An automatic evaluation system based on opencompass has been opened to promote reproducibility. [[Evaluation](#Evaluation)]
+
+- [8/21/2023] TigerBot releases updated 7b and 13b base/chat models: [[Evaluation](#Evaluation)]
+
+  - TigerBot-7B-base [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]: Based on Llama-2-7B, it was incrementally pretrained on 300B tokens and supplemented with datasets lacking in Llama-2, such as Chinese, code, and reasoning datasets, using the holistic training method. In 13 mainstream benchmark evaluations for both English and Chinese, it surpasses Llama-2-7B by 33%, demonstrating a leading performance among similar open source models both domestically and internationally.
+  - TigerBot-7B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]: Based on TigerBot-7B-base, it was fine-tuned using 20M data covering multiple tasks for directives (SFT) and alignment with rejection sampling (RS-HIL). In 13 mainstream benchmark evaluations for both English and Chinese, it surpasses Llama-2-7B-chat by 29%, also demonstrating a leading performance among similar open source models both domestically and internationally.
+  - TigerBot-13B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]: Based on TigerBot-13B-base, it was fine-tuned using 20M data covering multiple tasks for directives (13b-v1 used 5M data), achieving a better balance in English and Chinese abilities. In 13 mainstream benchmark evaluations for both English and Chinese, it surpasses Llama-2-13B-chat by 15%, demonstrating a leading performance among similar open source models both domestically and internationally.
+  - The TigerBot API has also been updated concurrently [[tigerbot-api](https://www.tigerbot.com/api-reference)].
+
+- [8/19/2023] TigerBot inference (tigerbot.com && tigerbot-api) enable [TGI](https://github.com/huggingface/text-generation-inference), achieving 3x QPS and 2x response speed.
+
+https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e8-45b482e76c51
+
+- [8/08/2023] TigerBot 2023.08 (V3) release: TigerBot is pleased to announce the release of the TigerBot-13B large model. Based on Llama-2 and with TigerBot's accumulated technology and data, this model not only maintains Llama-2's excellent English abilities but also fills the gap in its Chinese abilities, surpassing Llama-2 by 49% in various mainstream Chinese tasks. In comparison with other open source similar models, it is competitive. :fire: [[paper](https://github.com/TigerResearch/TigerBot/wiki/Tigerbot%E2%80%9013B-is-All-You-Need)] 
+
+	- TigerBot-13B-base: Based on Llama-2-13B, it continued to be pretrained on 300B tokens and the Chinese vocabulary was expanded to 60K. Additionally, holistic training was applied during pretraining to enable the model to complete 90% of the directives directly. In mainstream English benchmark tests, it surpassed Llama-2-13B-base by 7%, while in Chinese tests, its overall ability exceeded Llama-2-13B-base by 49%. It is at the leading position among mainstream open source base models both domestically and internationally. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)]
+	- TigerBot-13B-chat: Based on TigerBot-13B-base, it was fine-tuned using 5M directive data and rejection sampling was applied for alignment with human needs during fine-tuning. In mainstream English benchmark tests, its score reached that of Llama-2-13B-chat, while in Chinese tests, its overall ability exceeded Llama-2-13B-chat by 47%. It is also at the leading position among mainstream open source models both domestically and internationally. The chat model can be used by running `python infer.py --model_path TigerResearch/tigerbot-13b-chat`. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
+	- TigerBot-API: The chat and summarization APIs will automatically be upgraded to TigerBot-13B-chat. Free use is available for scientific and educational users, while prices remain unchanged for commercial developers. [[tigerbot-api](https://www.tigerbot.com/api-reference)]
+
+- [8/03/2023] TigerBot is compatible with the OpenAI interface. [[tigerbot-api](https://www.tigerbot.com/api-reference/chat?codeLanguage=python-openai)]
+
+- [7/26/2023] TigerBot opens its search API [[tigerbot-api](https://www.tigerbot.com/api-reference/search)]
+
+<p align="center" width="100%">
+  <img src="image/api/search/demo.png" alt="tigerbot search-api sample" style="width: 65%; display: block; margin: auto;">
+</p>
+		
+- [7/08/2023] TigerBot 2023.07 (V2) release [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-Version2)] :fire:
+
+  - tigerbot-7b-base (v2), Fully pretrained on 1.5TB high-quality data (4 weeks of training time and ~3 million dollars in compute cost), it outperforms the equivalent Bloom and Llama models on both Chinese and English public datasets by 15-30%. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+
+  - tigerbot-7b-sft (v2), Based on the base-v2 model and trained on 20 million/20G high-quality cleaned and aligned data, it outperforms the previous SFT model (sft-v1) on 9 public corpus evaluations by 9.3%. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
+
+    - How to Use：
+
     ```python
     import transformers
     
@@ -87,10 +135,10 @@ We pretrained and supervised fine-tuned our models, starting from a vanilla BLOO
 ## Contents
 
 - [Install](#Install)
-- [Model Weights](#Model-Weights)
+- [Model Download](#Model-Download)
 - [Training and Inference](#Training-and-Inference)
-- [Datasets](#Datasets)
 - [Evaluation](#Evaluation)
+- [Datasets](#Datasets)
 - [API](#API)
 - [Others](#Others)
 
@@ -107,38 +155,29 @@ cd TigerBot
 pip install -r requirements.txt
 ```
 
-## Model Weights
+## Model Download
 
-<summary>Tigerbot-7B</summary>
 
-| Tigerbot-7B                                                                                 | Bits | memory(GB) |
-| ------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-7b-base](https://huggingface.co/TigerResearch/tigerbot-7b-base)                   | 16   | 17.2       |
-| [tigerbot-7b-sft](https://huggingface.co/TigerResearch/tigerbot-7b-sft)                     | 16   | 17.2       |
-| [tigerbot-7b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) | 4    | 8.5        |
-
-<summary>Tigerbot-180B-Research</summary>
-
-| Tigerbot-180B-Research                                                                             | Bits | memory(GB) |
-| -------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| [tigerbot-180b-sft](https://huggingface.co/TigerResearch/tigerbot-180b-research)                   | 16   | 347.6      |
-| [tigerbot-180b-sft-4bit-128g](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) | 4    | 108.5      |
-
-<details> 
-<summary><b>versions</b></summary>
-
-- tigerbot-7b-sft
-
-  - tigerbot-7b-sft-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]
-
-  - tigerbot-7b-sft-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]
-
-- tigerbot-7b-base
-
-  - tigerbot-7b-base-v2 (2023.07.08) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]
-  - Tigerbot-7b-base-v1 (2023.06.07) [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]
-
-</details>
+| Model             | Version                                                      | Architecture | Disk size (GB) | Note                      |
+| ----------------- | ------------------------------------------------------------ | ------------ | -------------- | ------------------------- |
+| tigerbot-70b-base | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)] | llama-2      | 129           | From llama-2-70b weights  |
+| tigerbot-70b-chat | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+| tigerbot-70b-chat-4bit | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v1|
+| tigerbot-13b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)] | llama-2      | 26.6           | From llama-2-13b weights  |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
+| tigerbot-13b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
+| tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)] | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
+| tigerbot-13b-chat-4bit | v2 [[huggingface](TigerResearch/tigerbot-13b-chat-4bit)] | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
+| tigerbot-7b-base  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)] | llama-2      | 13.9           | From llama-2-7b weights   |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)] | bloom        | 16.2           | From bloom weights        |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)] | bloom        | 16.2           | From bloom weights        |
+| tigerbot-7b-chat  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)] | llama-2      | 13.9           | From tigerbot-7b-base v3  |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)] | bloom        | 16.2           | From tigerbot-7b-base v2  |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)] | bloom        | 16.2           | From tigerbot-7b-base v1  |
+| tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
+| tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
+| tigerbot-180b-sft | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)] | bloom        | 347.6          | From bloom weights        |
 
 ## Training and Inference
 
@@ -163,7 +202,9 @@ CUDA_VISIBLE_DEVICES=0 python -c "import torch; print(torch.cuda.get_device_capa
 
 So if you get 8, 0, then use TORCH_CUDA_ARCH_LIST="8.0".
 
-command to start training
+#### start training
+
+Starting the training of `tigerbot-7b` requires at least 1 x A100 (40GB), and starting `tigerbot-180b` requires at least 16 x A100 (40GB)
 
 ```
 deepspeed \
@@ -192,7 +233,10 @@ deepspeed \
 
 ### Fine-tunes
 
-command to start training
+
+Starting the training of `tigerbot-7b` requires at least 1 x A100 (40GB), and starting `tigerbot-180b` requires at least 16 x A100 (40GB)
+
+#### start training
 
 ```
 deepspeed \
@@ -229,22 +273,26 @@ You can infer with command line. Input `clear` to clean history and input `exit`
 
 #### Infer with single GPU
 
-`tigerbot-7b-sft` can be loaded for inference on RTX3090 GPU
-```
+`tigerbot-7b-sft` can be inferred on a single RTX3090, while the 4-bit quantization version of the model, `tigerbot-7b-sft-4bit-128g`, requires referring to the inference code in the [Quantization](### Quantization) module.
+
+
+```mathematica
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
 
-If you want to enable streaming output, please replace `infer.py` with `infer_stream.py`, and the output will change from one-shot output to sentence-by-sentence output.
+If you want to enable streaming output, replace `infer.py` with `infer_stream.py`, and the output will change from one-time output to sentence-by-sentence output.
+
 ```
 CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_stream.py --model_path ${MODEL_DIR}
 ```
+To enable web interface for question answering, replace the model path in line 12 of `web_demo.py` with your model path, and then run the following command to enable the web interface.
 
-If you want to enable the web interface for Q&A, change the model path corresponding to model_path on line 12 of `web_demo.py` to the path where your model is located, and then run the following command to enable the web interface.
+
 ```
 CUDA_VISIBLE_DEVICES=0 python ./apps/web_demo.py
 ```
+For `tigerbot-7b-base`, use the inference code for continuous writing (non-question answering).
 
-`tigerbot-7b-base` uses continuation (non-question answering) inference code.
 
 ```
 CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
@@ -283,46 +331,90 @@ python ./apps/web_api_demo.py
 
 ### Quantization
 
-We use [GPTQ](https://github.com/IST-DASLab/gptq) and [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa) to
-quantize models.
-
-go to the path of gptq
-
+#### Dynamic Quantization Model Loading
+This method is for online quantization and inference.
 ```
-cd gptq
+CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
 ```
 
-#### Model quantization
-
+#### AutoGPTQ Quantization
+Dynamic quantization accuracy may be lower than that of models quantized using gptq or other similar quantization methods. We can use [AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ) to achieve quantization:
 ```
-CUDA_VISIBLE_DEVICES=0 python tigerbot.py ${MODEL_DIR} c4 --wbits 4 --act-order --groupsize 128 --save ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
-```
+# Install auto-gptq
+pip install auto-gptq
 
-#### Quantized model infer with single GPU
-
-[`tigerbot-7b-sft-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-7b-sft-4bit-128g) can be loaded for
-inference on RTX3090 GPU
-
-```
-CUDA_VISIBLE_DEVICES=0 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load ${MODEL_DIR}/tigerbot-7b-4bit-128g.pt
+# Start inference
+CUDA_VISIBLE_DEVICES=0 python other_infer/gptq_infer.py --model_path ${MODEL_PATH}
 ```
 
-[`tigerbot-180b-research-4bit-128g`](https://huggingface.co/TigerResearch/tigerbot-180b-research-4bit-128g) can be
-loaded for parallelism inference on 2 A100(80G) GPUs
+`MODEL_PATH` is the path of the quantized model, such as `TigerResearch/tigerbot-13b-chat-8bit`.
 
+#### exllama Quantization Inference
+Use [exllama](https://github.com/turboderp/exllama) to load and perform inference on models such as [TigerResearch/tigerbot-13b-chat-4bit], which can improve inference speed.
 ```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load {MODEL_DIR}/tigerbot-4bit-128g.pt
+# Install exllama_lib
+pip install exllama_lib@git+https://github.com/taprosoft/exllama.git
+
+# Start inference
+CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_PATH}
 ```
 
-For quantized model shards
+`MODEL_PATH` is the path of the quantized model, such as `TigerResearch/tigerbot-13b-chat-4bit`.
 
+
+## Evaluation
+
+We use classic benchmarks for automatic evaluation on 13 tasks, covering code, common-sense reasoning, reading comprehension, math, and natural language understanding. We build an automatic evaluation system based on opencompass (thank for @opencompass)
 ```
-CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --groupsize 128 --load "{MODEL_DIR}/tigerbot-4bit-128g-*.pt"
+# Installation
+cd opencompass
+pip install -e .
+
+# Download dataset to the data/ directory
+wget https://github.com/InternLM/opencompass/releases/download/0.1.1/OpenCompassData.zip
+unzip OpenCompassData.zip
+
+#Run evaluation task:
+CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base --max-partition-size 30000
 ```
+
+The overall score is the average of scores from various tasks, with each task including both English and Chinese tasks. Scores for each task are referenced in the [Model Evaluation Breakdown](#model-evaluation-breakdown) section.
+
+Evaluation results for the base model:
+
+![image](image/eval_base.jpg)
+
+Evaluation results for the chat model:
+
+![image](image/eval_chat.jpg)
+<details> 
+<summary><b>Model Evaluation Breakdown</b></summary>
+Evaluation results for the base model:
+
+![image](image/eval_base_detail.jpg)
+
+Evaluation results for the chat model:
+
+![image](image/eval_chat_detail.jpg)
+</details>
+<details>
+<summary><b>SFT and base model evaluation results (V1 version)</b></summary>
+We evaluate the SFT model on 7 English NLP tasks and compare it with the baseline model (OpenAI-InstructGPT-6B-SFT). We normalize and average the scores of all models to get the following results:
+
+![image](image/auto-valuation-1.png)
+We also evaluate the pretraining model on 7 English NLP tasks and 4 Chinese NLP tasks and compare it with the baseline model (bloom-7b1). We normalize and average the scores of all models to get the following results:
+
+![image](image/auto-valuation-2.png)
+</details>
 
 ## Datasets
 
 ### Pretraining Datasets
+
+<details>
+<summary><b>Details</b></summary>
+
+We collected data from Chinese books, the internet, and encyclopedia-type data based on the distribution of GPT3 pretraining data, and filtered the data through source quality control and tf-idf soft deduplication. From 20TB of data, we filtered down to 2TB, maintaining the proportion of language and categories. On this basis, we randomly sampled 100G of data and released it open source.
 
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_zh>Chinese Pretraining Corpus - 55G [hugging face]</a>
 - <a href=https://huggingface.co/datasets/TigerResearch/pretrain_en>English Pretraining Corpus - 51G [hugging face]</a>
@@ -348,22 +440,51 @@ CUDA_VISIBLE_DEVICES=0,1 python tigerbot_infer.py ${MODEL_DIR} --wbits 4 --group
 <p width="100%">
     <img src="image/zh-books.png" alt="中文书籍分类" style="width: 50%; min-width: 200px;"><img src="image/code-lang-type.png" alt="代码语言" style="width: 50%; min-width: 200px;">
 </p>
+</details>
 
 ### Supervised Fine-tuning Datasets
 
-#### Data collection
-- We collect SFT data as follows:
-  a. self-instruct
-  b. human-labeling
-  c. open-source data cleaning
+<details> 
+<summary><b>Data Collection</b></summary>
 
-#### Data cleaning
-We clean and filter data as follows:
-- rule-based and keyword-based ways to filter low quality and unsafe contents.
-- deduplicate
+The data collection strategy used for fine-tuning the model involves the following:
 
-#### Datasets to open source
-- 1200K Instruction-following dataset (download it from huggingface)
+a. Summarize 10 categories and 120 sub-tasks based on the natural distribution of user instructions, including tasks such as factual questioning, open-ended creation, syntax analysis, and code editing.
+
+b. Self-instruct: Refer to the Alpaca self-instruct method to expand the seed tasks in both Chinese and English, adding some culturally-specific questions. Based on this, generate 2 million Chinese (0.5 million open-sourced) and 0.1 million English (50k open-sourced) tasks.
+
+c. Human-labeling: Organize and process question-answer datasets based on human writing and answer collection, as well as web searches. Identify the [self-developed] subset in the open source list, and release some data for this subset.
+
+d. Open-source data cleaning: Clean data based on various public datasets, including [self-developed *] datasets that are developed based on secondary development of raw data and [open-source] datasets that typically contain relatively organized question-answer pairs for simple cleaning.
+
+e. The overall distribution of data aligns with the natural distribution of user instructions.
+
+</details>
+<details> 
+<summary><b>Data Cleaning</b></summary>
+- Due to differences in data quality and the issues with the Alpaca Self-Instruct method, we conducted comprehensive manual review and classification to develop a comprehensive and systematic data cleaning ruleset.
+- The overall rules are divided into two categories: **filtering rules** and **cleaning rules**. Data items that meet filtering rules will be discarded, while cleaning rules are designed to handle and retain desired data.
+- Additionally, during the process of data organization and accumulation, we continuously iterate and optimize the cleaning rules.
+- General cleaning rules are described as follows:
+
+a. Filtering - sensitive words rule: Based on an accumulated sensitive word library, remove sensitive words related to politics, pornography, violence, terrorism, etc. from the dataset;
+
+b. Filtering - invalid input/output rule: This rule mainly focuses on removing specific issues related to the Alpaca Self-Instruct method. Separate rules are established for inputs and outputs to filter out invalid items; for example, invalid inputs include "<a text>" and invalid outputs include "[image]".
+
+c. Cleaning - keyword rules: Replace data based on a compiled list of keywords or regular expressions, including removing special characters, non-visible characters, tags, converting between traditional and simplified Chinese characters, etc.;
+
+d. Cleaning - special logic rules: These rules are used to clean specific issues in the dataset such as duplicate instructions and input/output pairs as follows:
+
+> {"instruction": "Describe how to make a red-cooked pork dish. Please provide the ingredients and detailed steps.", "input": "Please describe how to make a red-cooked pork dish and provide the ingredients and detailed steps.", ...}
+
+</details>
+
+<details> 
+<summary><b> Datasets to open source</b></summary>
+
+- Instruction dataset, currently with 1.2 million question-answer pairs open-sourced. Disk space required is 1.1G. (The dataset is available on Hugging Face, with Chinese and English instructions and download links provided in the table below.)
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_zh>Chinese - Fine-tuning Instruction Set - Collection - 530,000 items - Download [Hugging Face]</a>
+- <a href=https://huggingface.co/datasets/TigerResearch/sft_en>English - Fine-tuning Instruction Set - Collection - 670,000 items - Download [Hugging Face]</a>
 
   | Type         | Language | Dataset                                                                                                                           | Number | Source |
   |--| ---- |--------|----| ------ |
@@ -387,9 +508,15 @@ We clean and filter data as follows:
   | youtube-howto | en | [tigerbot-youtube-howto-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-youtube-howto-en-50k)                     | 50K     | Public |
   | **Total**     |  |                                                                                                                                  | **1200K** |
 
+> More datasets are being organized and released continuously...
+
+</details>
 
 ### Domain-specific Data
-- Domain-specific Data for Plugins
+<details>
+<summary><b>Details</b></summary>
+
+Open up data related to finance, law, and encyclopedia fields as external data sources for rethink
 
   | Type                                                                                       | Number        |
   |-----------------------------------------------------------------------------------------|-------------------|
@@ -398,34 +525,12 @@ We clean and filter data as follows:
   | [Law](https://huggingface.co/datasets/TigerResearch/tigerbot-law-plugin)                    | 550K |
   | [Wiki](https://huggingface.co/datasets/TigerResearch/tigerbot-wiki-plugin)                   | 100K     |
 
-## Evaluation
-
-Evaluation result of V2 version SFT model
-
-![image](image/evaluation_sft_v2.jpg)
-
-Evaluation result of V2 version base model
-
-![image](image/evaluation_base_v2.jpg)
-
-<details>
-Evaluation result of V1 version SFT and and base model
-
-We evaluate our SFT models on seven public NLP datasets, and compare these with OpenAI-InstructGPT. 
-Results against OpenAI-InstructGPT-6B-SFT.
-
-![image](image/auto-valuation-1.png)
-
-We evaluate our Pretrained models on seven public NLP datasets.
-Results against bloom-7b1.
-
-![image](image/auto-valuation-2.png)
-
 </details>
 
 ## API
 
 <details>
+<summary><b>Details</b></summary>
 
 ### [chat](https://www.tigerbot.com/api-reference/chat)
 
@@ -512,9 +617,18 @@ https://www.tigerbot.com
 
 <img src="image/qiyewechat.png" alt="Tiger" style="width: 260px;  "></a>
 
-## Limitations and Disclaimers
+</details>
+
+<details>
+<summary><b>Acknowledgments</b></summary>
+- [Bloom](https://arxiv.org/abs/2211.05100): We based our training on the Bloom architecture.
+- [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): We referenced the model quantization code from this project.
+</details>
+
+<details><summary><b>Limitations and Disclaimers</b></summary>
 Current models may contain hallucinatory, misleading, or discriminatory content. 
 Please use the content generated by TigerBot series models with caution, and do not spread the generated harmful content.
 
 The project developer is not responsible for any harm or loss caused by the use of this project 
 (including but not limited to data, models, codes, etc.).
+</details>
