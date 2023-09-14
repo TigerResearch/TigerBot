@@ -359,6 +359,18 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_
 `MODEL_PATH` is the path of the quantized model, such as `TigerResearch/tigerbot-13b-chat-4bit`.
 
 
+Please use the following quantization method to upgrade packages such as transformers and bitsandbytes to the latest version. (Currently, transformers==4.33.1 and bitsandbytes==0.41.1 can be used normally.)
+
+```
+pip install -U transformers bitsandbytes
+```
+
+If you encounter issues such as failed compilation when installing libraries such as autogptq, you can try the following code:
+
+```
+SETUPTOOLS_USE_DISTUTILS=stdlib pip install -v .
+```
+
 ## Evaluation
 
 We use classic benchmarks for automatic evaluation on 13 tasks, covering code, common-sense reasoning, reading comprehension, math, and natural language understanding. We build an automatic evaluation system based on opencompass (thank for @opencompass)

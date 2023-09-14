@@ -360,6 +360,17 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_
 ```
 `MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-4bit`
 
+使用以上量化方式，请将transformers、bitsandbytes等包升级到最新版（目前transformers==4.33.1和bitsandbytes==0.41.1可以正常使用）
+
+```
+pip install -U transformers bitsandbytes
+```
+
+如果遇到安装autogptq等库编译失败等问题，可以尝试以下代码
+
+```
+SETUPTOOLS_USE_DISTUTILS=stdlib  pip install -v .
+```
 
 ## 测评
 
