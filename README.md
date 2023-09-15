@@ -27,11 +27,11 @@
 
 ## 最新发布
 
-- [9/06/2023] Tigerbot-70b-chat(v2)和Tigerbot-13b-chat(v3)更新发布: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
+- [9/15/2023] Tigerbot-70b-chat(v2)和Tigerbot-13b-chat(v3)更新发布: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 
 	- 用更少但更高质量的数据，约5M指令完成数据，覆盖100+任务类型，符合自然用户分布；
-	- 用10K人类标注数据进行多维度对齐，包括：事实性，创造性，安全性和格式；
-	- 在10+项基准评测中，英文综合能力均超过上一版本和Llama-2，达到SOTA.
+	- 用10K人类标注数据进行多维度对齐，包括：事实性，创造性，丰富性，安全性和格式等；
+	- 在10+项基准评测中，中英文综合能力均超过上一版本和Llama-2，达到SOTA.
 	
 	![image](image/eval_chat_0915.png)
 	
