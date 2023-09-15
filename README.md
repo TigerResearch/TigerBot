@@ -33,6 +33,7 @@
 	- 用10K人类标注数据进行多维度对齐，包括：事实性，创造性，安全性和格式；
 	- 在10+项基准评测中，英文综合能力均超过上一版本和Llama-2，达到SOTA.
 	![image](image/eval_chat_0915.png)
+	![image](image/70b-chat-example.jpg)
 	
 - [9/06/2023] Tigerbot-70b发布，继续开源和免费商用: [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E2%80%9070B%E5%8F%91%E5%B8%83%EF%BC%81)][[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
 
