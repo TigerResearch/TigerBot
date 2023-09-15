@@ -391,17 +391,16 @@ CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs
 
 总分为各类任务的平均分，每类任务包括英文或者中文任务。各类任务得分参考 [模型测评细分项](#模型测评细分项)
 
-base模型测评结果
-
-![image](image/eval_base.jpg)
-
-
 chat模型测评结果
 
-![image](image/eval_chat.jpg)
+![image](image/eval_chat_0915.png)
+
+base模型测评结果
+
+![image](image/eval_base_0915.png)
 
 <details> 
-<summary><b>模型测评细分项</b></summary>
+<summary><b>模型历史版本测评</b></summary>
 base模型测评结果
 
 ![image](image/eval_base_detail.jpg)
