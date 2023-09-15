@@ -161,7 +161,8 @@ pip install -r requirements.txt
 | tigerbot-70b-chat-4bit | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v1|
 | tigerbot-13b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)] | llama-2      | 26.6           | From llama-2-13b weights  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
-| tigerbot-13b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+| tigerbot-13b-chat | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)] | llama-2      | 26.6           | From tigerbot-13b-chat v2 |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v2)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
 | tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)] | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
 | tigerbot-13b-chat-4bit | v2 [[huggingface](TigerResearch/tigerbot-13b-chat-4bit)] | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
