@@ -408,7 +408,7 @@ base模型测评结果
 
 chat模型测评结果
 
-![image](image/eval_chat_detail.jpg)
+![image](image/eval_chat_0915.png)
 
 </details>
 
