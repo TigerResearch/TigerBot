@@ -1,4 +1,5 @@
 import os
+import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
@@ -13,7 +14,6 @@ from transformers import (
     PreTrainedModel,
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
-import time
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -71,7 +71,7 @@ class ExllamaHF(PreTrainedModel):
         # Make the forward call
         if labels is None:
             if past_seq is None or not torch.equal(
-                    past_seq, seq_tensor[:-1]
+                past_seq, seq_tensor[:-1]
             ):
                 ex_cache.current_seq_len = 0
                 self.ex_model.forward(
@@ -121,15 +121,15 @@ class ExllamaHF(PreTrainedModel):
 
     @classmethod
     def from_pretrained(
-            cls,
-            pretrained_model_name_or_path: Optional[
-                Union[str, os.PathLike]
-            ],
-            *model_args,
-            **kwargs,
+        cls,
+        pretrained_model_name_or_path: Optional[
+            Union[str, os.PathLike]
+        ],
+        *model_args,
+        **kwargs,
     ):
         assert (
-                len(model_args) == 0 and len(kwargs) == 0
+            len(model_args) == 0 and len(kwargs) == 0
         ), "extra args is currently not supported"
         if isinstance(pretrained_model_name_or_path, str):
             pretrained_model_name_or_path = Path(
@@ -147,7 +147,7 @@ class ExllamaHF(PreTrainedModel):
                 weight_path = found[-1]
                 break
         assert (
-                weight_path is not None
+            weight_path is not None
         ), f'could not find weight in "{pretrained_model_name_or_path}"'
 
         config.model_path = str(weight_path)
@@ -176,13 +176,14 @@ def get_model(model):
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
     model = ExllamaHF.from_pretrained(model)
+    model.eval()
     return model
 
 
 def main(
-        model_path: str,
-        max_input_length: int = 512,
-        max_generate_length: int = 1024,
+    model_path: str,
+    max_input_length: int = 512,
+    max_generate_length: int = 1024,
 ):
     print(f"loading model: {model_path}...")
 
@@ -199,8 +200,8 @@ def main(
         truncation=True,
     )
     if (
-            tokenizer.model_max_length is None
-            or tokenizer.model_max_length > max_generate_length
+        tokenizer.model_max_length is None
+        or tokenizer.model_max_length > max_generate_length
     ):
         tokenizer.model_max_length = max_generate_length
 
@@ -251,7 +252,9 @@ def main(
 
         print("=" * 100)
         print(answer)
-        print(f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]")
+        print(
+            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
+        )
         print("=" * 100)
 
 

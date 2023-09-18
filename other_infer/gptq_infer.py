@@ -1,17 +1,17 @@
-import time
-import os
-import random
 import logging
-import fire
+import os
+import time
 
+import fire
 import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, GenerationConfig
-import time
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 tok_ins = "\n\n### Instruction:\n"
@@ -28,28 +28,40 @@ def get_model(model_name_or_path):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    quantize_config = BaseQuantizeConfig.from_pretrained(model_name_or_path)
-    model = AutoGPTQForCausalLM.from_quantized(model_name_or_path,
-                                               use_safetensors=True,
-                                               device_map='auto',
-                                               use_triton=False,
-                                               quantize_config=quantize_config)
+    quantize_config = BaseQuantizeConfig.from_pretrained(
+        model_name_or_path
+    )
+    model = AutoGPTQForCausalLM.from_quantized(
+        model_name_or_path,
+        use_safetensors=True,
+        device_map="auto",
+        use_triton=False,
+        inject_fused_attention=False,
+        quantize_config=quantize_config,
+    )
+    model.config.pretraining_tp = 1
+    model.eval()
     return model
 
 
-def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
-         max_input_length: int = 512,
-         max_generate_length: int = 1024):
+def main(
+    model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
+    max_input_length: int = 512,
+    max_generate_length: int = 1024,
+):
     model = get_model(model_name_or_path=model_path)
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
         model_max_length=max_generate_length,
         padding_side="left",
-        truncation_side='left',
+        truncation_side="left",
         padding=True,
-        truncation=True
+        truncation=True,
     )
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
+    if (
+        tokenizer.model_max_length is None
+        or tokenizer.model_max_length > max_generate_length
+    ):
         tokenizer.model_max_length = max_generate_length
     generation_config = GenerationConfig.from_pretrained(model_path)
 
@@ -61,24 +73,30 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
     sess_text = ""
     while True:
         raw_text = input(
-            "prompt(\"exit\" to end, \"clear\" to clear session) >>> ")
+            'prompt("exit" to end, "clear" to clear session) >>> '
+        )
         if not raw_text:
-            print('prompt should not be empty!')
+            print("prompt should not be empty!")
             continue
         if raw_text.strip() == "exit":
-            print('session ended.')
+            print("session ended.")
             break
         if raw_text.strip() == "clear":
-            print('session cleared.')
+            print("session cleared.")
             sess_text = ""
             continue
 
         query_text = raw_text.strip()
         sess_text += tok_ins + query_text
         input_text = prompt_input.format_map(
-            {'instruction': sess_text.split(tok_ins, 1)[1]})
+            {"instruction": sess_text.split(tok_ins, 1)[1]}
+        )
         inputs = tokenizer(
-            input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
+            input_text,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_input_length,
+        )
         inputs = {k: v.to(device) for k, v in inputs.items()}
         tic = time.perf_counter()
         output = model.generate(**inputs, **generation_config.to_dict())
@@ -86,7 +104,10 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
         res_time = toc - tic
         num_tok = output.shape[1]
         output_str = tokenizer.decode(
-            output[0], skip_special_tokens=False, spaces_between_special_tokens=False)
+            output[0],
+            skip_special_tokens=False,
+            spaces_between_special_tokens=False,
+        )
         answer = output_str.rsplit(tok_res, 1)[1].strip()
         if answer.endswith(tokenizer.eos_token):
             answer = answer.rsplit(tokenizer.eos_token, 1)[0].strip()
@@ -94,7 +115,9 @@ def main(model_path: str = "TigerResearch/tigerbot-13b-chat-8bit",
 
         print("=" * 100)
         print(answer)
-        print(f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]")
+        print(
+            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
+        )
         print("=" * 100)
 
 
