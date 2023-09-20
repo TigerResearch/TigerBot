@@ -10,8 +10,7 @@
 <font face="黑体" color=orange size=5"> 以世界级的基础大模型，贡献于中国式的创新。 </font>
 </p>
 <p align="center">
-   💻<a href="https://modelscope.cn/organization/TigerResearch" target="_blank">ModelScope</a> • 🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
-
+🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a> • 💻<a href="https://modelscope.cn/organization/TigerResearch" target="_blank">ModelScope</a>
 </p>
 <div align="center">
 
