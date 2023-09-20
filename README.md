@@ -1,7 +1,7 @@
 # TigerBot
 
 <p align="center" width="100%">
-<img src="image/logo_core.png" alt="Tiger" style="width: 20%; display: block; margin: auto;"></a>
+<img src="image/logo_core.png" alt="Tiger" style="width: 20%; display: block; margin: auto;"></img>
 </p>
 <p align="center">
 <font face="黑体" color=orange size=5"> A cutting-edge foundation for your very own LLM. </font>
@@ -10,7 +10,7 @@
 <font face="黑体" color=orange size=5"> 以世界级的基础大模型，贡献于中国式的创新。 </font>
 </p>
 <p align="center">
-   🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
+   💻<a href="https://modelscope.cn/organization/TigerResearch" target="_blank">ModelScope</a> • 🌐 <a href="https://tigerbot.com/" target="_blank">TigerBot</a> • 🤗 <a href="https://huggingface.co/TigerResearch" target="_blank">Hugging Face</a>
 
 </p>
 <div align="center">
@@ -165,29 +165,29 @@ pip install -r requirements.txt
 
 ## 模型下载
 
-| Model                  | Version                                                                            | Architecture | Disk size (GB) | Note                      |
-|------------------------|------------------------------------------------------------------------------------| ------------ | -------------- |---------------------------|
-| tigerbot-70b-base      | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)]         | llama-2      | 129           | From llama-2-70b weights  |
-| tigerbot-70b-chat      | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]         | llama-2      | 129           | From tigerbot-70b-base v1 |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)]      | llama-2      | 129           | From tigerbot-70b-base v1 |
-| tigerbot-70b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)]    | llama-2      | 37           | From tigerbot-70b-chat v2 |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)] | llama-2      | 37           | From tigerbot-70b-chat v1 |
-| tigerbot-13b-base      | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)]         | llama-2      | 26.6           | From llama-2-13b weights  |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)]      | llama-2      | 26.6           | From llama-2-13b weights  |
-| tigerbot-13b-chat      | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]         | llama-2      | 26.6           | From tigerbot-13b-chat v2 |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v2)]      | llama-2      | 26.6           | From tigerbot-13b-base v2 |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)]      | llama-2      | 26.6           | From tigerbot-13b-base v1 |
-| tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)]    | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
-| tigerbot-13b-chat-4bit | v2 [[huggingface](TigerResearch/tigerbot-13b-chat-4bit)]                           | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
-| tigerbot-7b-base       | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]          | llama-2      | 13.9           | From llama-2-7b weights   |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]       | bloom        | 16.2           | From bloom weights        |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]       | bloom        | 16.2           | From bloom weights        |
-| tigerbot-7b-chat       | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]          | llama-2      | 13.9           | From tigerbot-7b-base v3  |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]        | bloom        | 16.2           | From tigerbot-7b-base v2  |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]        | bloom        | 16.2           | From tigerbot-7b-base v1  |
-| tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)]     | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
-| tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)]     | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
-| tigerbot-180b-sft      | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)]    | bloom        | 347.6          | From bloom weights        |
+| Model             | Version                                                      | Architecture | Disk size (GB) | Note                      |
+| ----------------- | ------------------------------------------------------------ | ------------ | -------------- | ------------------------- |
+| tigerbot-70b-base | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)] | llama-2      | 129           | From llama-2-70b weights  |
+| tigerbot-70b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+| tigerbot-70b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v2|
+|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)] | llama-2      | 37           | From tigerbot-70b-chat v1|
+| tigerbot-13b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-base-v2/summary)] | llama-2      | 26.6           | From llama-2-13b weights  |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
+| tigerbot-13b-chat | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v3/summary)] | llama-2      | 26.6           | From tigerbot-13b-chat v2 |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v2)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
+| tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)] | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
+| tigerbot-13b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-4bit)] | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
+| tigerbot-7b-base  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-7b-base-v3/summary)] | llama-2      | 13.9           | From llama-2-7b weights   |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)] | bloom        | 16.2           | From bloom weights        |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)] | bloom        | 16.2           | From bloom weights        |
+| tigerbot-7b-chat  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-7b-chat-v3/summary)] | llama-2      | 13.9           | From tigerbot-7b-base v3  |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)] | bloom        | 16.2           | From tigerbot-7b-base v2  |
+|                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)] | bloom        | 16.2           | From tigerbot-7b-base v1  |
+| tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
+| tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
+| tigerbot-180b-sft | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)] | bloom        | 347.6          | From bloom weights        |
 
 ## 训练和推理
 
