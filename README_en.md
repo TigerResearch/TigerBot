@@ -125,7 +125,7 @@ We pretrained and supervised fine-tuned our models, starting from a vanilla BLOO
 
 - A stronger yet more elegant supervised learning algorithms to achieve higher learnability in supervised fine-tuning.
 - We implemented a probabilistic modeling and ensemble approach to achieve better factuality and generativeness.
-- We improved the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu enviroment with zero downtime.
+- We improved the memory management and multi-node communication of distributed training with deepspeed. It guarantees months of training in a thousand-gpu environment with zero downtime.
 - We used a specialized tokenizer and supervised training algorithm better suited for otherwise more skewed Chinese language distribution.
 
 
