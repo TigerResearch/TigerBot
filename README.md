@@ -32,7 +32,7 @@
 	- 用10K人类标注数据进行多维度对齐，包括：事实性，创造性，丰富性，安全性和格式等；
 	- 在10+项基准评测中，中英文综合能力均超过上一版本和Llama-2，达到SOTA.
 	
-	![image](image/eval_chat_0915.png)
+	![image](image/eval_chat_0923.png)
 	
 	<p align="center" width="100%">
   		<img src="image/70b-chat-example.jpg" alt="tigerbot-70b-chat example" style="width: 80%; display: block; margin: auto;">
@@ -405,7 +405,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs
 
 chat模型测评结果
 
-![image](image/eval_chat_0915.png)
+![image](image/eval_chat_0923.png)
 
 base模型测评结果
 
@@ -420,7 +420,7 @@ base模型测评结果
 
 chat模型测评结果
 
-![image](image/eval_chat_0915.png)
+![image](image/eval_chat_0923.png)
 
 </details>
 
