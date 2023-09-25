@@ -167,7 +167,8 @@ pip install -r requirements.txt
 | Model             | Version                                                      | Architecture | Disk size (GB) | Note                      |
 | ----------------- | ------------------------------------------------------------ | ------------ | -------------- | ------------------------- |
 | tigerbot-70b-base | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-base-v1/summary)] | llama-2      | 129           | From llama-2-70b weights  |
-| tigerbot-70b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+| tigerbot-70b-chat | v3 [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v3/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+|                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)] | llama-2      | 129           | From tigerbot-70b-base v1  |
 | tigerbot-70b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v2|
 |                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)] | llama-2      | 37           | From tigerbot-70b-chat v1|
@@ -188,7 +189,6 @@ pip install -r requirements.txt
 | tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
 | tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
 | tigerbot-180b-sft | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)] | bloom        | 347.6          | From bloom weights        |
-
 ## 训练和推理
 
 ### 预训练
