@@ -33,7 +33,6 @@
 	- 在10+项基准评测中，综合能力均超过上一版本和Llama-2，达到SOTA.
 	
 	![image](image/eval_chat_0925.png)
-	![image](image/loss-70b-chat-v3.jpg)
 	<p align="center" width="100%">
   		<img src="image/loss-70b-chat-v3.jpg" alt="tigerbot-70b-chat-v3 train loss" style="width: 40%; display: block; margin: auto;"></a>
    		<img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;"></a>
