@@ -28,12 +28,16 @@
 
 - [9/26/2023] Tigerbot-70b-chat(v3)和Tigerbot-13b-chat(v4)更新发布: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 
-	- smaller batch for finer-grained gradient updates, global_batch_size=66 (pretrain_gbs=1920, v2_gbs=240). 我们认为，在高质量数据的前提下，对齐微调的gbs可以到~100K tokens, 更dense的updates和更充分的steps，导致更低的loss（如下图）。
+	- smaller batch for finer-grained gradient updates, global_batch_size=66 (pretrain_gbs=1920, v2_gbs=240). 我们认为，在高质量数据的前提下，对齐微调的gbs可以到~100K tokens, 更dense的updates和更充分的steps，导致更低的loss（如下图train and validation loss）。
 	- 增加了高质量对其数据，更好的多样性、丰富度和格式；根据前期用户反馈，去除了原对齐数据中的一些已知脏数据和不符合自然用户习惯的prompts数据；
 	- 在10+项基准评测中，综合能力均超过上一版本和Llama-2，达到SOTA.
 	
 	![image](image/eval_chat_0925.png)
 	![image](image/loss-70b-chat-v3.jpg)
+	<p align="center" width="100%">
+  		<img src="image/loss-70b-chat-v3.jpg" alt="tigerbot-70b-chat-v3 train loss" style="width: 40%; display: block; margin: auto;"></a>
+   		<img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;"></a>
+	</p>
 
 - [9/15/2023] Tigerbot-70b-chat(v2)和Tigerbot-13b-chat(v3)更新发布: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 
