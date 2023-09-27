@@ -26,6 +26,8 @@
 
 ## 最新发布
 
+- [9/27/2023] Tigerbot-70b-chat-api发布function calling功能: [[tech report](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E5%BC%80%E6%94%BE%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%83%BD%E5%8A%9B%EF%BC%8C%E6%89%93%E5%BC%80agent%E7%9A%84%E6%97%A0%E9%99%90%E5%8F%AF%E8%83%BD)][[tigerbot-api](https://www.tigerbot.com/api-reference/chat)
+
 - [9/26/2023] Tigerbot-70b-chat(v3)和Tigerbot-13b-chat(v4)更新发布: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 
 	- smaller batch for finer-grained gradient updates, global_batch_size=66 (pretrain_gbs=1920, v2_gbs=240). 我们认为，在高质量数据的前提下，对齐微调的gbs可以到~100K tokens, 更dense的updates和更充分的steps，导致更低的loss（如下图train and validation loss）。
