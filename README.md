@@ -186,7 +186,8 @@ pip install -r requirements.txt
 | tigerbot-70b-chat | v3 [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v3/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
 |                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)] | llama-2      | 129           | From tigerbot-70b-base v1  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)] | llama-2      | 129           | From tigerbot-70b-base v1  |
-| tigerbot-70b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit)] | llama-2      | 37           | From tigerbot-70b-chat v2|
+| tigerbot-70b-chat-4bit | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-exl2)] | llama-2      | 37           | From tigerbot-70b-chat v3|
+|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v2)] | llama-2      | 37           | From tigerbot-70b-chat v2|
 |                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)] | llama-2      | 37           | From tigerbot-70b-chat v1|
 | tigerbot-13b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-base-v2/summary)] | llama-2      | 26.6           | From llama-2-13b weights  |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)] | llama-2      | 26.6           | From llama-2-13b weights  |
@@ -194,8 +195,7 @@ pip install -r requirements.txt
 |                   | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v3)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v3/summary)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
 |                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v2)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
-| tigerbot-13b-chat-8bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-8bit)] | llama-2      | 18.5           | From tigerbot-13b-chat v2 |
-| tigerbot-13b-chat-4bit | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-4bit)] | llama-2      | 11.5           | From tigerbot-13b-chat v2 |
+| tigerbot-13b-chat-4bit | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-4bit-exl2)] | llama-2      | 11.5           | From tigerbot-13b-chat v4 |
 | tigerbot-7b-base  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-7b-base-v3/summary)] | llama-2      | 13.9           | From llama-2-7b weights   |
 |                   | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)] | bloom        | 16.2           | From bloom weights        |
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)] | bloom        | 16.2           | From bloom weights        |
@@ -360,35 +360,19 @@ python ./apps/web_api_demo.py
 ```
 
 ### 量化
-ev
-#### 动态量化模型加载
-此方式为在线量化与推理
-```
-CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
-```
 
-#### AutoGPTQ量化
-动态量化准确率会低于使用gptq等量化好的模型，我们使用[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)实现量化：
+#### exllamav2量化推理
+使用[exllamav2](https://github.com/turboderp/exllamav2a)加载[TigerResearch/tigerbot-70b-chat-4bit-exl2]进行推理，推理速度加快
 ```
-# 安装auto-gptq
-pip install auto-gptq
-
-# 启动推理
-CUDA_VISIBLE_DEVICES=0 python other_infer/gptq_infer.py --model_path ${MODEL_PATH}
-```
-
-`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-8bit`
-
-#### exllama量化推理
-使用[exllama](https://github.com/turboderp/exllama)加载[TigerResearch/tigerbot-13b-chat-4bit]进行推理，推理速度加快
-```
-# 安装exllama_lib
-pip install exllama_lib@git+https://github.com/taprosoft/exllama.git
+# 安装exllamav2
+git clone https://github.com/turboderp/exllamav2
+cd exllamav2
+pip install -r requirements.txt
 
 #  启动推理
-CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_PATH}
+CUDA_VISIBLE_DEVICES=0 python other_infer/exllamav2_hf_infer.py --model_path ${MODEL_PATH}
 ```
-`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-13b-chat-4bit`
+`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-70b-chat-4bit-exl2`
 
 使用以上量化方式，请将transformers、bitsandbytes等包升级到最新版（目前transformers==4.33.1和bitsandbytes==0.41.1可以正常使用）
 
@@ -396,10 +380,10 @@ CUDA_VISIBLE_DEVICES=0 python other_infer/exllama_infer.py --model_path ${MODEL_
 pip install -U transformers bitsandbytes
 ```
 
-如果遇到安装autogptq等库编译失败等问题，可以尝试以下代码
-
+#### 动态量化模型加载
+此方式为在线量化与推理
 ```
-SETUPTOOLS_USE_DISTUTILS=stdlib  pip install -v .
+CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
 ```
 
 ## 测评
