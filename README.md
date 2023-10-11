@@ -138,23 +138,6 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 - [6/09/2023] 新增 stream infer 和 web demo，感谢 @Tlntin ！
 - [6/08/2023] TigerBot 已经可以在[colab, windows, langchain 和 webui](#开发者生态)上跑啦，感谢 @wordweb @runfuture !
 
-## 摘要
-
-TigerBot 是一个多语言多任务的大规模语言模型(LLM)。根据 OpenAI InstructGPT 论文在公开 NLP 数据集上的自动评测，TigerBot-7B 达到 OpenAI 同样大小模型的综合表现的 96%，并且这只是我们的 MVP，在此我们将如下探索成果开源：
-
-- 模型：TigerBot-7B, TigerBot-7B-base，TigerBot-180B (research version)，
-- 代码：基本训练和推理代码，包括双卡推理 180B 模型的量化和推理代码，
-- 数据：预训练 100G，从 2TB 过滤后的数据中经过去噪去重清洗而得；监督微调 1G 或 100 万条数据，按比例涵盖用户指令常见的 10 大类 120 小类任务，
-- API: chat, plugin, finetune, 让用户能在半小时内无代码的训练和使用专属于自己的大模型和数据，
-- 领域数据：涵盖金融，法律，百科，广邀大模型应用开发者，一起打造中国的世界级的应用。
-
-我们在 BLOOM 基础上，在模型架构和算法上做了如下优化：
-
-- 指令完成监督微调的创新算法以获得更好的可学习型(learnability)，
-- 运用 ensemble 和 probabilistic modeling 的方法实现更可控的事实性(factuality)和创造性(generativeness)，
-- 在并行训练上，我们突破了 deep-speed 等主流框架中若干内存和通信问题，使得在千卡环境下数月无间断，
-- 对中文语言的更不规则的分布，从 tokenizer 到训练算法上做了更适合的算法优化。
-
 ## 目录
 
 - [环境安装](#环境安装)
@@ -259,8 +242,6 @@ deepspeed \
 
 ### 微调
 
-启动`tigerbot-7b`训练至少需要 1 x A100 (40GB), 启动`tigerbot-180b`至少需要 16 x A100 (40GB)
-
 #### 启动训练
 
 ```
@@ -300,8 +281,6 @@ deepspeed \
 
 #### 单卡推理
 
-`tigerbot-7b-sft` 推理可在 1 张 RTX3090 上进行, `tigerbot-7b-sft-4bit-128g`量化版本模型需要参照[量化](###量化)模块的推理代码。
-
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path ${MODEL_DIR}
 ```
@@ -317,17 +296,15 @@ CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_stream.py --model_path ${MODEL
 ```
 CUDA_VISIBLE_DEVICES=0 python ./apps/web_demo.py
 ```
-
-`tigerbot-7b-base` 则用续写（非问答）的推理代码。
+ 
+base model则用续写（非问答）的推理代码。
 
 ```
 CUDA_VISIBLE_DEVICES=0 python ./other_infer/infer_pretrain.py --model_path ${PRETRAIN_MODEL_DIR}
 ```
 
 #### 多卡推理
-
-`tigerbot-180b-sft` 推理可在 5 张 A100(80G)上进行
-
+单卡显存不够时，可使用多卡推理。模型所占用显存可参考模型列表
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3,4 python infer.py --model_path ${MODEL_DIR}
 ```
@@ -402,7 +379,7 @@ unzip OpenCompassData.zip
 CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base --max-partition-size 30000
 ```
 
-总分为各类任务的平均分，每类任务包括英文或者中文任务。各类任务得分参考 [模型测评细分项](#模型测评细分项)
+总分为各类任务的平均分
 
 chat模型测评结果
 
@@ -412,31 +389,6 @@ base模型测评结果
 
 ![image](image/eval_base_0915.png)
 
-<details> 
-<summary><b>模型历史版本测评</b></summary>
-base模型测评结果
-
-![image](image/eval_base_detail.jpg)
-
-
-chat模型测评结果
-
-![image](image/eval_chat_0925.png)
-
-</details>
-
-<details>
-<summary><b>V1版SFT和base模型测评结果</b></summary>
-
-在 7 项英文 NLP 任务上，对 SFT 模型进行测评，以 OpenAI-InstructGPT-6B-SFT 为基准，归一化并平均各模型的得分，结果如下：
-
-![image](image/auto-valuation-1.png)
-
-在 7 项英文 NLP 任务和 4 项中文 NLP 任务上，对 Pretrain 模型进行测评，以 bloom-7b1 为基准，归一化并平均各模型的得分，结果如下：
-
-![image](image/auto-valuation-2.png)
-
-</details>
 
 ## 开源数据集
 
@@ -647,14 +599,8 @@ https://www.tigerbot.com
 
 </details>
 
-<details><summary><b>致谢</b></summary>
-- [Bloom](https://arxiv.org/abs/2211.05100): 我们基于 Bloom 架构进行训练
-- [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa): 模型量化代码参考来自于该项目
-</details>
-
 <details><summary><b>局限性与免责声明</b></summary>
 当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用 TigerBot 系列模型生成的内容，请勿将生成的有害内容进行传播。
-
 如需将模型公开使用或者商用，模型服务所产生的不良影响或者有害言论由服务方负责，本项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
 
 </details>
