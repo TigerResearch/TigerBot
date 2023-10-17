@@ -1,11 +1,10 @@
 import os
-import readline
 
 import fire
 import torch
+import transformers
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
-
-print(readline)
+from utils import compared_version
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -24,13 +23,13 @@ def main(
     if model_type.lower() not in ['chat', 'base']:
         raise ValueError(f"model_type must be one of ['chat', 'base'], got {model_type}")
     if use_flash_attn:
-        from flash_attention import replace_attn_with_flash_attn
-        replace_attn_with_flash_attn()
+        assert compared_version(transformers.__version__, '4.34.0'), 'Please update transformers version >= 4.34.0'
+        print(f"loading model: {model_path}...")
+        model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto', use_flash_attention_2=True)
         print("using flash attention...")
-
-    print(f"loading model: {model_path}...")
-
-    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
+    else:
+        print(f"loading model: {model_path}...")
+        model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
 
     generation_config = GenerationConfig.from_pretrained(model_path)
     generation_config.max_length = max_generate_length
