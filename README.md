@@ -26,6 +26,13 @@
 
 ## 最新发布
 
+- [10/19/2023] Long(16k)-Tigerbot 发布
+
+	- Tigerbot-13/70B web/api接口支持16k-token长度（约为20k字符，或20页的pdf或word文档，paper类的可直接作为context输入）。
+	- 基于[YaRN](https://arxiv.org/pdf/2309.00071.pdf)方法，推理时对RoPE表示进行“高频维度不变，低频维度插值”的方式外推，以达到处理长序列的目的。
+	- Tigerbot优化了TGI框架，为每个请求根据输入序列长度与最大生成序列长度单独计算cos/sin值，同时保证总长度不大于2048时的效果不变，因此API用户需要选择一个更合适的max_new_token参数，并且不同的max_new_token参数可能会导致不同的结果。
+	- Tigerbot后续将会在训练阶段继续优化对长序列的支持。
+
 - [9/27/2023] Tigerbot-70b-chat-api发布function calling功能: [[tech report](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E5%BC%80%E6%94%BE%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%83%BD%E5%8A%9B%EF%BC%8C%E6%89%93%E5%BC%80agent%E7%9A%84%E6%97%A0%E9%99%90%E5%8F%AF%E8%83%BD)][[tigerbot-api](https://www.tigerbot.com/api-reference/chat)]
 
 	- {user prompt, functions def} --> TigerBot --> 3rd party API --> TigerBot --> natural answers with accurate results.
