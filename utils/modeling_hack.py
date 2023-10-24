@@ -1,7 +1,10 @@
 import math
+from typing import Optional, Tuple
+
 import torch
+import transformers
 from transformers.models.llama.modeling_llama import LlamaAttention, LlamaLinearScalingRotaryEmbedding, \
-    LlamaDynamicNTKScalingRotaryEmbedding, LlamaRotaryEmbedding
+    LlamaRotaryEmbedding
 
 
 # Copied from
@@ -12,6 +15,9 @@ class LlamaYaRNRotaryEmbedding(LlamaRotaryEmbedding):
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0, attn_factor=1.):
         self.scaling_factor = scaling_factor
         self.attn_factor = attn_factor
+        self.beta_fast = 32
+        self.beta_slow = 1
+        self.extrapolation_factor = 1
         self.max_seq_len_cached = 0
         super().__init__(dim, max_position_embeddings, base, device)
 
@@ -76,6 +82,32 @@ class LlamaYaRNRotaryEmbedding(LlamaRotaryEmbedding):
                                  persistent=False)
 
 
+class LlamaDynamicNTKScalingRotaryEmbedding(LlamaRotaryEmbedding):
+    """LlamaRotaryEmbedding extended with Dynamic NTK scaling. Credits to the Reddit users /u/bloc97 and /u/emozilla"""
+
+    def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0):
+        self.scaling_factor = scaling_factor
+        super().__init__(dim, max_position_embeddings, base, device)
+
+    def _set_cos_sin_cache(self, seq_len, device, dtype):
+        self.max_seq_len_cached = seq_len
+
+        if seq_len > self.max_position_embeddings:
+            base = self.base * (
+                    (self.scaling_factor * seq_len / self.max_position_embeddings) - (self.scaling_factor - 1)
+            ) ** (self.dim / (self.dim - 2))
+            inv_freq = 1.0 / (base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
+            self.register_buffer("inv_freq", inv_freq, persistent=False)
+
+        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
+
+        freqs = torch.einsum("i,j->ij", t, self.inv_freq)
+        # Different from paper, but it uses a different permutation in order to obtain the same calculation
+        emb = torch.cat((freqs, freqs), dim=-1)
+        self.register_buffer("cos_cached", emb.cos().to(dtype), persistent=False)
+        self.register_buffer("sin_cached", emb.sin().to(dtype), persistent=False)
+
+
 # hack llama attention init rope
 
 def _init_rope(self):
@@ -114,3 +146,27 @@ def _init_rope(self):
 
 
 LlamaAttention._init_rope = _init_rope
+
+
+def get_model(model_path: str, rope_scaling: Optional[str] = None, rope_factor: float = 8.0, ) -> Tuple[
+    transformers.AutoModelForCausalLM, transformers.AutoTokenizer, transformers.GenerationConfig]:
+    if rope_scaling is None:
+        rope_config = None
+    else:
+        rope_config = {"type": rope_scaling, "factor": rope_factor}
+
+    print(f"Loading model from {model_path}...")
+    model = transformers.AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto',
+                                                              rope_scaling=rope_config)
+    print(model.model.layers[0].self_attn.rotary_emb)
+    print("Done")
+
+    print(f"Loading tokenizer from {model_path}...")
+    tokenizer = transformers.AutoTokenizer.from_pretrained(model_path)
+    print("Done")
+
+    print(f"Loading generation config from {model_path}...")
+    generation_config = transformers.GenerationConfig.from_pretrained(model_path)
+    print("Done")
+
+    return model, tokenizer, generation_config

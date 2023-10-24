@@ -6,7 +6,7 @@ import torch
 import transformers
 import readline
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
-from utils import modeling_hack
+from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -14,30 +14,6 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 tok_ins = "\n\n### Instruction:\n"
 tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
-
-
-def get_model(model_path: str, rope_scaling: Optional[str] = None, rope_factor: float = 8.0, ) -> Tuple[
-    transformers.AutoModelForCausalLM, transformers.AutoTokenizer, transformers.GenerationConfig]:
-    if rope_scaling is None:
-        rope_config = None
-    else:
-        rope_config = {"type": rope_scaling, "factor": rope_factor}
-
-    print(f"Loading model from {model_path}...")
-    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto',
-                                                 rope_scaling=rope_config)
-    print(model.model.layers[0].self_attn.rotary_emb)
-    print("Done")
-
-    print(f"Loading tokenizer from {model_path}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-    print("Done")
-
-    print(f"Loading generation config from {model_path}...")
-    generation_config = GenerationConfig.from_pretrained(model_path)
-    print("Done")
-
-    return model, tokenizer, generation_config
 
 
 def main(
