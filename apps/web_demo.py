@@ -13,6 +13,7 @@ def cached_get_model(model_path='/data1/cong.fu/models/hf/tigerbot-13b-chat-v4',
 
 model, tokenizer, generation_config = cached_get_model()
 
+generation_config.do_sample = False
 generation_config.max_length = 16384
 generation_config.max_new_tokens = 1024
 

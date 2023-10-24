@@ -25,6 +25,7 @@ def main(
         rope_factor: float = 8.0,
         streaming: bool = True
 ):
+    assert transformers.__version__.startswith('4.34')
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
     assert rope_scaling in [None, 'yarn',
                             'dynamic'], f"rope_scaling must be one of [None, 'yarn', 'dynamic'], got {rope_scaling}"
