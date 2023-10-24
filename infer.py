@@ -7,6 +7,7 @@ import transformers
 import readline
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 from utils import modeling_hack
+from utils.streaming import generate_stream
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -15,8 +16,8 @@ tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
 
 
-def get_model(model_path: str, rope_scaling: Optional[str] = None, rope_factor: float = 8.0) -> \
-        Tuple[transformers.AutoModelForCausalLM, transformers.AutoTokenizer, transformers.GenerationConfig]:
+def get_model(model_path: str, rope_scaling: Optional[str] = None, rope_factor: float = 8.0, ) -> Tuple[
+    transformers.AutoModelForCausalLM, transformers.AutoTokenizer, transformers.GenerationConfig]:
     if rope_scaling is None:
         rope_config = None
     else:
@@ -45,7 +46,8 @@ def main(
         max_generate_length: int = 1024,
         model_type: str = 'chat',
         rope_scaling: Optional[str] = None,
-        rope_factor: float = 8.0
+        rope_factor: float = 8.0,
+        streaming: bool = True
 ):
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
     assert rope_scaling in [None, 'yarn',
@@ -79,19 +81,16 @@ def main(
             input_text = query_text
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        print(input_text)
-        print(inputs['input_ids'].shape)
-        print(tokenizer.decode(inputs['input_ids'][0, :]))
-        output = model.generate(**inputs, **generation_config.to_dict())
-        answer = tokenizer.decode(output[0][inputs['input_ids'].shape[1]:], skip_special_tokens=False,
-                                  spaces_between_special_tokens=False)
-        if answer.endswith(tokenizer.eos_token):
-            answer = answer.rsplit(tokenizer.eos_token, 1)[0].strip()
 
-        sess_text += tok_res + answer
-
-        print("=" * 100)
-        print(answer)
+        print('=' * 100)
+        if streaming:
+            for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                        generation_config=generation_config):
+                print(text, end='', flush=True)
+        else:
+            output = model.generate(**inputs, **generation_config.to_dict())
+            print(tokenizer.decode(output[0][inputs['input_ids'].shape[1]:]))
+        print('')
         print("=" * 100)
 
 
