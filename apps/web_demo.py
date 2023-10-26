@@ -6,8 +6,7 @@ from TigerBot.utils.streaming import generate_stream
 
 
 @st.cache_resource
-def cached_get_model(model_path='/data1/cong.fu/models/hf/tigerbot-13b-chat-v4', rope_scaling='dynamic',
-                     rope_factor=8.0):
+def cached_get_model(model_path='/data1/cong.fu/models/hf/tigerbot-13b-chat-v4', rope_scaling='yarn', rope_factor=8.0):
     return get_model(model_path=model_path, rope_scaling=rope_scaling, rope_factor=rope_factor)
 
 
