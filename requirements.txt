@@ -8,14 +8,9 @@ torch>=2.0.0
 evaluate==0.4.0
 texttable==1.6.7
 toml==0.10.2
-numpy==1.18.5
+numpy>=1.22.0
 sentencepiece==0.1.98
 fire==0.5.0
 flash-attn==2.1.1
-gradio
-mdtex2html
-sse-starlette
-asyncio
-aiohttp_sse_client
-sseclient
-requests
+deepspeed==0.9.5
+streamlit==1.24.1

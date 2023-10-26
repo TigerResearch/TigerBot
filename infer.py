@@ -1,10 +1,13 @@
 import os
+from typing import Tuple, Optional
 
 import fire
 import torch
 import transformers
+import readline
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
-from utils import compared_version
+from utils.modeling_hack import get_model
+from utils.streaming import generate_stream
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -18,36 +21,21 @@ def main(
         max_input_length: int = 512,
         max_generate_length: int = 1024,
         model_type: str = 'chat',
-        use_flash_attn: bool = False
+        rope_scaling: Optional[str] = None,
+        rope_factor: float = 8.0,
+        streaming: bool = True
 ):
-    if model_type.lower() not in ['chat', 'base']:
-        raise ValueError(f"model_type must be one of ['chat', 'base'], got {model_type}")
-    if use_flash_attn:
-        assert compared_version(transformers.__version__, '4.34.0'), 'Please update transformers version >= 4.34.0'
-        print(f"loading model: {model_path}...")
-        model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto', use_flash_attention_2=True)
-        print("using flash attention...")
-    else:
-        print(f"loading model: {model_path}...")
-        model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.bfloat16, device_map='auto')
+    assert transformers.__version__.startswith('4.34')
+    assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
+    assert rope_scaling in [None, 'yarn',
+                            'dynamic'], f"rope_scaling must be one of [None, 'yarn', 'dynamic'], got {rope_scaling}"
 
-    generation_config = GenerationConfig.from_pretrained(model_path)
-    generation_config.max_length = max_generate_length
-    print(generation_config)
+    model, tokenizer, generation_config = get_model(model_path=model_path, rope_scaling=rope_scaling,
+                                                    rope_factor=rope_factor)
+    generation_config.max_new_tokens = max_generate_length
+    generation_config.max_length = max_input_length + max_generate_length
 
     device = torch.cuda.current_device()
-
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_path,
-        model_max_length=max_generate_length,
-        padding_side="left",
-        truncation_side='left',
-        padding=True,
-        truncation=True
-    )
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
-        tokenizer.model_max_length = max_generate_length
-
     sess_text = ""
     while True:
         raw_text = input("prompt(\"exit\" to end, \"clear\" to clear session) >>> ")
@@ -70,16 +58,16 @@ def main(
             input_text = query_text
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        output = model.generate(**inputs, **generation_config.to_dict())
-        answer = tokenizer.decode(output[0][inputs['input_ids'].shape[1]:], skip_special_tokens=False,
-                                  spaces_between_special_tokens=False)
-        if answer.endswith(tokenizer.eos_token):
-            answer = answer.rsplit(tokenizer.eos_token, 1)[0].strip()
 
-        sess_text += tok_res + answer
-
-        print("=" * 100)
-        print(answer)
+        print('=' * 100)
+        if streaming:
+            for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                        generation_config=generation_config):
+                print(text, end='', flush=True)
+        else:
+            output = model.generate(**inputs, **generation_config.to_dict())
+            print(tokenizer.decode(output[0][inputs['input_ids'].shape[1]:]))
+        print('')
         print("=" * 100)
 
 
