@@ -329,14 +329,13 @@ deepspeed \
 
 启动命令行模型推理命如下：
 
-#### 单卡推理
+#### 推理
 
 ```
 CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_input_length 1024 --max_generate_length 1024 --streaming True
 ```
 
 启动参数：
-
 - `--model_path`: 模型路径
 - `--model_type=chat`: base/chat
 - `--max_input_length=512`: 最大输入长度
@@ -345,7 +344,7 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_inpu
 - `--rope_factor=8.0`: 外推参数
 - `--streaming`: 流式输出
 
-如果要启用 web 界面进行问答，将`web_demo.py`第 9 行的 model_path 对应的模型路径改成你的模型所在路径即可，然后运行下面的命令启用
+如果要启用 web 界面进行问答，将`web_demo.py`第 9 行的 model_path 对应的模型路径改成你的模型所在路径，然后运行下面的命令启用
 web 界面。
 
 ```
