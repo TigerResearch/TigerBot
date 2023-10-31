@@ -244,50 +244,50 @@ def main(
             max_length=max_input_length,
         )
         tic = time.perf_counter()
-
-        if stream:
-            generation_kwargs["streamer"] = streamer
-            for k, v in inputs.items():
-                generation_kwargs[k] = v.to(device)
-            thread = Thread(
-                target=model.generate, kwargs=generation_kwargs
-            )
-            thread.start()
-            answer = ""
-            flag = False
-            print("=" * 100)
-            for new_text in streamer:
-                if new_text.endswith(tokenizer.eos_token):
-                    new_text = new_text.rsplit(tokenizer.eos_token, 1)[
+        with torch.inference_mode(mode=True):
+            if stream:
+                generation_kwargs["streamer"] = streamer
+                for k, v in inputs.items():
+                    generation_kwargs[k] = v.to(device)
+                thread = Thread(
+                    target=model.generate, kwargs=generation_kwargs
+                )
+                thread.start()
+                answer = ""
+                flag = False
+                print("=" * 100)
+                for new_text in streamer:
+                    if new_text.endswith(tokenizer.eos_token):
+                        new_text = new_text.rsplit(tokenizer.eos_token, 1)[
+                            0
+                        ].strip()
+                        flag = True
+                    print(new_text, end="")
+                    answer += new_text
+                    if flag:
+                        break
+                toc = time.perf_counter()
+                num_tok = len(tokenizer.encode(answer))
+            else:
+                if "streamer" in generation_kwargs:
+                    del generation_kwargs["streamer"]
+                inputs = {k: v.to(device) for k, v in inputs.items()}
+                output = model.generate(
+                    **inputs, **generation_config.to_dict()
+                )
+                toc = time.perf_counter()
+                num_tok = output.shape[1]
+                output_str = tokenizer.decode(
+                    output[0],
+                    skip_special_tokens=False,
+                    spaces_between_special_tokens=False,
+                )
+                answer = output_str.rsplit(tok_res, 1)[1].strip()
+                if answer.endswith(tokenizer.eos_token):
+                    answer = answer.rsplit(tokenizer.eos_token, 1)[
                         0
                     ].strip()
-                    flag = True
-                print(new_text, end="")
-                answer += new_text
-                if flag:
-                    break
-            toc = time.perf_counter()
-            num_tok = len(tokenizer.encode(answer))
-        else:
-            if "streamer" in generation_kwargs:
-                del generation_kwargs["streamer"]
-            inputs = {k: v.to(device) for k, v in inputs.items()}
-            output = model.generate(
-                **inputs, **generation_config.to_dict()
-            )
-            toc = time.perf_counter()
-            num_tok = output.shape[1]
-            output_str = tokenizer.decode(
-                output[0],
-                skip_special_tokens=False,
-                spaces_between_special_tokens=False,
-            )
-            answer = output_str.rsplit(tok_res, 1)[1].strip()
-            if answer.endswith(tokenizer.eos_token):
-                answer = answer.rsplit(tokenizer.eos_token, 1)[
-                    0
-                ].strip()
-            print(answer)
+                print(answer)
 
         sess_text += tok_res + answer
         res_time = toc - tic
