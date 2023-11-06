@@ -33,12 +33,11 @@
 	- Outperformed the previous version and Llama-2 in more than 10 benchmarks, achieving the current state-of-the-art results.
 
 	![image](image/eval_chat_0925.png)
+
   <div style="display: flex; justify-content: space-between;">
     <img src="image/loss-70b-chat-v3.jpg" alt="tigerbot-70b-chat-v3 train loss" style="width: 40%; display: block; margin: auto;">
     <img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;">
   </div>
-
-在这个代码中，我们使用了 `display: flex` 和 `justify-content: space-between` 来将两个图片并排放置，每个图片占据 40% 的宽度。
 
 - [9/15/2023] Tigerbot-70b-chat(v2) and Tigerbot-13b-chat(v3) updated: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 
