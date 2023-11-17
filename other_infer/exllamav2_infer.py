@@ -3,16 +3,17 @@ import sys
 import time
 
 import fire
-import torch
+from transformers import GenerationConfig
 from exllamav2 import (
     ExLlamaV2,
-    ExLlamaV2Cache,
     ExLlamaV2Config,
+    ExLlamaV2Cache,
     ExLlamaV2Tokenizer,
 )
+
 from exllamav2.generator import (
-    ExLlamaV2Sampler,
     ExLlamaV2StreamingGenerator,
+    ExLlamaV2Sampler
 )
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -23,47 +24,46 @@ prompt_input = tok_ins + "{instruction}" + tok_res
 
 def main(
     model_path: str,
-    max_length: int = 1024,
-    rope_scale: float = 1.0,
-    rope_alpha: float = 1.0,
-    no_flash_attn: bool = True,
     temperature: float = 0.3,
     repetition_penalty: float = 1.1,
-    gpu_split=None,
+    max_generate_length: int = 2048,
 ):
     # Create config
     config = ExLlamaV2Config()
     config.model_dir = model_path
     config.prepare()
 
-    # Set config options
-    config.max_seq_len = max_length
-    config.rope_scale = rope_scale
-    config.rope_alpha = rope_alpha
-    config.no_flash_attn = no_flash_attn
+    max_new_tokens = max_generate_length
 
     # Load model
     model = ExLlamaV2(config)
+    print("Loading model: " + model_path)
 
-    split = None
-    if gpu_split:
-        split = [float(alloc) for alloc in gpu_split.split(",")]
-    model.load(split)
+    cache = ExLlamaV2Cache(model, lazy = True)
+    model.load_autosplit(cache)
 
     # Load tokenizer
     tokenizer = ExLlamaV2Tokenizer(config)
+    # tokenizer.
 
-    # Create cache
-    cache = ExLlamaV2Cache(model)
+    # Initialize generator
+    generator = ExLlamaV2StreamingGenerator(model, cache, tokenizer)
+
+
+    # Settings
+    generation_config = GenerationConfig.from_pretrained(model_path)
+    settings = ExLlamaV2Sampler.Settings()
+    settings.temperature = generation_config.temperature
+    settings.token_repetition_penalty = generation_config.repetition_penalty
+
+    print([tokenizer.eos_token_id, tokenizer.pad_token_id])
+    settings.disallow_tokens(tokenizer, [tokenizer.eos_token_id, tokenizer.pad_token_id])
 
     # Generator
     generator = ExLlamaV2StreamingGenerator(model, cache, tokenizer)
     settings = ExLlamaV2Sampler.Settings()
     settings.temperature = temperature
     settings.token_repetition_penalty = repetition_penalty
-
-    # Stop conditions
-    generator.set_stop_conditions([tokenizer.eos_token_id])
 
     # Main loop
     sess_text = ""
@@ -90,52 +90,41 @@ def main(
             {"instruction": sess_text.split(tok_ins, 1)[1]}
         )
 
-        active_context = tokenizer.encode(input_text, add_bos=True)
-        generator.begin_stream(active_context, settings)
+        input_ids = tokenizer.encode(input_text, encode_special_tokens = True)
 
-        response_tokens = 0
-        response_text = ""
+        # Make sure CUDA is initialized so we can measure performance
+        generator.warmup()
 
         print("=" * 100)
         tic = time.perf_counter()
+
+        sys.stdout.flush()
+
+        generator.set_stop_conditions([60513, 60512, tokenizer.eos_token_id, tokenizer.pad_token_id])
+        generator.begin_stream(input_ids, settings)
+
+        # Streaming loop. Note that repeated calls to sys.stdout.flush() adds some latency, but some
+        # consoles won't update partial lines without it.
+        generated_tokens = 0
+
+        answer = ''
         while True:
-            # Get response stream
-            chunk, eos, tokens = generator.stream()
-            if len(response_text) == 0:
-                chunk = chunk.lstrip()
-            response_text += chunk
-            print(chunk, end="")
+            chunk, eos, _ = generator.stream()
+            generated_tokens += 1
+            answer += chunk
+            print (chunk, end = "")
             sys.stdout.flush()
-            response_tokens += 1
-
-            # If model has run out of space, rebuild the context and restart stream
-            # if generator.full():
-            #     generator.begin_stream(active_context, settings)
-
-            # EOS signal returned
-            if tok_ins in response_text:
-                response_text = response_text.split(tok_ins)[0]
-                print(response_text, end="")
-                sys.stdout.flush()
-                break
-
-            if tok_res in response_text:
-                response_text = response_text.split(tok_res)[0]
-                print(response_text, end="")
-                sys.stdout.flush()
-                break
-
-            if eos:
-                break
+            if eos or generated_tokens == max_new_tokens: break
 
         toc = time.perf_counter()
         res_time = toc - tic
         print(
-            f"\n[time: {res_time:0.4f} sec, speed: {response_tokens / res_time:0.4f} tok/sec]"
+            f"\n[time: {res_time:0.4f} sec, speed: {generated_tokens / res_time:0.4f} tok/sec]"
         )
         print("=" * 100)
-        sess_text += tok_res + response_text
+        sess_text += tok_res + answer
 
 
 if __name__ == "__main__":
     fire.Fire(main)
+

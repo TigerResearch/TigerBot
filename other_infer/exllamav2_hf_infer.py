@@ -178,16 +178,15 @@ def get_model(model):
     model.eval()
     return model
 
-
 def main(
     model_path: str,
     max_input_length: int = 512,
-    max_generate_length: int = 1024,
+    max_generate_length: int = 2048,
     stream: bool = True,
 ):
     print(f"loading model: {model_path}...")
 
-    model = get_model(model_path)
+    model = get_model(model_path)    
     device = torch.cuda.current_device()
 
     tokenizer = LlamaTokenizer.from_pretrained(
@@ -206,6 +205,7 @@ def main(
         tokenizer.model_max_length = max_generate_length
 
     generation_config = GenerationConfig.from_pretrained(model_path)
+    generation_config.max_new_tokens = max_generate_length
 
     sess_text = ""
 
@@ -216,41 +216,48 @@ def main(
         spaces_between_special_tokens=False,
     )
     generation_kwargs = generation_config.to_dict()
+    
 
-    while True:
-        raw_text = input(
-            'prompt("exit" to end, "clear" to clear session) >>> '
-        )
-        if not raw_text:
-            print("prompt should not be empty!")
-            continue
-        if raw_text.strip() == "exit":
-            print("session ended.")
-            break
-        if raw_text.strip() == "clear":
-            print("session cleared.")
-            sess_text = ""
-            continue
-
-        query_text = raw_text.strip()
-        sess_text += tok_ins + query_text
-        input_text = prompt_input.format_map(
-            {"instruction": sess_text.split(tok_ins, 1)[1]}
-        )
-        inputs = tokenizer(
-            input_text,
-            return_tensors="pt",
-            truncation=True,
-            max_length=max_input_length,
-        )
-        tic = time.perf_counter()
+    def eval_generate(**args):
         with torch.inference_mode(mode=True):
+            model.eval()
+            model.generate(**args)
+
+    with torch.inference_mode(mode=True):
+        model.eval()
+        while True:
+            raw_text = input(
+                'prompt("exit" to end, "clear" to clear session) >>> '
+            )
+            if not raw_text:
+                print("prompt should not be empty!")
+                continue
+            if raw_text.strip() == "exit":
+                print("session ended.")
+                break
+            if raw_text.strip() == "clear":
+                print("session cleared.")
+                sess_text = ""
+                continue
+
+            query_text = raw_text.strip()
+            sess_text += tok_ins + query_text
+            input_text = prompt_input.format_map(
+                {"instruction": sess_text.split(tok_ins, 1)[1]}
+            )
+            inputs = tokenizer(
+                input_text,
+                return_tensors="pt",
+                truncation=True,
+                max_length=max_input_length,
+            )
+            tic = time.perf_counter()
             if stream:
                 generation_kwargs["streamer"] = streamer
                 for k, v in inputs.items():
                     generation_kwargs[k] = v.to(device)
                 thread = Thread(
-                    target=model.generate, kwargs=generation_kwargs
+                    target=eval_generate, kwargs=generation_kwargs
                 )
                 thread.start()
                 answer = ""
@@ -289,12 +296,13 @@ def main(
                     ].strip()
                 print(answer)
 
-        sess_text += tok_res + answer
-        res_time = toc - tic
-        print(
-            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
-        )
-        print("=" * 100)
+            sess_text += tok_res + answer
+            res_time = toc - tic
+            print(
+                f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
+            )
+            print("=" * 100)
 
 if __name__ == "__main__":
     fire.Fire(main)
+
