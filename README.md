@@ -147,7 +147,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 
       ```python
       import transformers
-  
+      
       # 下载过旧版的用户需要指定`force_download=True`避免使用旧版缓存
       model_sft = transformers.AutoModelForCausalLM.from_pretrained('TigerResearch/tigerbot-7b-sft', force_download=True)
       model_base = transformers.AutoModelForCausalLM.from_pretrained('TigerResearch/tigerbot-7b-base', force_download=True)
@@ -237,7 +237,83 @@ pip install -r requirements.txt
 | tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)]                                                                                       | llama-2      | 6.5            | From tigerbot-7b-chat v3  |
 | tigerbot-180b-sft      | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)]                                                                                      | bloom        | 347.6          | From bloom weights        |
 
-## 训练和推理
+## 推理
+
+### CLI
+
+```shell
+CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_input_length 1024 --max_generate_length 1024 --streaming True
+```
+
+参数：
+
+- `--model_path`: 模型路径
+- `--model_type=chat`: base/chat
+- `--max_input_length=512`: 最大输入长度
+- `--max_generate_length=1024`: 最大输出长度
+- `--rope_scaling=None`: 长度外推方法(dynamic/yarn supported now)
+- `--rope_factor=8.0`: 外推参数
+- `--streaming`: 流式输出
+
+输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
+
+<p width="100%">
+    <img src="image/terminal_case.jpeg" alt="命令行推理" style="width: 100%; min-width: 200px;">
+</p>
+
+### WebPage
+
+将`apps/web_demo.py`第 9 行的 model_path 对应的模型路径改成你的模型所在路径，然后运行下面的命令启用web 界面。
+
+```
+export PYTHONPATH='../' ; export CUDA_VISIBLE_DEVICES="2" ;streamlit run apps/web_demo.py
+```
+
+### 本地API
+
+CLI/WebPage均为demo性质。[TGI](https://github.com/huggingface/text-generation-inference)实现了混合batch，request queue等工程特性，如有大量推理需求，推荐通过TGI镜像提供服务。
+
+```shell
+docker run --gpus '"device=2,3,4,5"' --shm-size 1g -d -p 8080:80 -v PATH-TO-MODEL-DIR:/model ghcr.io/huggingface/text-generation-inference:1.1.1 --model-id /model --max-total-tokens=1024 --max-input-length=1024 --max-batch-prefill-tokens=1024
+```
+
+请根据模型规模与硬件情况选择合适的参数。一般来说7B/13B需要A100 40G * 1，70B需要A100 * 4。
+
+注意，TGI部署服务，生成控制参数需要在每个请求中控制。
+
+### 量化
+
+#### exllamav2量化推理
+
+使用[exllamav2](https://github.com/turboderp/exllamav2a)加载[TigerResearch/tigerbot-70b-chat-4bit-exl2]进行推理，推理速度加快
+
+```
+# 安装exllamav2
+git clone https://github.com/turboderp/exllamav2
+cd exllamav2
+pip install -r requirements.txt
+
+#  启动推理
+CUDA_VISIBLE_DEVICES=0 python other_infer/exllamav2_hf_infer.py --model_path ${MODEL_PATH}
+```
+
+`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-70b-chat-4bit-exl2`
+
+使用以上量化方式，请将transformers、bitsandbytes等包升级到最新版（目前transformers==4.33.1和bitsandbytes==0.41.1可以正常使用）
+
+```
+pip install -U transformers bitsandbytes
+```
+
+#### 动态量化模型加载
+
+此方式为在线量化与推理
+
+```
+CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
+```
+
+## 训练
 
 ### 预训练
 
@@ -316,93 +392,6 @@ deepspeed \
 --tf32 True \
 --per_device_train_batch_size 2 \
 --per_device_eval_batch_size 2
-```
-
-### 推理
-
-你可以在该命令行中进行模型推理对话，输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
-
-<p width="100%">
-    <img src="image/terminal_case.jpeg" alt="命令行推理" style="width: 100%; min-width: 200px;">
-</p>
-
-启动命令行模型推理命如下：
-
-#### 推理
-
-```
-CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_input_length 1024 --max_generate_length 1024 --streaming True
-```
-
-启动参数：
-- `--model_path`: 模型路径
-- `--model_type=chat`: base/chat
-- `--max_input_length=512`: 最大输入长度
-- `--max_generate_length=1024`: 最大输出长度
-- `--rope_scaling=None`: 长度外推方法(dynamic/yarn supported now)
-- `--rope_factor=8.0`: 外推参数
-- `--streaming`: 流式输出
-
-如果要启用 web 界面进行问答，将`web_demo.py`第 9 行的 model_path 对应的模型路径改成你的模型所在路径，然后运行下面的命令启用
-web 界面。
-
-```
-export PYTHONPATH='../' ; export CUDA_VISIBLE_DEVICES="2" ;streamlit run apps/web_demo.py
-```
-
-#### 部署 API
-
-如果要启用 api,需要先安装 fastapi，将 193 行的模型路径改成你的，然后运行服务。
-
-```bash
-pip install "fastapi[all]"
-python ./apps/api.py
-```
-
-之后可以测试客户端通过 web 服务调用 api
-
-```bash
-python ./apps/client.py
-```
-
-也可以客户端通过 web 服务异步调用 api
-
-```bash
-python ./apps/async_client.py
-```
-
-也可以通过之前的 web 页面来调用 web 服务生成文字。
-
-### 量化
-
-#### exllamav2量化推理
-
-使用[exllamav2](https://github.com/turboderp/exllamav2a)加载[TigerResearch/tigerbot-70b-chat-4bit-exl2]进行推理，推理速度加快
-
-```
-# 安装exllamav2
-git clone https://github.com/turboderp/exllamav2
-cd exllamav2
-pip install -r requirements.txt
-
-#  启动推理
-CUDA_VISIBLE_DEVICES=0 python other_infer/exllamav2_hf_infer.py --model_path ${MODEL_PATH}
-```
-
-`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-70b-chat-4bit-exl2`
-
-使用以上量化方式，请将transformers、bitsandbytes等包升级到最新版（目前transformers==4.33.1和bitsandbytes==0.41.1可以正常使用）
-
-```
-pip install -U transformers bitsandbytes
-```
-
-#### 动态量化模型加载
-
-此方式为在线量化与推理
-
-```
-CUDA_VISIBLE_DEVICES=0 python other_infer/quant_infer.py --model_path ${MODEL_DIR} --wbit 8
 ```
 
 ## 测评
@@ -554,7 +543,7 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 
 </details>
 
-## api
+## Tigerbot API
 
 <details>
 
@@ -605,7 +594,6 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 ## 其他
 
 <details><summary><b>案例</b></summary>
-
 ![image](./image/api/case-1.png)
 ![image](image/api/case-2.png)
 ![image](image/api/case-3.png)
@@ -650,5 +638,4 @@ https://www.tigerbot.com
 <details><summary><b>局限性与免责声明</b></summary>
 当前模型可能存在生成幻觉、误导性、或歧视性内容。请谨慎使用 TigerBot 系列模型生成的内容，请勿将生成的有害内容进行传播。
 如需将模型公开使用或者商用，模型服务所产生的不良影响或者有害言论由服务方负责，本项目开发者不承担任何因使用本项目（包含但不限于数据、模型、代码等）导致的危害或损失。
-
 </details>
