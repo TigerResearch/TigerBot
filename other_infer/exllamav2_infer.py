@@ -56,14 +56,8 @@ def main(
     settings.temperature = generation_config.temperature
     settings.token_repetition_penalty = generation_config.repetition_penalty
 
-    print([tokenizer.eos_token_id, tokenizer.pad_token_id])
-    settings.disallow_tokens(tokenizer, [tokenizer.eos_token_id, tokenizer.pad_token_id])
-
     # Generator
     generator = ExLlamaV2StreamingGenerator(model, cache, tokenizer)
-    settings = ExLlamaV2Sampler.Settings()
-    settings.temperature = temperature
-    settings.token_repetition_penalty = repetition_penalty
 
     # Main loop
     sess_text = ""
