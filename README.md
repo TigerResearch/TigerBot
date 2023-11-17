@@ -194,7 +194,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 - [训练](#训练)
 - [测评](#测评)
 - [开源数据集](#开源数据集)
-- [Tigerbot API](#Tigerbot API)
+- [Tigerbot API](#tigerbot-api)
 - [其他](#其他)
 
 ## 环境安装
