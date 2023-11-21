@@ -215,10 +215,12 @@ pip install -r requirements.txt
 | Model                  | Version                                                                                                                                                              | Architecture | Disk size (GB) | Note                      |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|----------------|---------------------------|
 | tigerbot-70b-base      | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-base-v1/summary)]    | llama-2      | 129            | From llama-2-70b weights  |
+| tigerbot-70b-chat      | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v4)]                                                                                        | llama-2      | 129            | From tigerbot-70b-base v1 |
 | tigerbot-70b-chat      | v3 [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v3/summary)]    | llama-2      | 129            | From tigerbot-70b-base v1 |
 |                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)] | llama-2      | 129            | From tigerbot-70b-base v1 |
 |                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)]                                                                                        | llama-2      | 129            | From tigerbot-70b-base v1 |
-| tigerbot-70b-chat-4bit | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-exl2)]                                                                                 | llama-2      | 37             | From tigerbot-70b-chat v3 |
+| tigerbot-70b-chat-4bit | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v4-4bit-exl2)]                                                                              | llama-2      | 37             | From tigerbot-70b-chat v3 |
+| tigerbot-70b-chat-4bit | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v3-4bit-exl2)]                                                                              | llama-2      | 37             | From tigerbot-70b-chat v3 |
 |                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v2)]                                                                                   | llama-2      | 37             | From tigerbot-70b-chat v2 |
 |                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)]                                                                                   | llama-2      | 37             | From tigerbot-70b-chat v1 |
 | tigerbot-13b-base      | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-base-v2/summary)]    | llama-2      | 26.6           | From llama-2-13b weights  |
@@ -286,7 +288,7 @@ docker run --gpus '"device=2,3,4,5"' --shm-size 1g -d -p 8080:80 -v PATH-TO-MODE
 
 #### exllamav2量化推理
 
-使用[exllamav2](https://github.com/turboderp/exllamav2a)加载[TigerResearch/tigerbot-70b-chat-4bit-exl2]进行推理，推理速度加快
+使用[exllamav2](https://github.com/turboderp/exllamav2a)加载[TigerResearch/tigerbot-70b-chat-v4-4bit-exl2]进行推理，推理速度加快
 
 ```
 # 安装exllamav2
@@ -298,7 +300,7 @@ pip install -r requirements.txt
 CUDA_VISIBLE_DEVICES=0 python other_infer/exllamav2_hf_infer.py --model_path ${MODEL_PATH}
 ```
 
-`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-70b-chat-4bit-exl2`
+`MODEL_PATH`为量化模型路径，如 `TigerResearch/tigerbot-70b-chat-v4-4bit-exl2`
 
 使用以上量化方式，请将transformers、bitsandbytes等包升级到最新版（目前transformers==4.33.1和bitsandbytes==0.41.1可以正常使用）
 
