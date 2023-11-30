@@ -1,11 +1,10 @@
 import os
-from typing import Tuple, Optional
+from typing import Optional
 
 import fire
 import torch
 import transformers
-import readline
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+
 from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
 
@@ -23,7 +22,7 @@ def main(
         model_type: str = 'chat',
         rope_scaling: Optional[str] = None,
         rope_factor: float = 8.0,
-        streaming: bool = True
+        streaming: bool = True  # streaming is always enabled now
 ):
     assert transformers.__version__.startswith('4.34')
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
@@ -60,13 +59,9 @@ def main(
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
         print('=' * 100)
-        if streaming:
-            for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
-                                        generation_config=generation_config):
-                print(text, end='', flush=True)
-        else:
-            output = model.generate(**inputs, **generation_config.to_dict())
-            print(tokenizer.decode(output[0][inputs['input_ids'].shape[1]:]))
+        for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                    generation_config=generation_config):
+            print(text, end='', flush=True)
         print('')
         print("=" * 100)
 
