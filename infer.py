@@ -1,11 +1,10 @@
 import os
-from typing import Tuple, Optional
+from typing import Optional
 
 import fire
 import torch
 import transformers
-import readline
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+
 from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
 
@@ -23,7 +22,7 @@ def main(
         model_type: str = 'chat',
         rope_scaling: Optional[str] = None,
         rope_factor: float = 8.0,
-        streaming: bool = True
+        streaming: bool = True  # streaming is always enabled now
 ):
     assert transformers.__version__.startswith('4.34')
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"

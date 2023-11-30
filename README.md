@@ -264,10 +264,8 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_inpu
 
 ### WebPage
 
-将`apps/web_demo.py`第 9 行的 model_path 对应的模型路径改成你的模型所在路径，然后运行下面的命令启用web 界面。
-
 ```
-export PYTHONPATH='../' ; export CUDA_VISIBLE_DEVICES="2" ;streamlit run apps/web_demo.py
+export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/web_demo.py -- --model_path tigerbot-13b-chat
 ```
 
 ### 本地API
@@ -275,7 +273,7 @@ export PYTHONPATH='../' ; export CUDA_VISIBLE_DEVICES="2" ;streamlit run apps/we
 CLI/WebPage均为demo性质。[TGI](https://github.com/huggingface/text-generation-inference)实现了混合batch，request queue等工程特性，如有大量推理需求，推荐通过TGI镜像提供服务。
 
 ```shell
-docker run --gpus '"device=2,3,4,5"' --shm-size 1g -d -p 8080:80 -v PATH-TO-MODEL-DIR:/model ghcr.io/huggingface/text-generation-inference:1.1.1 --model-id /model --max-total-tokens=1024 --max-input-length=1024 --max-batch-prefill-tokens=1024
+docker run --gpus '"device=0,1,2,3"' -d -p 8080:80 -v PATH-TO-MODEL-DIR:/model ghcr.io/huggingface/text-generation-inference:1.1.1 --model-id /model --max-total-tokens=1024 --max-input-length=1024 --max-batch-prefill-tokens=1024
 ```
 
 请根据模型规模与硬件情况选择合适的参数。一般来说7B/13B需要A100 40G * 1，70B需要A100 * 4。
