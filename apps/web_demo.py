@@ -9,7 +9,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True)
 parser.add_argument('--rope_scaling', type=str, required=False, default=None)
 parser.add_argument('--rope_factor', type=float, required=False, default=None)
+parser.add_argument('--max_input_length', type=int, required=False, default=1024)
+parser.add_argument('--max_generate_length', type=int, required=False, default=1024)
+
 args = parser.parse_args()
+print(args)
 
 
 @st.cache_resource
@@ -21,8 +25,8 @@ def cached_get_model(model_path, rope_scaling, rope_factor):
 model, tokenizer, generation_config = cached_get_model(args.model_path, args.rope_scaling, args.rope_factor)
 
 generation_config.do_sample = False
-generation_config.max_length = 16384
-generation_config.max_new_tokens = 1024
+generation_config.max_length = args.max_input_length + args.max_generate_length
+generation_config.max_new_tokens = args.max_generate_length
 
 tok_ins = "\n\n### Instruction:\n"
 tok_res = "\n\n### Response:\n"

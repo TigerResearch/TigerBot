@@ -30,7 +30,8 @@
 
     - Tigerbot-13/70B web/api接口支持16k-token长度（约为20k字符，或20页的pdf或word文档，paper类的可直接作为context输入）。
     - 基于[YaRN](https://arxiv.org/pdf/2309.00071.pdf)方法，推理时对RoPE表示进行“高频维度不变，低频维度插值”的方式外推，以达到处理长序列的目的。
-    - Tigerbot优化了TGI框架，为每个请求根据输入序列长度与最大生成序列长度单独计算cos/sin值，同时保证总长度不大于2048时的效果不变，因此API用户需要选择一个更合适的max_new_token参数，并且不同的max_new_token参数可能会导致不同的结果。
+    -
+    Tigerbot优化了TGI框架，为每个请求根据输入序列长度与最大生成序列长度单独计算cos/sin值，同时保证总长度不大于2048时的效果不变，因此API用户需要选择一个更合适的max_new_token参数，并且不同的max_new_token参数可能会导致不同的结果。
     - Tigerbot后续将会在训练阶段继续优化对长序列的支持。
 
 - [9/27/2023] Tigerbot-70b-chat-api发布function
@@ -252,11 +253,11 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_inpu
 
 - `--model_path`: 模型路径
 - `--model_type=chat`: base/chat
-- `--max_input_length=512`: 最大输入长度
+- `--max_input_length=1024`: 最大输入长度
 - `--max_generate_length=1024`: 最大输出长度
 - `--rope_scaling=None`: 长度外推方法(dynamic/yarn supported now)
 - `--rope_factor=8.0`: 外推参数
-- `--streaming`: 流式输出
+- ~~`--streaming`: 流式输出~~
 
 输入 `clear` 可以清空对话历史，输入 `exit` 终止推理对话。
 
@@ -270,9 +271,12 @@ CUDA_VISIBLE_DEVICES=0 python infer.py --model_path tigerbot-13b-chat --max_inpu
 export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/web_demo.py -- --model_path tigerbot-13b-chat
 ```
 
+参数同CLI启动参数
+
 ### 本地API
 
-CLI/WebPage均为demo性质。[TGI](https://github.com/huggingface/text-generation-inference)实现了混合batch，request queue等工程特性，如有大量推理需求，推荐通过TGI镜像提供服务。
+CLI/WebPage均为demo性质。[TGI](https://github.com/huggingface/text-generation-inference)实现了混合batch，request
+queue等工程特性，如有大量推理需求，推荐通过TGI镜像提供服务。
 
 ```shell
 docker run --gpus '"device=0,1,2,3"' -d -p 8080:80 -v PATH-TO-MODEL-DIR:/model ghcr.io/huggingface/text-generation-inference:1.1.1 --model-id /model --max-total-tokens=1024 --max-input-length=1024 --max-batch-prefill-tokens=1024
@@ -435,7 +439,7 @@ base模型测评结果
   51G，包含英文书籍、英文互联网、英文百科 - 下载 [hugging face]</a>
 
   | 类型       | 磁盘占用 | 来源 |
-  | ---------- | -------- | ---- |
+    | ---------- | -------- | ---- |
   | 中文书籍   | 12G      | 自研 |
   | 中文互联网 | 25G      | 自研 |
   | 中文百科   | 19G      | 自研 |
