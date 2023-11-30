@@ -60,13 +60,9 @@ def main(
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
         print('=' * 100)
-        if streaming:
-            for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
-                                        generation_config=generation_config):
-                print(text, end='', flush=True)
-        else:
-            output = model.generate(**inputs, **generation_config.to_dict())
-            print(tokenizer.decode(output[0][inputs['input_ids'].shape[1]:]))
+        for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                    generation_config=generation_config):
+            print(text, end='', flush=True)
         print('')
         print("=" * 100)
 
