@@ -433,7 +433,7 @@ chat模型测评结果
 
 base模型测评结果
 
-![image](image/eval_base_0925.png)
+![image](image/eval_base_1206.png)
 
 ## 开源数据集
 
