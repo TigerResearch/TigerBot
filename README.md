@@ -421,18 +421,19 @@ wget https://github.com/InternLM/opencompass/releases/download/0.1.1/OpenCompass
 unzip OpenCompassData.zip
 
 #运行测评任务：
-CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base --max-partition-size 30000
+CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs/tigerbot-13b-base
 ```
 
 总分为各类任务的平均分
 
 chat模型测评结果
 
-![image](image/eval_chat_0925.png)
+![image](image/eval_70b_chat_1206.png)
+![image](image/eval_13b_chat_1206.png)
 
 base模型测评结果
 
-![image](image/eval_base_0915.png)
+![image](image/eval_base_0925.png)
 
 ## 开源数据集
 
@@ -527,8 +528,7 @@ d. 清洗类-特殊逻辑规则：此类规则用于清洗一些特殊现象数�
 | 知乎问答      | 中文 | [tigerbot-zhihu-zh-10k](https://huggingface.co/datasets/TigerResearch/tigerbot-zhihu-zh-10k)                                     | 10k        | 开源   |
 | alpaca 英文 | 英文 | [tigerbot-alpaca-en-50k](https://huggingface.co/datasets/TigerResearch/tigerbot-alpaca-en-50k)                                   | 50k        | 自研   |
 | 头脑风暴      | 英文 | [tigerbot-dolly-Brainstorming-en-1.7k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Brainstorming-en-1.7k)       | 1.7k       | 开源   |
-| 分类        | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2k         | 开源   |
-| 数学问题      | 英文 | [tigerbot-gsm-8k-en](https://huggingface.co/datasets/TigerResearch/tigerbot-gsm-8k-en)                                           | 8k         | 开源   |
+| 分类        | 英文 | [tigerbot-dolly-Classification-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-dolly-Classification-en-2k)         | 2k         | 开源   ｜
 | 代码        | 英文 | [tigerbot-kaggle-leetcodesolutions-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-leetcodesolutions-en-2k) | 2k         | 自研\* |
 | 食谱生成      | 英文 | [tigerbot-kaggle-recipes-en-2k](https://huggingface.co/datasets/TigerResearch/tigerbot-kaggle-recipes-en-2k)                     | 2k         | 开源   |
 | 病历生成      | 英文 | [tigerbot-mt-note-generation-en](https://huggingface.co/datasets/TigerResearch/tigerbot-mt-note-generation-en)                   | 450        | 开源   |
