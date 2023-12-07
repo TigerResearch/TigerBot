@@ -515,7 +515,7 @@ Open up data related to finance, law, and encyclopedia fields as external data s
 
 </details>
 
-## API
+## Tigerbot API
 
 <details>
 <summary><b>Details</b></summary>
