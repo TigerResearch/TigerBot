@@ -223,7 +223,7 @@ Parameters:
 - `--max_generate_length=1024`: Maximum output length
 - `--rope_scaling=None`: Length extrapolation method (either "dynamic" or "yarn" supported now)
 - `--rope_factor=8.0`: Extrapolation parameter
--  ~~`--streaming`: Streaming output ~~
+- ~~`--streaming`: Streaming output~~
 
 You can infer with command line. Input `clear` to clean history and input `exit` to stop it.
 
