@@ -24,17 +24,24 @@ tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
 
 
+def progress_rep(module, num_modules):
+    yield 100 * module / num_modules
+
+
 class Exllamav2HF(PreTrainedModel):
     def __init__(self, config: ExLlamaV2Config):
         super().__init__(PretrainedConfig())
         self.ex_config = config
         self.ex_model = ExLlamaV2(config)
-        split = None
-        self.ex_model.load(split)
 
         self.generation_config = GenerationConfig()
 
-        self.ex_cache = ExLlamaV2Cache(self.ex_model)
+        self.ex_cache = ExLlamaV2Cache(self.ex_model, lazy=True)
+        f = self.ex_model.load_autosplit_gen(
+            self.ex_cache, last_id_only=True, callback_gen=progress_rep
+        )
+        for _ in f:
+            pass
         self.past_seq = None
 
     def _validate_model_class(self):
@@ -59,7 +66,7 @@ class Exllamav2HF(PreTrainedModel):
             input_ids = args[0]
             is_negative = True
             past_seq = self.past_seq_negative
-            ex_cache = self.ex_cache_negative
+            ex_cache = None
         else:
             input_ids = kwargs["input_ids"]
             is_negative = False
@@ -178,6 +185,7 @@ def get_model(model):
     model.eval()
     return model
 
+
 def main(
     model_path: str,
     max_input_length: int = 512,
@@ -186,7 +194,7 @@ def main(
 ):
     print(f"loading model: {model_path}...")
 
-    model = get_model(model_path)    
+    model = get_model(model_path)
     device = torch.cuda.current_device()
 
     tokenizer = LlamaTokenizer.from_pretrained(
@@ -206,6 +214,7 @@ def main(
 
     generation_config = GenerationConfig.from_pretrained(model_path)
     generation_config.max_new_tokens = max_generate_length
+    generation_config.max_length = None
 
     sess_text = ""
 
@@ -216,7 +225,6 @@ def main(
         spaces_between_special_tokens=False,
     )
     generation_kwargs = generation_config.to_dict()
-    
 
     def eval_generate(**args):
         with torch.inference_mode(mode=True):
@@ -265,9 +273,9 @@ def main(
                 print("=" * 100)
                 for new_text in streamer:
                     if new_text.endswith(tokenizer.eos_token):
-                        new_text = new_text.rsplit(tokenizer.eos_token, 1)[
-                            0
-                        ].strip()
+                        new_text = new_text.rsplit(
+                            tokenizer.eos_token, 1
+                        )[0].strip()
                         flag = True
                     print(new_text, end="")
                     answer += new_text
@@ -303,6 +311,6 @@ def main(
             )
             print("=" * 100)
 
+
 if __name__ == "__main__":
     fire.Fire(main)
-
