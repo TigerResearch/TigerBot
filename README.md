@@ -255,7 +255,7 @@ pip install -r requirements.txt
 |                   | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)] | bloom        | 16.2           | From tigerbot-7b-base v1  |
 | tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
 | tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
-| tigerbot-180b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-base-v2)] | bloom        | 347.6          | From bloom weights        |
+| tigerbot-180b-base | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-base-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-180b-base-v2/summary)] | bloom        | 347.6          | From bloom weights        |
 | tigerbot-180b-chat | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-chat-v2)][[modelsope](https://modelscope.cn/models/TigerResearch/tigerbot-180b-chat-v2/summary)] | bloom        | 347.6          | From tigerbot-180b-chat v2        |
 |                    | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)] | bloom        | 347.6          | From bloom weights        |
 
