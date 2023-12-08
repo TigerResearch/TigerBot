@@ -35,7 +35,6 @@
 	- 序列长度：70b-chat和13b-chat均推出4k长度训练版本，推理可外推到32k；
 	- 训练方法：预训练优化了TP/PP算法，对齐采用了grouped sft, rejection-sampling，dpo (稍后会分享技术报告)；
 	- 全线产品(web, app, 小程序)和api均升级到最新最强的Tigerbot-70b-chat-v4-4k，产品端增加了search (搜索增加) and document (文件增强) RAG功能。
-	
 
 - [10/19/2023] Long(16k)-Tigerbot 发布
 
