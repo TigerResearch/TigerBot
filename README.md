@@ -26,7 +26,7 @@
 
 ## 最新发布
 
-- [12/08/2023] Tigerbot family新版模型发布，bigger and better :fire: [[models](https://huggingface.co/TigerResearch)][[测评](#测评)]
+- [12/08/2023] Tigerbot family新版模型发布，bigger and better :fire: [[模型下载](#模型下载)][[测评](#测评)]
 
 	- Tigerbot-70b base (v2) and chat (v4)更新，chat模型综合能力比上一版提升19%；
 	- Tigerbot-13b base (v3) and chat (v5)更新，chat模型综合能力比上一版提升16%；
