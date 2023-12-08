@@ -30,7 +30,7 @@
 
 	- Tigerbot-70b base (v2) and chat (v4)更新，chat模型综合能力比上一版提升19%；
 	- Tigerbot-13b base (v3) and chat (v5)更新，chat模型综合能力比上一版提升16%；
-	- Tigerbot-180b base and chat (v2)更新，base模型优于Bloom 7%, chat由于Bloomz/Bloomz-mt 20%；
+	- Tigerbot-180b base and chat (v2)更新，base模型优于Bloom 7%, chat模型优于Bloomz/Bloomz-mt 20%；
 	- 训练数据：500B tokens预训练数据，知识截止到2023年8月。更多优质数据，包括：万卷，arXiv, 中文教科书，法律和专利等领域数据；
 	- 序列长度：70b-chat和13b-chat均推出4k长度训练版本，推理可外推到32k；
 	- 训练方法：预训练优化了TP/PP算法，对齐采用了grouped sft, rejection-sampling，dpo (稍后会分享技术报告)；
