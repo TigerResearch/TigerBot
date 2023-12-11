@@ -26,6 +26,16 @@
 
 ## News
 
+- [12/08/2023] Tigerbot family releases updated models - bigger and better :fire: [[Model Download](#Model-Download)][[Evaluation](#Evaluation)]
+
+	- Tigerbot-70b base (v2) and chat (v4) updated, chat model's comprehensive ability increased by 19% compared to the previous version;
+	- Tigerbot-13b base (v3) and chat (v5) updated, chat model's comprehensive ability increased by 16% compared to the previous version;
+	- Tigerbot-180b base and chat (v2) updated, base model is 7% better than Bloom, chat model is 20% better than Bloomz/Bloomz-mt;
+	- Training data: 500B tokens pre-trained data, knowledge截止 to August 2023. More high-quality data, including: tens of thousands of volumes, arXiv, Chinese textbooks, legal and patent data;
+	- Sequence length: Tigerbot-70b-chat and Tigerbot-13b-chat launched training versions with a sequence length of 4k, and inference can be extrapolated to 32k;
+	- Training method: Pre-training optimized TP/PP algorithm, alignment used grouped sft, rejection-sampling, dpo (will share technical report later);
+	- The entire product line (web, app, mini program) and API have been upgraded to the latest and most powerful Tigerbot-70b-chat-v4-4k, and the product side has added search (search addition) and document (file enhancement) RAG functionality.
+
 - [10/19/2023] Long(16k)-Tigerbot Released
 
 	- Tigerbot-13/70B web/api interface supports 16k-token lengths (approximately 20k tokens, or 20 pages of pdf or word documents, which can be directly used as context input for paper-related tasks).
@@ -38,9 +48,9 @@
 	- {user prompt, functions definition} --> TigerBot --> 3rd party API --> TigerBot --> accurate and natural answers with accurate results.
 	- Although Tigerbot's training did not specifically use function calling structured extraction data, it has already demonstrated impressive understanding and extraction abilities. Therefore, we believe that with domain-specific data fine-tuning, the performance of function calling will approach production readiness.
 
-- [9/26/2023] Tigerbot-70b-chat(v3) and Tigerbot-13b-chat(v4) updated: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
-
-	- Reduced the batch size for more precise gradient updates, with a global_batch_size of 66 (pretrain_gbs=1920, v2_gbs=240). We believe that with high-quality data, the gbs for alignment fine-tuning can be up to ~100K tokens, resulting in more dense updates and more extensive steps, leading to lower loss (as shown in the following figure: train and validation loss).
+- [9/26/2023] Tigerbot-70b-chat(v3) and Tigerbot-13b-chat(v4) updated: [[Model Download](#Model-Download)]
+	- smaller batch for finer-grained gradient updates, global_batch_size=66 (pretrain_gbs=1920, v2_gbs=240).
+    We believe that with high-quality data, the gbs for alignment fine-tuning can be up to ~100K tokens, resulting in more dense updates and more extensive steps, leading to lower loss (as shown in the following figure: train and validation loss).
 	- Increased the quality and diversity of the alignment data, with richer content and proper formats. Based on user feedback in the previous stage, we removed some known dirty data and prompts that do not conform to natural user habits from the original alignment data;
 	- Outperformed the previous version and Llama-2 in more than 10 benchmarks, achieving the current state-of-the-art results.
 
@@ -51,8 +61,7 @@
     <img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;">
   </div>
 
-- [9/15/2023] Tigerbot-70b-chat(v2) and Tigerbot-13b-chat(v3) updated: [[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)][[tigerbot-13b-chat](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
-
+- [9/15/2023] Tigerbot-70b-chat(v2) and Tigerbot-13b-chat(v3) updated: [[Model Download](#Model-Download)]
 	- Data: Used less but higher quality data, about 5M instructions to complete data, covered 100+ types of tasks, in line with natural user distribution;
 	- Data alignment: Used 10K human-annotated data for multi-dimensional alignment, including factuality, creativity, richness, security, and format;
 	- Evaluation: Outperformed the previous version and Llama-2 in more than 10 benchmarks, achieving SOTA results.
@@ -61,7 +70,7 @@
    		<img src="image/70b-chat-example.jpg" alt="tigerbot-70b-chat example" style="width: 80%; display: block; margin: auto;">
   </p>
 
-- [9/06/2023] Tigerbot-70b released with open source and free commercial usage: [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E2%80%9070B%E5%8F%91%E5%B8%83%EF%BC%81)][[tigerbot-70b-base](https://huggingface.co/TigerResearch/tigerbot-70b-base)][[tigerbot-70b-chat](https://huggingface.co/TigerResearch/tigerbot-70b-chat)]:fire:
+- [9/06/2023] Tigerbot-70b released with open source and free commercial usage: [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot%E2%80%9070B%E5%8F%91%E5%B8%83%EF%BC%81)][[Model Download](#Model-Download)]:fire:
 
   - Tigerbot-70b-base: Building on the Llama-2-70b foundation, the model's overall capabilities have surpassed Llama-2-70b in 10 mainstream benchmark tests, reaching the current industry SOTA. 
     - Trained with high-quality 300 billion token multilingual data.
@@ -75,12 +84,12 @@
 	</p>
 
 
-- [8/25/2023] TigerBot updates the 13b-base model: [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)][[Evaluation](#Evaluation)]
+- [8/25/2023] TigerBot updates the 13b-base model: [[Model Download](#Model-Download)][[Evaluation](#Evaluation)]
 
   - TigerBot-13B-base: The training data has been doubled to 600B tokens, with targeted additions of high-quality English and Chinese math reasoning and scientific literature datasets. Additionally, the cleaning of Chinese web datasets has been optimized in terms of format, language, and knowledgeability. In 13 mainstream benchmark evaluations, the English comprehensive ability is 5% superior to Llama-2-13b, while the Chinese ability is over 30% superior. [[Evaluation](#Evaluation)]![image](image/eval_base.jpg)
   - An automatic evaluation system based on opencompass has been opened to promote reproducibility. [[Evaluation](#Evaluation)]
 
-- [8/21/2023] TigerBot releases updated 7b and 13b base/chat models: [[Evaluation](#Evaluation)]
+- [8/21/2023] TigerBot releases updated 7b and 13b base/chat models: [[Model Download](#Model-Download)][[Evaluation](#Evaluation)]
 
   - TigerBot-7B-base [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]: Based on Llama-2-7B, it was incrementally pretrained on 300B tokens and supplemented with datasets lacking in Llama-2, such as Chinese, code, and reasoning datasets, using the holistic training method. In 13 mainstream benchmark evaluations for both English and Chinese, it surpasses Llama-2-7B by 33%, demonstrating a leading performance among similar open source models both domestically and internationally.
   - TigerBot-7B-chat [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)]: Based on TigerBot-7B-base, it was fine-tuned using 20M data covering multiple tasks for directives (SFT) and alignment with rejection sampling (RS-HIL). In 13 mainstream benchmark evaluations for both English and Chinese, it surpasses Llama-2-7B-chat by 29%, also demonstrating a leading performance among similar open source models both domestically and internationally.
@@ -93,7 +102,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 
 - [8/08/2023] TigerBot 2023.08 (V3) release: TigerBot is pleased to announce the release of the TigerBot-13B large model. Based on Llama-2 and with TigerBot's accumulated technology and data, this model not only maintains Llama-2's excellent English abilities but also fills the gap in its Chinese abilities, surpassing Llama-2 by 49% in various mainstream Chinese tasks. In comparison with other open source similar models, it is competitive. :fire: [[paper](https://github.com/TigerResearch/TigerBot/wiki/Tigerbot%E2%80%9013B-is-All-You-Need)] 
 
-	- TigerBot-13B-base: Based on Llama-2-13B, it continued to be pretrained on 300B tokens and the Chinese vocabulary was expanded to 60K. Additionally, holistic training was applied during pretraining to enable the model to complete 90% of the directives directly. In mainstream English benchmark tests, it surpassed Llama-2-13B-base by 7%, while in Chinese tests, its overall ability exceeded Llama-2-13B-base by 49%. It is at the leading position among mainstream open source base models both domestically and internationally. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base)]
+	- TigerBot-13B-base: Based on Llama-2-13B, it continued to be pretrained on 300B tokens and the Chinese vocabulary was expanded to 60K. Additionally, holistic training was applied during pretraining to enable the model to complete 90% of the directives directly. In mainstream English benchmark tests, it surpassed Llama-2-13B-base by 7%, while in Chinese tests, its overall ability exceeded Llama-2-13B-base by 49%. It is at the leading position among mainstream open source base models both domestically and internationally. [[Evaluation](#Evaluation)][[Model Download](#Model-Download)]
 	- TigerBot-13B-chat: Based on TigerBot-13B-base, it was fine-tuned using 5M directive data and rejection sampling was applied for alignment with human needs during fine-tuning. In mainstream English benchmark tests, its score reached that of Llama-2-13B-chat, while in Chinese tests, its overall ability exceeded Llama-2-13B-chat by 47%. It is also at the leading position among mainstream open source models both domestically and internationally. The chat model can be used by running `python infer.py --model_path TigerResearch/tigerbot-13b-chat`. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat)]
 	- TigerBot-API: The chat and summarization APIs will automatically be upgraded to TigerBot-13B-chat. Free use is available for scientific and educational users, while prices remain unchanged for commercial developers. [[tigerbot-api](https://www.tigerbot.com/api-reference)]
 
@@ -107,9 +116,9 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 		
 - [7/08/2023] TigerBot 2023.07 (V2) release [[paper](https://github.com/TigerResearch/TigerBot/wiki/TigerBot-Version2)] :fire:
 
-  - tigerbot-7b-base (v2), Fully pretrained on 1.5TB high-quality data (4 weeks of training time and ~3 million dollars in compute cost), it outperforms the equivalent Bloom and Llama models on both Chinese and English public datasets by 15-30%. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)]
+  - tigerbot-7b-base (v2), Fully pretrained on 1.5TB high-quality data (4 weeks of training time and ~3 million dollars in compute cost), it outperforms the equivalent Bloom and Llama models on both Chinese and English public datasets by 15-30%. [[Evaluation](#Evaluation)][[Model Download](#Model-Download)]
 
-  - tigerbot-7b-sft (v2), Based on the base-v2 model and trained on 20 million/20G high-quality cleaned and aligned data, it outperforms the previous SFT model (sft-v1) on 9 public corpus evaluations by 9.3%. [[Evaluation](#Evaluation)][[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft)]
+  - tigerbot-7b-sft (v2), Based on the base-v2 model and trained on 20 million/20G high-quality cleaned and aligned data, it outperforms the previous SFT model (sft-v1) on 9 public corpus evaluations by 9.3%. [[Evaluation](#Evaluation)][[Model Download](#Model-Download)]
 
     The new model can be loaded using the following code:
 
@@ -124,7 +133,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
   - You can use tigerbot chat-api with streaming switch [[TigerBot](https://www.tigerbot.com/chat)][[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
   - New features in tigerbot-api, including LLM (chat, plugin, finetune), text (embedding, summarization, pdf2text), vision (text2image) [[TigerBot-API](https://www.tigerbot.com/api-reference/chat)]
   
-- [6/27/2023] PEFT TigerBot with QLoRA:  finetune a tigerbot-7b-sft model on single RTX3090 with qlora, speeds up by 16 times and reduces GPI3/4, which also preventing overfitting on downstream data[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)] [[model](https://huggingface.co/TigerResearch/medical-bot-peft-from-tigerbot-7b-sft)]
+- [6/27/2023] PEFT TigerBot with QLoRA:  finetune a tigerbot-7b-sft model on single RTX3090 with qlora, speeds up by 16 times and reduces GPI3/4, which also preventing overfitting on downstream data[[code](https://github.com/TigerResearch/TigerBot/blob/main/train/train_with_qlora.py)] [[paper](https://github.com/TigerResearch/TigerBot/wiki/PEFT-TigerBot-7b-with-QLoRA,-building-an-domain-LLM-on-one-consumer-level-GPU-in-hours)][[Model Download](#Model-Download)]
 
 <p align="center" width="100%">
 	<img src="image/peft_metrics.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
@@ -137,7 +146,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-- [6/13/2023] Plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#API)
+- [6/13/2023] Plug-in api upgrades：[search results、prompt prefix and tf-idf, embedding mixture weights](#tigerbot-api)
 - [6/13/2023] Fast way to [download model](#Model-Weights)
 - [6/13/2023] TigerBot now is on QQ! [QQ bot based on Tigerbot with custom knowledge base](#Community)，thanks to @wordweb ！
 - [6/09/2023] Stream infer and web demo，thanks to @Tlntin ！
@@ -170,41 +179,43 @@ pip install -r requirements.txt
 
 ## Model Download
 
-| Model                  | Version                                                                                                                                                                       | Architecture | Disk size (GB) | Note                         |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | -------------- | ---------------------------- |
-| tigerbot-70b-base      | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-base-v2/summary)]          | llama-2      | 129            | From llama-2-70b weights     |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-base-v1)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-base-v1/summary)]          | llama-2      | 129            | From llama-2-70b weights     |
-| tigerbot-70b-chat      | v4-4k [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v4-4k)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v4-4k/summary)] | llama-2      | 129            | From tigerbot-70b-base v2    |
-|                        | v4 [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v4)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v4/summary)]          | llama-2      | 129            | From tigerbot-70b-base v2    |
-|                        | v3 [[huggingface]](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v3)[[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v3/summary)]          | llama-2      | 129            | From tigerbot-70b-base v1    |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-70b-chat-v2/summary)]          | llama-2      | 129            | From tigerbot-70b-base v1    |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v1)]                                                                                                 | llama-2      | 129            | From tigerbot-70b-base v1    |
-| tigerbot-70b-chat-4bit | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v4-4bit-exl2)]                                                                                       | llama-2      | 37             | From tigerbot-70b-chat v4    |
-|                        | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-v3-4bit-exl2)]                                                                                       | llama-2      | 37             | From tigerbot-70b-chat v3    |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v2)]                                                                                            | llama-2      | 37             | From tigerbot-70b-chat v2    |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-70b-chat-4bit-v1)]                                                                                            | llama-2      | 37             | From tigerbot-70b-chat v1    |
-| tigerbot-13b-base      | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v3)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-base-v3/summary)]          | llama-2      | 26.6           | From llama-2-13b weights     |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v2)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-base-v2/summary)]          | llama-2      | 26.6           | From llama-2-13b weights     |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-base-v1)]                                                                                                 | llama-2      | 26.6           | From llama-2-13b weights     |
-| tigerbot-13b-chat      | v5-4k [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v5-4k)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v5-4k/summary)] | llama-2      | 26.6           | From tigerbot-13b-base v3    |
-|                        | v5 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v5)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v5/summary)]          | llama-2      | 26.6           | From tigerbot-13b-base v3    |
-|                        | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v4)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v4/summary)]          | llama-2      | 26.6           | From tigerbot-13b-base v2    |
-|                        | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v3)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-13b-chat-v3/summary)]          | llama-2      | 26.6           | From tigerbot-13b-base v2    |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v2)]                                                                                                 | llama-2      | 26.6           | From tigerbot-13b-base v2    |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v1)]                                                                                                 | llama-2      | 26.6           | From tigerbot-13b-base v1    |
-| tigerbot-13b-chat-4bit | v5 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v5-4bit-exl2)]                                                                                       | llama-2      | 11.5           | From tigerbot-13b-chat v5-4k |
-|                        | v4 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-13b-chat-v4-4bit-exl2)]                                                                                       | llama-2      | 11.5           | From tigerbot-13b-chat v4    |
-| tigerbot-7b-base       | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-7b-base-v3/summary)]               | llama-2      | 13.9           | From llama-2-7b weights      |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v2)]                                                                                                  | bloom        | 16.2           | From bloom weights           |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-base-v1)]                                                                                                  | bloom        | 16.2           | From bloom weights           |
-| tigerbot-7b-chat       | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat)][[modelscope](https://modelscope.cn/models/TigerResearch/tigerbot-7b-chat-v3/summary)]               | llama-2      | 13.9           | From tigerbot-7b-base v3     |
-|                        | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v2)]                                                                                                   | bloom        | 16.2           | From tigerbot-7b-base v2     |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-sft-v1)]                                                                                                   | bloom        | 16.2           | From tigerbot-7b-base v1     |
-| tigerbot-7b-chat-8bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-8bit)]                                                                                                | llama-2      | 10.8           | From tigerbot-7b-chat v3     |
-| tigerbot-7b-chat-4bit  | v3 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-7b-chat-4bit)]                                                                                                | llama-2      | 6.5            | From tigerbot-7b-chat v3     |
-| tigerbot-180b-base     | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-base-v2)]                                                                                                | bloom        | 347.6          | From bloom weights           |
-| tigerbot-180b-chat     | v2 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-chat-v2)][[modelsope](https://modelscope.cn/models/TigerResearch/tigerbot-180b-chat-v2/summary)]         | bloom        | 347.6          | From tigerbot-180b-chat v2   |
-|                        | v1 [[huggingface](https://huggingface.co/TigerResearch/tigerbot-180b-research)]                                                                                               | bloom        | 347.6          | From bloom weights           |
+
+| Model             | Version                                                      | Architecture | Disk size (GB) | Note                      |
+| ----------------- | ------------------------------------------------------------ | ------------ | -------------- | ------------------------- |
+| tigerbot-70b-base | v2 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From llama-2-70b weights  |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From llama-2-70b weights  |
+| tigerbot-70b-chat | v4-4k [[🤗]](https://huggingface.co/TigerResearch)[[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From tigerbot-70b-base v2  |
+|                   | v4 [[🤗]](https://huggingface.co/TigerResearch)[[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From tigerbot-70b-base v2  |
+|                   | v3 [[🤗]](https://huggingface.co/TigerResearch)[[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+|                   | v2 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 129           | From tigerbot-70b-base v1  |
+| tigerbot-70b-chat-4bit | v4 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 37           | From tigerbot-70b-chat v4|
+|                        | v3 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 37           | From tigerbot-70b-chat v3|
+|                        | v2 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 37           | From tigerbot-70b-chat v2|
+|                        | v1 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 37           | From tigerbot-70b-chat v1|
+| tigerbot-13b-base | v3 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From llama-2-13b weights  |
+|                   | v2 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From llama-2-13b weights  |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 26.6           | From llama-2-13b weights  |
+| tigerbot-13b-chat | v5-4k [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v3 |
+|                   | v5 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v3 |
+|                   | v4 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+|                   | v3 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+|                   | v2 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v2 |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 26.6           | From tigerbot-13b-base v1 |
+| tigerbot-13b-chat-4bit | v5 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 11.5           | From tigerbot-13b-chat v5-4k |
+|                        | v4 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 11.5           | From tigerbot-13b-chat v4 |
+| tigerbot-7b-base  | v3 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 13.9           | From llama-2-7b weights   |
+|                   | v2 [[🤗](https://huggingface.co/TigerResearch)] | bloom        | 16.2           | From bloom weights        |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)] | bloom        | 16.2           | From bloom weights        |
+| tigerbot-7b-chat  | v3 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | llama-2      | 13.9           | From tigerbot-7b-base v3  |
+|                   | v2 [[🤗](https://huggingface.co/TigerResearch)] | bloom        | 16.2           | From tigerbot-7b-base v2  |
+|                   | v1 [[🤗](https://huggingface.co/TigerResearch)] | bloom        | 16.2           | From tigerbot-7b-base v1  |
+| tigerbot-7b-chat-8bit  | v3 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 10.8           | From tigerbot-7b-chat v3  |
+| tigerbot-7b-chat-4bit  | v3 [[🤗](https://huggingface.co/TigerResearch)] | llama-2      | 6.5           | From tigerbot-7b-chat v3  |
+| tigerbot-180b-base | v2 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | bloom        | 347.6          | From bloom weights        |
+| tigerbot-180b-chat | v2 [[🤗](https://huggingface.co/TigerResearch)][[🤖](https://modelscope.cn/organization/TigerResearch)] | bloom        | 347.6          | From tigerbot-180b-chat v2        |
+|                    | v1 [[🤗](https://huggingface.co/TigerResearch)] | bloom        | 347.6          | From bloom weights        |
+
 
 
 ## Inference
