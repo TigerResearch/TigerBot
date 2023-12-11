@@ -182,7 +182,7 @@ https://github.com/TigerResearch/TigerBot/assets/32117316/0a8c11b9-6a10-4e37-80e
 	<img src="image/tigerbot_chatapi_sample.png" alt="tigerbot chat-api sample" style="width: 65%; display: block; margin: auto;"></a>
 </p>
 
-- [6/13/2023] plug-in api 升级，放出：[搜索结果数量、prompt 前缀和 tf-idf, embedding mixture weights](#API)
+- [6/13/2023] plug-in api 升级，放出：[搜索结果数量、prompt 前缀和 tf-idf, embedding mixture weights](#tigerbot-api)
 - [6/13/2023] 模型已支持更迅速的[本地下载](#模型下载)
 - [6/13/2023] TigerBot now is on QQ! [基于本地知识库的 TigerBot 大语言模型 qq 群知识库 bot 应用实现](#开发者生态)，感谢
   @wordweb ！
