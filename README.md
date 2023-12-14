@@ -60,7 +60,6 @@
     - 增加了高质量对其数据，更好的多样性、丰富度和格式；根据前期用户反馈，去除了原对齐数据中的一些已知脏数据和不符合自然用户习惯的prompts数据；
     - 在10+项基准评测中，综合能力均超过上一版本和Llama-2，达到SOTA.
 
-  ![image](image/eval_chat_0925.png)
   <div style="display: flex; justify-content: space-between;">
     <img src="image/loss-70b-chat-v3.jpg" alt="tigerbot-70b-chat-v3 train loss" style="width: 40%; display: block; margin: auto;">
     <img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;">
@@ -431,12 +430,11 @@ CUDA_VISIBLE_DEVICES=0,1,2 python run.py configs/eval_tigerbot_13b.py -w outputs
 
 chat模型测评结果
 
-![image](image/eval_70b_chat_1206.png)
-![image](image/eval_13b_chat_1206.png)
+![image](image/eval_chat_1214.png)
 
 base模型测评结果
 
-![image](image/eval_base_1206.png)
+![image](image/eval_base_1214.png)
 
 ## 开源数据集
 

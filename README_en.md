@@ -54,8 +54,6 @@
 	- Increased the quality and diversity of the alignment data, with richer content and proper formats. Based on user feedback in the previous stage, we removed some known dirty data and prompts that do not conform to natural user habits from the original alignment data;
 	- Outperformed the previous version and Llama-2 in more than 10 benchmarks, achieving the current state-of-the-art results.
 
-	![image](image/eval_chat_0925.png)
-
   <div style="display: flex; justify-content: space-between;">
     <img src="image/loss-70b-chat-v3.jpg" alt="tigerbot-70b-chat-v3 train loss" style="width: 40%; display: block; margin: auto;">
     <img src="image/loss-70b-chat-v3-valid.jpg" alt="tigerbot-70b-chat-v3 validation loss" style="width: 40%; display: block; margin: auto;">
@@ -399,13 +397,12 @@ The overall score is the average of scores from various tasks
 
 Evaluation results for the chat model:
 
-![image](image/eval_70b_chat_1206.png)
-![image](image/eval_13b_chat_1206.png)
+![image](image/eval_chat_1214.png)
 
 
 Evaluation results for the base model:
 
-![image](image/eval_base_1206.png)
+![image](image/eval_base_1214.png)
 
 ## Datasets
 
