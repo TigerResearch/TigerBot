@@ -26,7 +26,7 @@
 
 ## 最新发布
 
-- [12/29/2023] Tigerbot发表技术报告(arXiv preprint)，分享我们在大模型狂飙和应用落地方面的一些技术细节和浅见。:fire: [[paper](https://arxiv.org/abs/2312.08688)]
+- [12/29/2023] Tigerbot发表技术报告（arXiv preprint），分享我们在大模型狂飙和应用落地方面的一些技术细节和浅见。:fire: [[paper](https://arxiv.org/abs/2312.08688)]
 
 - [12/08/2023] Tigerbot family新版模型发布，bigger and better :fire: [[模型下载](#模型下载)][[测评](#测评)]
 
