@@ -26,6 +26,8 @@
 
 ## News
 
+- [12/29/2023] Tigerbot has published our technical report, to share our approach with technical details and experiences in application deployment。:fire: [[paper](https://arxiv.org/abs/2312.08688)]
+
 - [12/08/2023] Tigerbot family releases updated models - bigger and better :fire: [[Model Download](#Model-Download)][[Evaluation](#Evaluation)]
 
 	- Tigerbot-70b base (v2) and chat (v4) updated, chat model's comprehensive ability increased by 19% compared to the previous version;
