@@ -32,6 +32,7 @@
 	- 适合的prompt激发出大模型的底层知识，即完成的游戏引擎的开发，
 	- 前端设计好游戏的互动性和即时反馈便可完成一款可玩的小游戏。
 	
+	
   <div style="display: flex; justify-content: space-between;">
     <img src="image/tigerbot-idiom.jpg" alt="tigerbot-idiom" style="width: 30%; display: block; margin: auto;">
     <img src="image/tigerbot-idiom2.jpg" alt="tigerbot-idiom2" style="width: 30%; display: block; margin: auto;">
