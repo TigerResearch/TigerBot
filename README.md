@@ -26,12 +26,12 @@
 
 ## 最新发布
 
-- [01/18/2024] 我们让Tigerbot-70b-chat和GPT-4 Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。基于此，Tigerbot发布第一款基于大模型的小游戏[TigerBot成语接龙](https://h5.tigerbot.com/idiom-superman?access_source=jielong)]，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max.
+- [01/18/2024] 新一代的TigerBot基座模型训练了我们认为最大最高质量的中文数据，为了验证我们做了个有趣的测试：我们让Tigerbot-70b-chat和GPT-4 Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。
+基于此，Tigerbot发布第一款基于大模型的小游戏[[TigerBot成语接龙](https://h5.tigerbot.com/idiom-superman?access_source=jielong)]，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max.
 
 	- 大模型的生成能力、世界知识、和随机性可以增加文字类游戏的可玩性和知识性，
 	- 适合的prompt激发出大模型的底层知识，即完成的游戏引擎的开发，
 	- 前端设计好游戏的互动性和即时反馈便可完成一款可玩的小游戏。
-	
 	
   <div style="display: flex; justify-content: space-between;">
     <img src="image/tigerbot-idiom.jpg" alt="tigerbot-idiom" style="width: 30%; display: block; margin: auto;">
