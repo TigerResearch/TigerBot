@@ -26,12 +26,18 @@
 
 ## 最新发布
 
-- [01/18/2024] 我们让Tigerbot-70b-chat和GPT-4 Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。基于此，Tigerbot发布第一款基于大模型的小游戏「TigerBot成语接龙」(https://h5.tigerbot.com/idiom-superman?access_source=jielong)，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max.
+- [01/18/2024] 我们让Tigerbot-70b-chat和GPT-4 Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。基于此，Tigerbot发布第一款基于大模型的小游戏[TigerBot成语接龙](https://h5.tigerbot.com/idiom-superman?access_source=jielong)]，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max.
 
+	- 大模型的生成能力、世界知识、和随机性可以增加文字类游戏的可玩性和知识性，
+	- 适合的prompt激发出大模型的底层知识，即完成的游戏引擎的开发，
+	- 前端设计好游戏的互动性和即时反馈便可完成一款可玩的小游戏。
+	
   <div style="display: flex; justify-content: space-between;">
-    <img src="image/tigerbot-idiom.jpg" alt="tigerbot-idiom" style="width: 40%; display: block; margin: auto;">
-    <img src="image/tigerbot-idiom2.jpg" alt="tigerbot-idiom2" style="width: 40%; display: block; margin: auto;">
+    <img src="image/tigerbot-idiom.jpg" alt="tigerbot-idiom" style="width: 30%; display: block; margin: auto;">
+    <img src="image/tigerbot-idiom2.jpg" alt="tigerbot-idiom2" style="width: 30%; display: block; margin: auto;">
+	<img src="image/tigerbot-idiom3.jpg" alt="tigerbot-idiom3" style="width: 30%; display: block; margin: auto;">
   </div>
+	
 
 - [12/29/2023] Tigerbot发表技术报告（arXiv preprint），分享我们在大模型狂飙和应用落地方面的一些技术细节和浅见 :fire: [[paper](https://arxiv.org/abs/2312.08688)]
 
