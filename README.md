@@ -26,6 +26,13 @@
 
 ## 最新发布
 
+- [01/18/2024] 我们让Tigerbot-70b-chat和GPT-4 Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。基于此，Tigerbot发布第一款基于大模型的小游戏[[「TigerBot成语接龙」](https://h5.tigerbot.com/idiom-superman?access_source=jielong)]，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max.
+
+  <div style="display: flex; justify-content: space-between;">
+    <img src="image/tigerbot-idiom.jpg" alt="tigerbot-idiom" style="width: 40%; display: block; margin: auto;">
+    <img src="image/tigerbot-idiom2.jpg" alt="tigerbot-idiom2" style="width: 40%; display: block; margin: auto;">
+  </div>
+
 - [12/29/2023] Tigerbot发表技术报告（arXiv preprint），分享我们在大模型狂飙和应用落地方面的一些技术细节和浅见 :fire: [[paper](https://arxiv.org/abs/2312.08688)]
 
 - [12/08/2023] Tigerbot family新版模型发布，bigger and better :fire: [[模型下载](#模型下载)][[测评](#测评)]
