@@ -183,15 +183,7 @@ def get_model(model_path):
     torch.nn.init.normal_ = skip
     model = Exllamav2HF.from_pretrained(model_path)
     model.eval()
-    tokenizer = LlamaTokenizer.from_pretrained(
-        model_path,
-        cache_dir=None,
-        model_max_length=max_generate_length,
-        padding_side="left",
-        truncation_side="left",
-        padding=True,
-        truncation=True,
-    )
+    tokenizer = LlamaTokenizer.from_pretrained(model_path)
     if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
         tokenizer.model_max_length = max_generate_length
 
