@@ -262,9 +262,11 @@ def main(
                                     generation_config=generation_config):
             print(text, end='', flush=True)
             answer += text
+        sess_text += tok_res + answer
         print('')
         toc = time.perf_counter()
         num_tok = len(tokenizer.encode(answer))
+        res_time = toc - tic
         print(
             f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
         )
