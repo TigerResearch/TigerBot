@@ -199,8 +199,7 @@ def get_model(model_path):
 def main(
         model_path: str,
         max_input_length: int = 512,
-        max_generate_length: int = 2048,
-        stream: bool = True,
+        max_generate_length: int = 2048
 ):
     print(f"loading model: {model_path}...")
 
@@ -255,52 +254,59 @@ def main(
                 truncation=True,
                 max_length=max_input_length,
             )
+            inputs = {k: v.to(device) for k, v in inputs.items()}
             tic = time.perf_counter()
-            if stream:
-                generation_kwargs["streamer"] = streamer
-                for k, v in inputs.items():
-                    generation_kwargs[k] = v.to(device)
-                thread = Thread(
-                    target=eval_generate, kwargs=generation_kwargs
-                )
-                thread.start()
-                answer = ""
-                flag = False
-                print("=" * 100)
-                for new_text in streamer:
-                    if new_text.endswith(tokenizer.eos_token):
-                        new_text = new_text.rsplit(
-                            tokenizer.eos_token, 1
-                        )[0].strip()
-                        flag = True
-                    print(new_text, end="")
-                    answer += new_text
-                    if flag:
-                        break
-                toc = time.perf_counter()
-                num_tok = len(tokenizer.encode(answer))
-            else:
-                if "streamer" in generation_kwargs:
-                    del generation_kwargs["streamer"]
-                inputs = {k: v.to(device) for k, v in inputs.items()}
-                output = model.generate(
-                    **inputs, **generation_config.to_dict()
-                )
-                toc = time.perf_counter()
-                num_tok = output.shape[1]
-                output_str = tokenizer.decode(
-                    output[0],
-                    skip_special_tokens=False,
-                    spaces_between_special_tokens=False,
-                )
-                answer = output_str.rsplit(tok_res, 1)[1].strip()
-                if answer.endswith(tokenizer.eos_token):
-                    answer = answer.rsplit(tokenizer.eos_token, 1)[
-                        0
-                    ].strip()
-                print(answer)
+            print('=' * 100)
+            for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                        generation_config=generation_config):
+                print(text, end='', flush=True)
+            print('')
+            print("=" * 100)
 
-            sess_text += tok_res + answer
+            #     generation_kwargs["streamer"] = streamer
+            #     for k, v in inputs.items():
+            #         generation_kwargs[k] = v.to(device)
+            #     thread = Thread(
+            #         target=eval_generate, kwargs=generation_kwargs
+            #     )
+            #     thread.start()
+            #     answer = ""
+            #     flag = False
+            #     print("=" * 100)
+            #     for new_text in streamer:
+            #         if new_text.endswith(tokenizer.eos_token):
+            #             new_text = new_text.rsplit(
+            #                 tokenizer.eos_token, 1
+            #             )[0].strip()
+            #             flag = True
+            #         print(new_text, end="")
+            #         answer += new_text
+            #         if flag:
+            #             break
+            #     toc = time.perf_counter()
+            #     num_tok = len(tokenizer.encode(answer))
+            # else:
+            #     if "streamer" in generation_kwargs:
+            #         del generation_kwargs["streamer"]
+            #     inputs = {k: v.to(device) for k, v in inputs.items()}
+            #     output = model.generate(
+            #         **inputs, **generation_config.to_dict()
+            #     )
+            #     toc = time.perf_counter()
+            #     num_tok = output.shape[1]
+            #     output_str = tokenizer.decode(
+            #         output[0],
+            #         skip_special_tokens=False,
+            #         spaces_between_special_tokens=False,
+            #     )
+            #     answer = output_str.rsplit(tok_res, 1)[1].strip()
+            #     if answer.endswith(tokenizer.eos_token):
+            #         answer = answer.rsplit(tokenizer.eos_token, 1)[
+            #             0
+            #         ].strip()
+            #     print(answer)
+            #
+            # sess_text += tok_res + answer
             res_time = toc - tic
             print(
                 f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
