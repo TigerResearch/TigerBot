@@ -184,9 +184,6 @@ def get_model(model_path):
     model = Exllamav2HF.from_pretrained(model_path)
     model.eval()
     tokenizer = LlamaTokenizer.from_pretrained(model_path)
-    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
-        tokenizer.model_max_length = max_generate_length
-
     generation_config = GenerationConfig.from_pretrained(model_path)
     return model, tokenizer, generation_config
 
