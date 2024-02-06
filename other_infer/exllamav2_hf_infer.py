@@ -16,6 +16,7 @@ from transformers import (
     TextIteratorStreamer,
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
+from utils.streaming import generate_stream
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
