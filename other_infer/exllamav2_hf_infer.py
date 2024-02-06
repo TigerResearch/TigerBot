@@ -181,10 +181,18 @@ def get_model(model_path):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
+    print(f"Loading model from {model_path}...")
     model = Exllamav2HF.from_pretrained(model_path)
     model.eval()
+    print("Done")
+
+    print(f"Loading tokenizer from {model_path}...")
     tokenizer = LlamaTokenizer.from_pretrained(model_path)
+    print("Done")
+
+    print(f"Loading generation config from {model_path}...")
     generation_config = GenerationConfig.from_pretrained(model_path)
+    print("Done")
     return model, tokenizer, generation_config
 
 

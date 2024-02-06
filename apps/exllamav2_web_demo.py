@@ -7,8 +7,6 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True)
-parser.add_argument('--rope_scaling', type=str, required=False, default=None)
-parser.add_argument('--rope_factor', type=float, required=False, default=None)
 parser.add_argument('--max_input_length', type=int, required=False, default=1024)
 parser.add_argument('--max_generate_length', type=int, required=False, default=1024)
 
