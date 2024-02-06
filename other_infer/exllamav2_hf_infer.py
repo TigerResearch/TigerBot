@@ -200,8 +200,14 @@ def get_model(model_path):
 def generate_stream(model: transformers.AutoModelForCausalLM, tokenizer: transformers.AutoModelForCausalLM,
                     input_ids: torch.Tensor, attention_mask: torch.Tensor,
                     generation_config: transformers.GenerationConfig):
-    streamer = transformers.TextIteratorStreamer(tokenizer, skip_prompt=True, timeout=180)
+    streamer = TextIteratorStreamer(
+        tokenizer,
+        skip_prompt=True,
+        skip_special_tokens=True,
+        spaces_between_special_tokens=False,
+    )
     kwargs = generation_config.to_dict()
+    print(kwargs)
 
     def eval_generate(**args):
         with torch.inference_mode(mode=True):
@@ -255,68 +261,27 @@ def main(
             truncation=True,
             max_length=max_input_length,
         )
+        tic = time.perf_counter()
         inputs = {k: v.to(device) for k, v in inputs.items()}
         print('=' * 100)
         answer = ""
         print(generation_config)
-        for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
-                                    generation_config=generation_config):
-            print(text, end='', flush=True)
-            answer += text
+        flag = False
+        for new_text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                        generation_config=generation_config):
+            if new_text.endswith(tokenizer.eos_token):
+                new_text = new_text.rsplit(
+                    tokenizer.eos_token, 1
+                )[0].strip()
+                flag = True
+            if flag:
+                break
+            print(new_text, end='')
+            answer += new_text
         sess_text += tok_res + answer
         print('')
         toc = time.perf_counter()
         num_tok = len(tokenizer.encode(answer))
-        res_time = toc - tic
-        print(
-            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
-        )
-        print("=" * 100)
-
-        #     generation_kwargs["streamer"] = streamer
-        #     for k, v in inputs.items():
-        #         generation_kwargs[k] = v.to(device)
-        #     thread = Thread(
-        #         target=eval_generate, kwargs=generation_kwargs
-        #     )
-        #     thread.start()
-        #     answer = ""
-        #     flag = False
-        #     print("=" * 100)
-        #     for new_text in streamer:
-        #         if new_text.endswith(tokenizer.eos_token):
-        #             new_text = new_text.rsplit(
-        #                 tokenizer.eos_token, 1
-        #             )[0].strip()
-        #             flag = True
-        #         print(new_text, end="")
-        #         answer += new_text
-        #         if flag:
-        #             break
-        #     toc = time.perf_counter()
-        #     num_tok = len(tokenizer.encode(answer))
-        # else:
-        #     if "streamer" in generation_kwargs:
-        #         del generation_kwargs["streamer"]
-        #     inputs = {k: v.to(device) for k, v in inputs.items()}
-        #     output = model.generate(
-        #         **inputs, **generation_config.to_dict()
-        #     )
-        #     toc = time.perf_counter()
-        #     num_tok = output.shape[1]
-        #     output_str = tokenizer.decode(
-        #         output[0],
-        #         skip_special_tokens=False,
-        #         spaces_between_special_tokens=False,
-        #     )
-        #     answer = output_str.rsplit(tok_res, 1)[1].strip()
-        #     if answer.endswith(tokenizer.eos_token):
-        #         answer = answer.rsplit(tokenizer.eos_token, 1)[
-        #             0
-        #         ].strip()
-        #     print(answer)
-        #
-        # sess_text += tok_res + answer
         res_time = toc - tic
         print(
             f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
