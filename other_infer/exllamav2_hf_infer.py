@@ -148,15 +148,15 @@ class Exllamav2HF(PreTrainedModel):
 
     @classmethod
     def from_pretrained(
-        cls,
-        pretrained_model_name_or_path: Optional[
-            Union[str, os.PathLike]
-        ],
-        *model_args,
-        **kwargs,
+            cls,
+            pretrained_model_name_or_path: Optional[
+                Union[str, os.PathLike]
+            ],
+            *model_args,
+            **kwargs,
     ):
         assert (
-            len(model_args) == 0 and len(kwargs) == 0
+                len(model_args) == 0 and len(kwargs) == 0
         ), "extra args is currently not supported"
         if isinstance(pretrained_model_name_or_path, str):
             pretrained_model_name_or_path = Path(
@@ -174,29 +174,15 @@ class Exllamav2HF(PreTrainedModel):
         return Exllamav2HF(config)
 
 
-def get_model(model):
+def get_model(model_path):
     def skip(*args, **kwargs):
         pass
 
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    model = Exllamav2HF.from_pretrained(model)
+    model = Exllamav2HF.from_pretrained(model_path)
     model.eval()
-    return model
-
-
-def main(
-    model_path: str,
-    max_input_length: int = 512,
-    max_generate_length: int = 2048,
-    stream: bool = True,
-):
-    print(f"loading model: {model_path}...")
-
-    model = get_model(model_path)
-    device = torch.cuda.current_device()
-
     tokenizer = LlamaTokenizer.from_pretrained(
         model_path,
         cache_dir=None,
@@ -206,15 +192,28 @@ def main(
         padding=True,
         truncation=True,
     )
-    if (
-        tokenizer.model_max_length is None
-        or tokenizer.model_max_length > max_generate_length
-    ):
+    if tokenizer.model_max_length is None or tokenizer.model_max_length > max_generate_length:
         tokenizer.model_max_length = max_generate_length
 
     generation_config = GenerationConfig.from_pretrained(model_path)
+    return model, tokenizer, generation_config
+
+
+def main(
+        model_path: str,
+        max_input_length: int = 512,
+        max_generate_length: int = 2048,
+        stream: bool = True,
+):
+    print(f"loading model: {model_path}...")
+
+    model = get_model(model_path)
+    device = torch.cuda.current_device()
+    model, tokenizer, generation_config = get_model(model_path)
+
+    generation_config.do_sample = False
+    generation_config.max_length = max_input_length + max_generate_length
     generation_config.max_new_tokens = max_generate_length
-    generation_config.max_length = None
 
     sess_text = ""
 
