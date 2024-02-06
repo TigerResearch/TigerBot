@@ -188,11 +188,7 @@ def get_model(model_path):
     print("Done")
 
     print(f"Loading tokenizer from {model_path}...")
-    tokenizer = LlamaTokenizer.from_pretrained(model_path,
-                                               padding_side="left",
-                                               truncation_side="left",
-                                               padding=True,
-                                               truncation=True)
+    tokenizer = LlamaTokenizer.from_pretrained(model_path)
     print("Done")
 
     print(f"Loading generation config from {model_path}...")
@@ -264,10 +260,8 @@ def main(
         )
         tic = time.perf_counter()
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        print(inputs)
         print('=' * 100)
         answer = ""
-        print(generation_config)
         flag = False
         for new_text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                         generation_config=generation_config):
@@ -278,7 +272,7 @@ def main(
                 flag = True
             if flag:
                 break
-            print(new_text, end='')
+            print(new_text, end='', )
             answer += new_text
         sess_text += tok_res + answer
         print('')
