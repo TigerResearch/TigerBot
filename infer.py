@@ -4,6 +4,7 @@ from typing import Optional
 import fire
 import torch
 import transformers
+from packaging import version
 
 from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
@@ -24,7 +25,7 @@ def main(
         rope_factor: float = 8.0,
         streaming: bool = True  # streaming is always enabled now
 ):
-    assert transformers.__version__.startswith('4.34')
+    assert version.parse(transformers.__version__) >= version.parse("4.34")
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
     assert rope_scaling in [None, 'yarn',
                             'dynamic'], f"rope_scaling must be one of [None, 'yarn', 'dynamic'], got {rope_scaling}"
@@ -59,9 +60,12 @@ def main(
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
         print('=' * 100)
+        answer = ''
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                     generation_config=generation_config):
             print(text, end='', flush=True)
+            answer += text
+        sess_text += tok_res + answer
         print('')
         print("=" * 100)
 

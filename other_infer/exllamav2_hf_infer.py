@@ -8,6 +8,8 @@ import fire
 import torch
 from exllamav2 import ExLlamaV2, ExLlamaV2Cache, ExLlamaV2Config
 from torch.nn import CrossEntropyLoss
+import torch
+import transformers
 from transformers import (
     GenerationConfig,
     LlamaTokenizer,
@@ -148,15 +150,15 @@ class Exllamav2HF(PreTrainedModel):
 
     @classmethod
     def from_pretrained(
-        cls,
-        pretrained_model_name_or_path: Optional[
-            Union[str, os.PathLike]
-        ],
-        *model_args,
-        **kwargs,
+            cls,
+            pretrained_model_name_or_path: Optional[
+                Union[str, os.PathLike]
+            ],
+            *model_args,
+            **kwargs,
     ):
         assert (
-            len(model_args) == 0 and len(kwargs) == 0
+                len(model_args) == 0 and len(kwargs) == 0
         ), "extra args is currently not supported"
         if isinstance(pretrained_model_name_or_path, str):
             pretrained_model_name_or_path = Path(
@@ -174,142 +176,112 @@ class Exllamav2HF(PreTrainedModel):
         return Exllamav2HF(config)
 
 
-def get_model(model):
+def get_model(model_path):
     def skip(*args, **kwargs):
         pass
 
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    model = Exllamav2HF.from_pretrained(model)
-    model.eval()
-    return model
+    print(f"Loading model from {model_path}...")
+    model = Exllamav2HF.from_pretrained(model_path)
+    print("Done")
 
+    print(f"Loading tokenizer from {model_path}...")
+    tokenizer = LlamaTokenizer.from_pretrained(model_path)
+    print("Done")
 
-def main(
-    model_path: str,
-    max_input_length: int = 512,
-    max_generate_length: int = 2048,
-    stream: bool = True,
-):
-    print(f"loading model: {model_path}...")
-
-    model = get_model(model_path)
-    device = torch.cuda.current_device()
-
-    tokenizer = LlamaTokenizer.from_pretrained(
-        model_path,
-        cache_dir=None,
-        model_max_length=max_generate_length,
-        padding_side="left",
-        truncation_side="left",
-        padding=True,
-        truncation=True,
-    )
-    if (
-        tokenizer.model_max_length is None
-        or tokenizer.model_max_length > max_generate_length
-    ):
-        tokenizer.model_max_length = max_generate_length
-
+    print(f"Loading generation config from {model_path}...")
     generation_config = GenerationConfig.from_pretrained(model_path)
-    generation_config.max_new_tokens = max_generate_length
-    generation_config.max_length = None
+    print("Done")
+    return model, tokenizer, generation_config
 
-    sess_text = ""
 
+def generate_stream(model: transformers.AutoModelForCausalLM, tokenizer: transformers.AutoModelForCausalLM,
+                    input_ids: torch.Tensor, attention_mask: torch.Tensor,
+                    generation_config: transformers.GenerationConfig):
     streamer = TextIteratorStreamer(
         tokenizer,
         skip_prompt=True,
         skip_special_tokens=True,
         spaces_between_special_tokens=False,
     )
-    generation_kwargs = generation_config.to_dict()
+    kwargs = generation_config.to_dict()
 
     def eval_generate(**args):
         with torch.inference_mode(mode=True):
             model.eval()
             model.generate(**args)
 
-    with torch.inference_mode(mode=True):
-        model.eval()
-        while True:
-            raw_text = input(
-                'prompt("exit" to end, "clear" to clear session) >>> '
-            )
-            if not raw_text:
-                print("prompt should not be empty!")
-                continue
-            if raw_text.strip() == "exit":
-                print("session ended.")
+    kwargs['input_ids'] = input_ids
+    kwargs['attention_mask'] = attention_mask
+    kwargs['streamer'] = streamer
+    Thread(target=eval_generate, kwargs=kwargs).start()
+    return streamer
+
+
+def main(
+        model_path: str,
+        max_input_length: int = 512,
+        max_generate_length: int = 2048
+):
+    model, tokenizer, generation_config = get_model(model_path)
+    generation_config.max_new_tokens = max_generate_length
+    generation_config.max_length = None
+
+    device = torch.cuda.current_device()
+    sess_text = ""
+    while True:
+        raw_text = input(
+            'prompt("exit" to end, "clear" to clear session) >>> '
+        )
+        if not raw_text:
+            print("prompt should not be empty!")
+            continue
+        if raw_text.strip() == "exit":
+            print("session ended.")
+            break
+        if raw_text.strip() == "clear":
+            print("session cleared.")
+            sess_text = ""
+            continue
+
+        query_text = raw_text.strip()
+        sess_text += tok_ins + query_text
+        input_text = prompt_input.format_map(
+            {"instruction": sess_text.split(tok_ins, 1)[1]}
+        )
+        inputs = tokenizer(
+            input_text,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_input_length,
+        )
+        tic = time.perf_counter()
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+        print('=' * 100)
+        answer = ""
+        flag = False
+        for new_text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
+                                        generation_config=generation_config):
+            if new_text.endswith(tokenizer.eos_token):
+                new_text = new_text.rsplit(
+                    tokenizer.eos_token, 1
+                )[0].strip()
+                flag = True
+            if flag:
                 break
-            if raw_text.strip() == "clear":
-                print("session cleared.")
-                sess_text = ""
-                continue
-
-            query_text = raw_text.strip()
-            sess_text += tok_ins + query_text
-            input_text = prompt_input.format_map(
-                {"instruction": sess_text.split(tok_ins, 1)[1]}
-            )
-            inputs = tokenizer(
-                input_text,
-                return_tensors="pt",
-                truncation=True,
-                max_length=max_input_length,
-            )
-            tic = time.perf_counter()
-            if stream:
-                generation_kwargs["streamer"] = streamer
-                for k, v in inputs.items():
-                    generation_kwargs[k] = v.to(device)
-                thread = Thread(
-                    target=eval_generate, kwargs=generation_kwargs
-                )
-                thread.start()
-                answer = ""
-                flag = False
-                print("=" * 100)
-                for new_text in streamer:
-                    if new_text.endswith(tokenizer.eos_token):
-                        new_text = new_text.rsplit(
-                            tokenizer.eos_token, 1
-                        )[0].strip()
-                        flag = True
-                    print(new_text, end="")
-                    answer += new_text
-                    if flag:
-                        break
-                toc = time.perf_counter()
-                num_tok = len(tokenizer.encode(answer))
-            else:
-                if "streamer" in generation_kwargs:
-                    del generation_kwargs["streamer"]
-                inputs = {k: v.to(device) for k, v in inputs.items()}
-                output = model.generate(
-                    **inputs, **generation_config.to_dict()
-                )
-                toc = time.perf_counter()
-                num_tok = output.shape[1]
-                output_str = tokenizer.decode(
-                    output[0],
-                    skip_special_tokens=False,
-                    spaces_between_special_tokens=False,
-                )
-                answer = output_str.rsplit(tok_res, 1)[1].strip()
-                if answer.endswith(tokenizer.eos_token):
-                    answer = answer.rsplit(tokenizer.eos_token, 1)[
-                        0
-                    ].strip()
-                print(answer)
-
-            sess_text += tok_res + answer
-            res_time = toc - tic
-            print(
-                f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
-            )
-            print("=" * 100)
+            print(text, end='', flush=True)
+            answer += new_text
+        sess_text += tok_res + answer
+        print('')
+        toc = time.perf_counter()
+        num_tok = len(tokenizer.encode(answer))
+        res_time = toc - tic
+        print(
+            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
+        )
+        print("=" * 100)
 
 
 if __name__ == "__main__":
