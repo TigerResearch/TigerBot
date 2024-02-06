@@ -184,7 +184,6 @@ def get_model(model_path):
     torch.nn.init.normal_ = skip
     print(f"Loading model from {model_path}...")
     model = Exllamav2HF.from_pretrained(model_path)
-    model.eval()
     print("Done")
 
     print(f"Loading tokenizer from {model_path}...")
