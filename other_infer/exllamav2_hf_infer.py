@@ -256,6 +256,7 @@ def main(
             max_length=max_input_length,
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
+        print(inputs)
         tic = time.perf_counter()
         print('=' * 100)
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
