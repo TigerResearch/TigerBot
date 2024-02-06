@@ -22,7 +22,7 @@ def cached_get_model(model_path):
     return get_model(model_path=model_path)
 
 
-model, tokenizer, generation_config = cached_get_model(args.model_path, args.rope_scaling, args.rope_factor)
+model, tokenizer, generation_config = cached_get_model(args.model_path)
 generation_config.do_sample = False
 generation_config.max_length = args.max_input_length + args.max_generate_length
 generation_config.max_new_tokens = args.max_generate_length
