@@ -207,7 +207,6 @@ def generate_stream(model: transformers.AutoModelForCausalLM, tokenizer: transfo
         spaces_between_special_tokens=False,
     )
     kwargs = generation_config.to_dict()
-    print(kwargs)
 
     def eval_generate(**args):
         with torch.inference_mode(mode=True):
