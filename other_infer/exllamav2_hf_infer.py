@@ -211,7 +211,7 @@ def generate_stream(model: transformers.AutoModelForCausalLM, tokenizer: transfo
     kwargs['input_ids'] = input_ids
     kwargs['attention_mask'] = attention_mask
     kwargs['streamer'] = streamer
-    threading.Thread(target=eval_generate(), kwargs=kwargs).start()
+    Thread(target=eval_generate(), kwargs=kwargs).start()
 
     return streamer
 
