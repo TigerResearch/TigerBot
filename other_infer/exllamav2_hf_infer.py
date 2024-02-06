@@ -257,11 +257,14 @@ def main(
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
         print('=' * 100)
+        answer = ""
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                     generation_config=generation_config):
             print(text, end='', flush=True)
+            answer += text
         print('')
         toc = time.perf_counter()
+        num_tok = len(tokenizer.encode(answer))
         print(
             f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
         )
