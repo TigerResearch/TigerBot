@@ -52,7 +52,6 @@ if prompt := st.chat_input("Input here"):
                            max_length=generation_config.max_length - generation_config.max_new_tokens)
         inputs = {k: v.to(device) for k, v in inputs.items()}
         full_answer = ""
-        print(inputs)
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                     generation_config=generation_config):
             print(text, end='', flush=True)
