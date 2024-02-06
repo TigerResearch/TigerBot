@@ -258,6 +258,7 @@ def main(
         inputs = {k: v.to(device) for k, v in inputs.items()}
         print('=' * 100)
         answer = ""
+        print(generation_config)
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                     generation_config=generation_config):
             print(text, end='', flush=True)
