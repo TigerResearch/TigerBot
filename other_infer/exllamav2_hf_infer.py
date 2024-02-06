@@ -231,8 +231,6 @@ def main(
         max_generate_length: int = 2048
 ):
     model, tokenizer, generation_config = get_model(model_path)
-
-    generation_config.do_sample = False
     generation_config.max_new_tokens = max_generate_length
     generation_config.max_length = None
 
