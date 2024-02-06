@@ -228,6 +228,7 @@ def main(
 
     device = torch.cuda.current_device()
     sess_text = ""
+    tic = time.perf_counter()
     while True:
         raw_text = input(
             'prompt("exit" to end, "clear" to clear session) >>> '
@@ -255,13 +256,15 @@ def main(
             max_length=max_input_length,
         )
         inputs = {k: v.to(device) for k, v in inputs.items()}
-        print(inputs)
-        tic = time.perf_counter()
         print('=' * 100)
         for text in generate_stream(model, tokenizer, inputs['input_ids'], inputs['attention_mask'],
                                     generation_config=generation_config):
             print(text, end='', flush=True)
         print('')
+        toc = time.perf_counter()
+        print(
+            f"\n[time: {res_time:0.4f} sec, speed: {num_tok / res_time:0.4f} tok/sec]"
+        )
         print("=" * 100)
 
         #     generation_kwargs["streamer"] = streamer
