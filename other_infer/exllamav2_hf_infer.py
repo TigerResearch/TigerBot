@@ -8,7 +8,7 @@ import fire
 import torch
 from exllamav2 import ExLlamaV2, ExLlamaV2Cache, ExLlamaV2Config
 from torch.nn import CrossEntropyLoss
-import tensor
+import torch
 import transformers
 from transformers import (
     GenerationConfig,
