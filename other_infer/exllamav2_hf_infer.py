@@ -188,7 +188,11 @@ def get_model(model_path):
     print("Done")
 
     print(f"Loading tokenizer from {model_path}...")
-    tokenizer = LlamaTokenizer.from_pretrained(model_path)
+    tokenizer = LlamaTokenizer.from_pretrained(model_path,
+                                               padding_side="left",
+                                               truncation_side="left",
+                                               padding=True,
+                                               truncation=True)
     print("Done")
 
     print(f"Loading generation config from {model_path}...")
@@ -229,12 +233,11 @@ def main(
     model, tokenizer, generation_config = get_model(model_path)
 
     generation_config.do_sample = False
-    generation_config.max_length = max_input_length + max_generate_length
     generation_config.max_new_tokens = max_generate_length
+    generation_config.max_length = None
 
     device = torch.cuda.current_device()
     sess_text = ""
-    tic = time.perf_counter()
     while True:
         raw_text = input(
             'prompt("exit" to end, "clear" to clear session) >>> '
@@ -263,6 +266,7 @@ def main(
         )
         tic = time.perf_counter()
         inputs = {k: v.to(device) for k, v in inputs.items()}
+        print(inputs)
         print('=' * 100)
         answer = ""
         print(generation_config)
