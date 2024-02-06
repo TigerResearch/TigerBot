@@ -298,7 +298,7 @@ export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/web_
 ```
 启动量化模型的web_demo
 ```
-export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/web_demo.py -- --model_path TigerResearch/tigerbot-70b-chat-v4-4bit-exl2
+export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/exllamav2_web_demo.py -- --model_path TigerResearch/tigerbot-70b-chat-v4-4bit-exl2
 ```
 
 参数同CLI启动参数
