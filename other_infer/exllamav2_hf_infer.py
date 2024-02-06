@@ -16,7 +16,6 @@ from transformers import (
     TextIteratorStreamer,
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
-from utils.streaming import generate_stream
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -196,19 +195,37 @@ def get_model(model_path):
     return model, tokenizer, generation_config
 
 
+def generate_stream(model: transformers.AutoModelForCausalLM, tokenizer: transformers.AutoModelForCausalLM,
+                    input_ids: torch.Tensor, attention_mask: torch.Tensor,
+                    generation_config: transformers.GenerationConfig):
+    streamer = transformers.TextIteratorStreamer(tokenizer, skip_prompt=True, timeout=180)
+    kwargs = generation_config.to_dict()
+
+    def eval_generate(**args):
+        with torch.inference_mode(mode=True):
+            model.eval()
+            model.generate(**args)
+
+    kwargs['input_ids'] = input_ids
+    kwargs['attention_mask'] = attention_mask
+    kwargs['streamer'] = streamer
+    threading.Thread(target=eval_generate(), kwargs=kwargs).start()
+
+    return streamer
+
+
 def main(
         model_path: str,
         max_input_length: int = 512,
         max_generate_length: int = 2048
 ):
-    print(f"loading model: {model_path}...")
-    device = torch.cuda.current_device()
     model, tokenizer, generation_config = get_model(model_path)
 
     generation_config.do_sample = False
     generation_config.max_length = max_input_length + max_generate_length
     generation_config.max_new_tokens = max_generate_length
 
+    device = torch.cuda.current_device()
     sess_text = ""
     while True:
         raw_text = input(
