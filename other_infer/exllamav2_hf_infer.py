@@ -271,7 +271,7 @@ def main(
                 flag = True
             if flag:
                 break
-            print(text, end='', flush=True)
+            print(new_text, end='', flush=True)
             answer += new_text
         sess_text += tok_res + answer
         print('')
