@@ -27,6 +27,10 @@
 ## 最新发布
 
 - [03/18/2024] 虎博TigerBot升级，支持100K上下文长度 (70b and 13b chat) :fire: [[models](https://huggingface.co/TigerResearch)]；TigerBot医疗大模型被AAAI 2024 Spring Symposium on Clinical Foundation Models录取 [[paper](https://arxiv.org/abs/2403.00868)]。
+  ```shell
+  # 可以根据实际硬件情况调整max_input/generate_length
+  export PYTHONPATH='./' ; export CUDA_VISIBLE_DEVICES=0 ; streamlit run apps/web_demo.py -- --model_path tigerbot-70b-chat-v6 --rope_scaling yarn --rope_factor 8 --max_input_length 37888 --max_generate_length 62112
+  ```
 
 - [01/18/2024] 新一代的TigerBot基座模型训练了我们认为最大最高质量的中文数据。为了验证，我们做了个有趣的测试：我们让Tigerbot-70b-chat和GPT-4-Turbo对战40局成语接龙，各先出20局。每局中无法成功接龙成语者输（以权威成语词典为准），比分 Tigerbot:GPT-4 = 24:16。
 基于此，Tigerbot发布第一款基于大模型的小游戏[[TigerBot成语接龙](https://h5.tigerbot.com/idiom-superman?access_source=jielong)]，移动端扫如下二维码参与，有机会赢取顶配iPhone Pro Max. :fire:
