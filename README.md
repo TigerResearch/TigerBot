@@ -29,7 +29,7 @@
 - [06/01/2024] 虎博TigerBot产品升级：搜索模式(search augmented)增加信息源链接。
 
 <p align="center" width="100%">
-    <img src="image/search-link.pdf" alt="search-link" style="width: 30%; display: block; margin: auto;">
+    <img src="image/search-link.jpg" alt="search-link" style="width: 30%; display: block; margin: auto;">
   </p>
 
 - [03/18/2024] 虎博TigerBot升级，支持100K上下文长度 (70b and 13b chat) :fire: [[models](https://huggingface.co/TigerResearch)]；TigerBot医疗大模型被AAAI 2024 Spring Symposium on Clinical Foundation Models录取 [[paper](https://arxiv.org/abs/2403.00868)]。
