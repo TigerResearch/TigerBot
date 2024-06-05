@@ -8,6 +8,7 @@ from packaging import version
 
 from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
+from builtins import True
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -63,9 +64,13 @@ def main(
         query_text = raw_text.strip()
         sess_text += tok_ins + query_text
         if model_type == 'chat':
+            tokenizer.add_bos_token = False
+            tokenizer.add_eos_token = False
             input_text = prompt_input.format_map({'instruction': sess_text.split(tok_ins, 1)[1]})
         else:
-            input_text = tokenizer.bos_token + query_text
+            tokenizer.add_bos_token = True
+            tokenizer.add_eos_token = False
+            input_text = query_text
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
