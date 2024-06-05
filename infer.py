@@ -37,7 +37,6 @@ def main(
     tokenizer.add_bos_token = False
     tokenizer.add_eos_token = False
     generation_config.max_new_tokens = max_generate_length
-    generation_config.max_length = max_input_length + max_generate_length
     
     # sampling gen configs
     generation_config.do_sample = True
