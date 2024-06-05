@@ -34,6 +34,8 @@ def main(
 
     model, tokenizer, generation_config = get_model(model_path=model_path, rope_scaling=rope_scaling,
                                                     rope_factor=rope_factor)
+    tokenizer.add_bos_token = False
+    tokenizer.add_eos_token = False
     generation_config.max_new_tokens = max_generate_length
     generation_config.max_length = max_input_length + max_generate_length
     
@@ -63,13 +65,9 @@ def main(
         query_text = raw_text.strip()
         sess_text += tok_ins + query_text
         if model_type == 'chat':
-            tokenizer.add_bos_token = False
-            tokenizer.add_eos_token = False
             input_text = prompt_input.format_map({'instruction': sess_text.split(tok_ins, 1)[1]})
         else:
-            tokenizer.add_bos_token = True
-            tokenizer.add_eos_token = False
-            input_text = query_text
+            input_text = tokenizer.bos_token + query_text
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
