@@ -8,7 +8,6 @@ from packaging import version
 
 from utils.modeling_hack import get_model
 from utils.streaming import generate_stream
-from builtins import True
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
