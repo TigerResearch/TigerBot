@@ -14,16 +14,18 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 tok_ins = "\n\n### Instruction:\n"
 tok_res = "\n\n### Response:\n"
 prompt_input = tok_ins + "{instruction}" + tok_res
+bos_token = "<|begin_of_text|>"
+eos_token = "<|end_of_text|>"
 
 
 def main(
         model_path: str,
-        max_input_length: int = 512,
-        max_generate_length: int = 1024,
-        model_type: str = 'chat',
-        rope_scaling: Optional[str] = None,
-        rope_factor: float = 8.0,
-        streaming: bool = True  # streaming is always enabled now
+        max_input_length: int=512,
+        max_generate_length: int=1024,
+        model_type: str='chat',
+        rope_scaling: Optional[str]=None,
+        rope_factor: float=8.0,
+        streaming: bool=True  # streaming is always enabled now
 ):
     assert version.parse(transformers.__version__) >= version.parse("4.34")
     assert model_type.lower() in ['chat', 'base'], f"model_type must be one of ['chat', 'base'], got {model_type}"
@@ -55,7 +57,7 @@ def main(
         if model_type == 'chat':
             input_text = prompt_input.format_map({'instruction': sess_text.split(tok_ins, 1)[1]})
         else:
-            input_text = query_text
+            input_text = tokenizer.bos_token + query_text
         inputs = tokenizer(input_text, return_tensors='pt', truncation=True, max_length=max_input_length)
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
