@@ -36,6 +36,14 @@ def main(
                                                     rope_factor=rope_factor)
     generation_config.max_new_tokens = max_generate_length
     generation_config.max_length = max_input_length + max_generate_length
+    
+    # sampling gen configs
+    generation_config.do_sample = True
+    generation_config.temperature = 0.6
+    generation_config.top_k = 5
+    generation_config.top_p = 0.9
+    generation_config.repetition_penalty = 1.02
+    generation_config.use_cache = True
 
     device = torch.cuda.current_device()
     sess_text = ""
