@@ -40,9 +40,9 @@ def main(
     # sampling gen configs
     generation_config.do_sample = True
     generation_config.temperature = 0.6
-    generation_config.top_k = 5
-    generation_config.top_p = 0.9
-    generation_config.repetition_penalty = 1.02
+    # generation_config.top_k = 5
+    # generation_config.top_p = 0.9
+    generation_config.repetition_penalty = 1.08
     generation_config.use_cache = True
 
     device = torch.cuda.current_device()
