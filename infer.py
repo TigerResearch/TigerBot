@@ -39,8 +39,8 @@ def main(
     generation_config.max_new_tokens = max_generate_length
     
     # sampling gen configs
-    generation_config.do_sample = True
-    generation_config.temperature = 0.6
+    # generation_config.do_sample = True
+    # generation_config.temperature = 0.6
     # generation_config.top_k = 5
     # generation_config.top_p = 0.9
     generation_config.repetition_penalty = 1.08
