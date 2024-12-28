@@ -26,6 +26,11 @@
 
 ## 最新发布
 
+- [12/28/2024] 虎博TigerBot发布全球首个中文临床术语体系——MedCT (Medical Clinical Terminology)，以及相应的医疗NER模型和医疗基础模型，在中英文医疗NER任务中均取得新SOTA，同时发布真实临床标注数据。
+
+	- [MedCT Github](https://github.com/TigerResearch/MedCT)  
+	- [MedCT Huggingface](https://huggingface.co/collections/TigerResearch/medct-6744641d6f19b9d70a56f848)
+	
 - [06/01/2024] 虎博TigerBot产品升级：搜索模式(search augmented)增加信息源链接。
 
 <p align="center" width="100%">
